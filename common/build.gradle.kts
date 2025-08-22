@@ -3,6 +3,7 @@ plugins {
 }
 dependencies {
     implementation("com.google.protobuf", "protobuf-java", "4.32.0")
+    implementation("org.slf4j:slf4j-api:2.0.17")
 }
 protobuf {
     protoc {

@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     implementation("net.minestom:minestom:2025.08.18-1.21.8")
-    implementation(":common")
+    implementation(project((":common")))
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.2")
 }
 application {
