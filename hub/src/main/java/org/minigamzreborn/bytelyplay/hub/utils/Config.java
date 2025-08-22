@@ -22,9 +22,9 @@ public class Config {
     public static void deserialize(JsonNode rootNode) {
         Config config = new Config();
         JsonNode spawnPointNode = rootNode.get("spawn_point");
-        int spawnX = spawnPointNode.get("x").asInt();
-        int spawnY = spawnPointNode.get("y").asInt();
-        int spawnZ = spawnPointNode.get("z").asInt();
+        double spawnX = spawnPointNode.get("x").asDouble();
+        double spawnY = spawnPointNode.get("y").asDouble();
+        double spawnZ = spawnPointNode.get("z").asDouble();
         config.spawnPoint = new Pos(spawnX, spawnY, spawnZ);
     }
     public static JsonNode serialize() {
