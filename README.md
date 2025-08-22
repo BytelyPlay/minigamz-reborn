@@ -4,4 +4,13 @@ Minestom, fabric whatever is used doesn't matter! \
 the only thing that DOES matter is EVERYTHING has to be custom-made (libraries are allowed)
 
 # The Protocol
-TODO
+All packets have a PacketType and a class associated with the data.
+We want to use ProtoBuffers AS MUCH as possible...
+
+The server is the proxy...
+
+# Packets
+HandShakePacketS2C (Contains 32 bit int that is 8439)
+HandShakePacketC2S (Contains 32 bit int that is 8439 too)
+
+TransferPlayerPacketS2C (contains an enum representing a server type which the proxy has to pick which server of that type to use.)
