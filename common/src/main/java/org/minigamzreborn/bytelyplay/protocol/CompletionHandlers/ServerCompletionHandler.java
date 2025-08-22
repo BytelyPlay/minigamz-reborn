@@ -7,7 +7,7 @@ import java.nio.channels.CompletionHandler;
 public class ServerCompletionHandler implements CompletionHandler<AsynchronousSocketChannel, AsynchronousServerSocketChannel> {
     @Override
     public void completed(AsynchronousSocketChannel result, AsynchronousServerSocketChannel attachment) {
-        attachment.accept(null, new ClientCompletionHandler());
+        attachment.accept(null, new ServerClientCompletionHandler());
     }
 
     @Override

@@ -1,18 +1,17 @@
 package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import lombok.extern.slf4j.Slf4j;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.PacketWrapperOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.wrappers.ClientReadAttachment;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
 import java.util.ArrayList;
 
-public class ClientReadHandler implements CompletionHandler<Integer, ClientReadAttachment> {
-    private static final Logger log = LoggerFactory.getLogger(ClientReadHandler.class);
-    public static ArrayList<PacketWrapperOuterClass.PacketWrapper> fullPacketWrappers = new ArrayList<>();
+@Slf4j
+public class ServerClientReadHandler implements CompletionHandler<Integer, ClientReadAttachment> {
+    public ArrayList<PacketWrapperOuterClass.PacketWrapper> fullPacketWrappers = new ArrayList<>();
     @Override
     public void completed(Integer size, ClientReadAttachment attachment) {
         byte[] lengthPrefix = new byte[4];
@@ -22,27 +21,34 @@ public class ClientReadHandler implements CompletionHandler<Integer, ClientReadA
                 attachment.toRead = ByteBuffer.wrap(lengthPrefix).getInt();
                 attachment.buffer.compact();
                 if (!(attachment.toRead >= 1 && attachment.toRead <= 10240)) {
-                    attachment.toRead = 0;
+                    attachment.toRead = -1;
+                    read(attachment);
                     throw new StackOverflowError("buffer length is not in a valid range.");
                 }
             }
-            return;
         }
         if (attachment.toRead == -1) {
-            read(attachment);
+            try {
+                attachment.client.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return;
         }
         if (attachment.toRead == 0) {
             byte[] bytes = new byte[attachment.buffer.remaining()];
+            attachment.buffer.get(bytes);
             try {
                 PacketWrapperOuterClass.PacketWrapper wrapper = PacketWrapperOuterClass.PacketWrapper
                         .parseFrom(bytes);
                 fullPacketWrappers.add(wrapper);
+                attachment.toRead = -1;
             } catch (InvalidProtocolBufferException e) {
                 log.info("Sent invalid PacketWrapper...");
                 e.printStackTrace();
             }
         }
+        read(attachment);
     }
     @Override
     public void failed(Throwable exc, ClientReadAttachment buffer) {
