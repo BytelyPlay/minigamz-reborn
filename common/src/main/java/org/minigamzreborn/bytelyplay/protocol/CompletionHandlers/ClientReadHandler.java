@@ -3,12 +3,15 @@ package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.PacketWrapperOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.wrappers.ClientReadAttachment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
 import java.util.ArrayList;
 
 public class ClientReadHandler implements CompletionHandler<Integer, ClientReadAttachment> {
+    private static final Logger log = LoggerFactory.getLogger(ClientReadHandler.class);
     public static ArrayList<PacketWrapperOuterClass.PacketWrapper> fullPacketWrappers = new ArrayList<>();
     @Override
     public void completed(Integer size, ClientReadAttachment attachment) {
@@ -36,7 +39,7 @@ public class ClientReadHandler implements CompletionHandler<Integer, ClientReadA
                         .parseFrom(bytes);
                 fullPacketWrappers.add(wrapper);
             } catch (InvalidProtocolBufferException e) {
-                System.out.println("Sent invalid PacketWrapper...");
+                log.info("Sent invalid PacketWrapper...");
                 e.printStackTrace();
             }
         }

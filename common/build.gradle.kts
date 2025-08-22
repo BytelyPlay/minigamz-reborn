@@ -1,6 +1,8 @@
 plugins {
     id("com.google.protobuf") version "0.9.5"
 }
+group = "org.minigamzreborn.bytelyplay.common"
+
 dependencies {
     implementation("com.google.protobuf", "protobuf-java", "4.32.0")
     implementation("org.slf4j:slf4j-api:2.0.17")

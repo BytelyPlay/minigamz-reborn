@@ -13,4 +13,5 @@ The server is the proxy...
 HandShakePacketS2C (Contains 32 bit int that is 8439)
 HandShakePacketC2S (Contains 32 bit int that is 8439 too)
 
-TransferPlayerPacketS2C (contains an enum representing a server type which the proxy has to pick which server of that type to use.)
+TransferPlayerPacketC2S (contains an enum representing a server type which the proxy has to pick which server of that type to use.)
+AddServerPacketC2S (Add a server with a specific ip and port to the minecraft server list)
