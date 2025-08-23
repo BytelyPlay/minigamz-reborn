@@ -23,3 +23,4 @@ UnregisterServerPacketC2S (Removes a server with a specific ip and port, server 
 2. Random items void minigame thing implemented in a fabric server...
 3. finish the protocol
 4. Bungeecord plugin that implements the protocol
+5. convert to 100% gradle KTS

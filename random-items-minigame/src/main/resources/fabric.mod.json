@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "random_items_minigame",
+  "version": "${version}",
+  "name": "random_items_minigame",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/random_items_minigame/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "org.minigamzreborn.bytelyplay.randomItems.Main"
+    ]
+  },
+  "mixins": [
+    "random_items_minigame.mixins.json",
+    {
+      "config": "random_items_minigame.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}

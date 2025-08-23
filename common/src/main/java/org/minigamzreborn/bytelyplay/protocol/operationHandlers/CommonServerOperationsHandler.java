@@ -4,6 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class CommonServerOperationsHandler {
-    @Getter @Setter
+    @Getter
     private static CommonServerOperationsHandler instance;
 }

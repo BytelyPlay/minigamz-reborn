@@ -3,7 +3,7 @@ package org.minigamzreborn.bytelyplay.protobuffer.packets;
 
 import "packets/HandShakePacketS2C.proto";
 
-message PacketWrapper {
+message WrappedPacket {
   oneof body {
     HandShakePacketS2C handShakeS2C = 1;
   }
