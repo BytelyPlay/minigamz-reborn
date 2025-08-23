@@ -20,7 +20,6 @@ import org.minigamzreborn.bytelyplay.hub.utils.Config;
 import org.minigamzreborn.bytelyplay.hub.utils.Constants;
 import org.minigamzreborn.bytelyplay.hub.utils.Instances;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.HandShakePacketS2COuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.PacketWrapperOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
 
 import java.io.BufferedOutputStream;

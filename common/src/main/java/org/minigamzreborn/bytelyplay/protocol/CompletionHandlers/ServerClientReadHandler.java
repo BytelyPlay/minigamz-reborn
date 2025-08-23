@@ -2,18 +2,17 @@ package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.extern.slf4j.Slf4j;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.PacketWrapperOuterClass;
-import org.minigamzreborn.bytelyplay.protocol.wrappers.ClientReadAttachment;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
+import org.minigamzreborn.bytelyplay.protocol.wrappers.ServerReadAttachment;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
-import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Slf4j
-public class ServerClientReadHandler implements CompletionHandler<Integer, ClientReadAttachment> {
-    public ArrayList<PacketWrapperOuterClass.PacketWrapper> fullPacketWrappers = new ArrayList<>();
+public class ServerClientReadHandler implements CompletionHandler<Integer, ServerReadAttachment> {
     @Override
-    public void completed(Integer size, ClientReadAttachment attachment) {
+    public void completed(Integer size, ServerReadAttachment attachment) {
         byte[] lengthPrefix = new byte[4];
         if (size >= 4) {
             if (attachment.toRead == -1) {
@@ -29,7 +28,7 @@ public class ServerClientReadHandler implements CompletionHandler<Integer, Clien
         }
         if (attachment.toRead == -1) {
             try {
-                attachment.client.close();
+                attachment.clientChannel.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -39,22 +38,22 @@ public class ServerClientReadHandler implements CompletionHandler<Integer, Clien
             byte[] bytes = new byte[attachment.buffer.remaining()];
             attachment.buffer.get(bytes);
             try {
-                PacketWrapperOuterClass.PacketWrapper wrapper = PacketWrapperOuterClass.PacketWrapper
+                WrappedPacketC2SOuterClass.WrappedPacketC2S wrappedPacket = WrappedPacketC2SOuterClass.WrappedPacketC2S
                         .parseFrom(bytes);
-                fullPacketWrappers.add(wrapper);
+                attachment.client.receivePacket(wrappedPacket);
                 attachment.toRead = -1;
             } catch (InvalidProtocolBufferException e) {
-                log.info("Sent invalid PacketWrapper...");
+                log.info("Sent invalid WrappedPacket...");
                 e.printStackTrace();
             }
         }
         read(attachment);
     }
     @Override
-    public void failed(Throwable exc, ClientReadAttachment buffer) {
+    public void failed(Throwable exc, ServerReadAttachment buffer) {
 
     }
-    private void read(ClientReadAttachment attachment) {
-        attachment.client.read(attachment.buffer, attachment, this);
+    private void read(ServerReadAttachment attachment) {
+        attachment.clientChannel.read(attachment.buffer, attachment, this);
     }
 }

@@ -1,6 +1,7 @@
 package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers;
 
-import org.minigamzreborn.bytelyplay.protocol.wrappers.ClientReadAttachment;
+import org.minigamzreborn.bytelyplay.protocol.Client;
+import org.minigamzreborn.bytelyplay.protocol.wrappers.ServerReadAttachment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,10 +16,12 @@ public class ServerClientCompletionHandler implements CompletionHandler<Asynchro
     public void completed(AsynchronousSocketChannel result, Void v) {
         try {
             ByteBuffer buffer = ByteBuffer.allocate(1024);
-            ClientReadAttachment attachment = new ClientReadAttachment();
+            ServerReadAttachment attachment = new ServerReadAttachment();
             attachment.buffer = buffer;
-            attachment.client = result;
+            attachment.clientChannel = result;
+            ServerClientReadHandler readHandler = new ServerClientReadHandler();
             result.read(buffer, attachment, new ServerClientReadHandler());
+            attachment.client = new Client(readHandler, attachment);
             log.info("Client successfully connected: {}", result.getRemoteAddress().toString());
         } catch (Exception e) {
             e.printStackTrace();
