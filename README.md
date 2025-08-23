@@ -21,5 +21,5 @@ UnregisterServerPacketC2S (Removes a server with a specific ip and port, server 
 # TODO
 1. NPCs
 2. Random items void minigame thing implemented in a fabric server...
-3. Bungeecord plugin that implements the protocol
-4. finish the protocol
+3. finish the protocol
+4. Bungeecord plugin that implements the protocol
