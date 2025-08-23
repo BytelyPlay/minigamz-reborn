@@ -15,7 +15,8 @@ HandShakePacketS2C (Contains 32 bit int that is 8439) \
 HandShakePacketC2S (Contains 32 bit int that is 8439 too)
 
 TransferPlayerPacketC2S (contains an enum representing a server type which the proxy has to pick which server of that type to use and the UUID of the player that should be transferred) \
-AddServerPacketC2S (Add a server with a specific ip and port to the server list thing and set the server type)
+RegisterServerPacketC2S (Add a server with a specific ip and port to the server list thing and set the server type)
+UnregisterServerPacketC2S (Removes a server with a specific ip and port, server type shouldn't be required though.)
 
 # TODO
 1. NPCs
