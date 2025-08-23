@@ -1,0 +1,6 @@
+syntax = "proto3";
+package org.minigamzreborn.bytelyplay.protobuffer.packets;
+
+message HandShakePacketC2S {
+  int32 id = 1;
+}

@@ -1,0 +1,12 @@
+syntax = "proto3";
+package org.minigamzreborn.bytelyplay.protobuffer.packets;
+
+import "packets/HandShakePacketC2S.proto";
+import "packets/RegisterServerPacketC2S.proto";
+
+message WrappedPacketC2S {
+  oneof body {
+    HandShakePacketC2S handShakeC2S = 1;
+    RegisterServerPacketC2S regServerPacket = 2;
+  }
+}
