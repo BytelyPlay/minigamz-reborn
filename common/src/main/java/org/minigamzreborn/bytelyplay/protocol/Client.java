@@ -1,20 +1,19 @@
 package org.minigamzreborn.bytelyplay.protocol;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketS2COuterClass;
-import org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.ServerClientReadHandler;
-import org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.ServerClientWriteHandler;
+import org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.Server.ServerClientReadHandler;
+import org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.Server.ServerClientWriteHandler;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.wrappers.ServerReadAttachment;
 import org.minigamzreborn.bytelyplay.protocol.wrappers.ServerWriteAttachment;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousSocketChannel;
 
 // represents a client
 @Slf4j
@@ -36,7 +35,7 @@ public class Client {
     public void receivePacket(WrappedPacketC2SOuterClass.WrappedPacketC2S packet) {
         for (PacketTypeC2S<?> packetTypeC2S : Packets.getC2SPackets()) {
             if (packetTypeC2S.isWrappedPacketThis(packet)) {
-                packetTypeC2S.receivedPacketWrapped(packet);
+                packetTypeC2S.receivedPacketWrapped(packet, this);
             }
         }
         log.error("Received unknown packet?");

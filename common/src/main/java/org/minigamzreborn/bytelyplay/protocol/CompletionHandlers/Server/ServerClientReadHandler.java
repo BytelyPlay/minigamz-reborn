@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers;
+package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.Server;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,6 @@ import org.minigamzreborn.bytelyplay.protocol.wrappers.ServerReadAttachment;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Slf4j
 public class ServerClientReadHandler implements CompletionHandler<Integer, ServerReadAttachment> {

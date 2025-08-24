@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers;
+package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.Server;
 
 import org.minigamzreborn.bytelyplay.protocol.Client;
 import org.minigamzreborn.bytelyplay.protocol.wrappers.ServerReadAttachment;

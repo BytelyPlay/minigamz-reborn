@@ -19,8 +19,7 @@ RegisterServerPacketC2S (Add a server with a specific ip and port to the server 
 UnregisterServerPacketC2S (Removes a server with a specific ip and port, server type shouldn't be required though.)
 
 # TODO
-1. NPCs
-2. Random items void minigame thing implemented in a fabric server...
-3. finish the protocol
-4. Bungeecord plugin that implements the protocol
-5. convert to 100% gradle KTS
+1. NPCs (Base class done just need to)
+2. finish the protocol
+3. Bungeecord plugin that implements the protocol
+4. convert to 100% gradle KTS

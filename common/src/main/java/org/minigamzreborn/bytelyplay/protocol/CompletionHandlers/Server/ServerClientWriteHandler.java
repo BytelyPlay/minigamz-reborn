@@ -1,8 +1,7 @@
-package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers;
+package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.Server;
 
 import org.minigamzreborn.bytelyplay.protocol.wrappers.ServerWriteAttachment;
 
-import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 
 public class ServerClientWriteHandler implements CompletionHandler<Integer, ServerWriteAttachment> {

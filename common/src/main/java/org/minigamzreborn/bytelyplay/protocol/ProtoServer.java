@@ -1,12 +1,10 @@
 package org.minigamzreborn.bytelyplay.protocol;
 
-import org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.ServerCompletionHandler;
+import org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.Server.ServerCompletionHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
 
 public class ProtoServer {
     public void init() {

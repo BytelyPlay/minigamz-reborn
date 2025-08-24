@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers;
+package org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.Server;
 
 import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
