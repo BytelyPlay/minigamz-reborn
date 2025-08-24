@@ -11,12 +11,12 @@ base {
 }
 
 loom {
+    serverOnlyMinecraftJar();
     splitEnvironmentSourceSets()
 
     mods {
         "random_items_minigame" {
             sourceSet sourceSets.main
-            sourceSet sourceSets.client
         }
     }
 }
