@@ -19,7 +19,8 @@ RegisterServerPacketC2S (Add a server with a specific ip and port to the server 
 UnregisterServerPacketC2S (Removes a server with a specific ip and port, server type shouldn't be required though.)
 
 # TODO
-1. NPCs (Base class done just need to)
+1. NPCs (Base class done just need to actually add the NPCs)
 2. finish the protocol
-3. Bungeecord plugin that implements the protocol
+3. velocity plugin that implements the protocol
 4. convert to 100% gradle KTS
+5. Convert from NIO to Netty

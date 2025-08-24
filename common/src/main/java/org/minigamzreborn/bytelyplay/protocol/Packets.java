@@ -23,7 +23,7 @@ public class Packets {
     );
     public static final HandShakePacketTypeS2C handShakePacketTypeS2C = registerS2C(
             new HandShakePacketTypeS2C(
-                    packet, client -> {/* TODO: Put a ACTUAL consumer here from commonoperationshandler or what not */}
+                    (packet, client) -> {/* TODO: Put a ACTUAL consumer here from commonoperationshandler or what not */}
             )
     );
     public static final RegisterServerPacketTypeC2S registerServerPacketTypeC2S = registerC2S(

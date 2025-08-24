@@ -20,7 +20,7 @@ public class HandShakePacketTypeS2C extends PacketTypeS2C<HandShakePacketS2COute
     }
 
     @Override
-    public void receivedPacketWrapped(WrappedPacketS2COuterClass.WrappedPacketS2C packet) {
-        receivedPacket(packet.getHandShake());
+    public void receivedPacketWrapped(WrappedPacketS2COuterClass.WrappedPacketS2C packet, Client client) {
+        receivedPacket(packet.getHandShake(), client);
     }
 }

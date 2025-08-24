@@ -13,5 +13,5 @@ public abstract class PacketTypeS2C<T extends GeneratedMessage> extends PacketTy
         super(parser, handler, packetDataClass);
     }
     public abstract boolean isWrappedPacketThis(WrappedPacketS2COuterClass.WrappedPacketS2C packetS2C);
-    public abstract void receivedPacketWrapped(WrappedPacketS2COuterClass.WrappedPacketS2C packet);
+    public abstract void receivedPacketWrapped(WrappedPacketS2COuterClass.WrappedPacketS2C packet, Client client);
 }
