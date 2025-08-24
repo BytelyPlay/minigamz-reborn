@@ -5,6 +5,6 @@ import "packets/HandShakePacketS2C.proto";
 
 message WrappedPacketS2C {
   oneof body {
-    HandShakePacketS2C handShakeS2C = 1;
+    HandShakePacketS2C handShake = 1;
   }
 }

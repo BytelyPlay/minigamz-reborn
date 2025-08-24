@@ -8,12 +8,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.nio.ByteBuffer;
+import java.util.function.Consumer;
 
 public abstract class PacketType<T extends GeneratedMessage> {
-    private final Parser<T> parser;
+    protected final Parser<T> parser;
+    protected final Consumer<T> handler;
+    // just for when we need it...
+    protected final Class<T> packetDataClass;
 
-    public PacketType(Parser<T> parser) {
+    public PacketType(Parser<T> parser, Consumer<T> handler, Class<T> packetDataClass) {
         this.parser = parser;
+        this.handler = handler;
+        this.packetDataClass = packetDataClass;
     }
 
     public ByteBuffer encode(T packet) {
@@ -27,5 +33,7 @@ public abstract class PacketType<T extends GeneratedMessage> {
             return null;
         }
     }
-    public abstract void receivedPacket(T packet);
+    public void receivedPacket(T packet) {
+        handler.accept(packet);
+    }
 }

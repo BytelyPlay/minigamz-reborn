@@ -16,4 +16,7 @@ subprojects {
     tasks.named("build") {
         dependsOn("shadowJar");
     }
+    dependencies {
+        compileOnly("org.jetbrains:annotations:26.0.2")
+    }
 }

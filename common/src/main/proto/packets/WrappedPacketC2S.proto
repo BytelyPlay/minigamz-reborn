@@ -6,7 +6,7 @@ import "packets/RegisterServerPacketC2S.proto";
 
 message WrappedPacketC2S {
   oneof body {
-    HandShakePacketC2S handShakeC2S = 1;
-    RegisterServerPacketC2S regServerPacket = 2;
+    HandShakePacketC2S handShake = 1;
+    RegisterServerPacketC2S registerServerPacket = 2;
   }
 }

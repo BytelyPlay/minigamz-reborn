@@ -4,15 +4,32 @@ import com.google.protobuf.GeneratedMessage;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketType;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeS2C;
+import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.HandShakePacketTypeC2S;
+import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.HandShakePacketTypeS2C;
+import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.RegisterServerPacketTypeC2S;
 
 import java.util.HashSet;
 
 public class Packets {
-    public static HashSet<PacketTypeC2S<?>> C2SPackets = new HashSet<>();
-    public static HashSet<PacketTypeS2C<?>> S2CPackets = new HashSet<>();
+    private static HashSet<PacketTypeC2S<?>> C2SPackets = new HashSet<>();
+    private static HashSet<PacketTypeS2C<?>> S2CPackets = new HashSet<>();
 
     // Register all packet types:
-
+    public static final HandShakePacketTypeC2S handShakePacketTypeC2S = registerC2S(
+            new HandShakePacketTypeC2S(
+                    packet -> {/* TODO: Put a ACTUAL consumer here from commonoperationshandler or what not */}
+            )
+    );
+    public static final HandShakePacketTypeS2C handShakePacketTypeS2C = registerS2C(
+            new HandShakePacketTypeS2C(
+                    packet -> {/* TODO: Put a ACTUAL consumer here from commonoperationshandler or what not */}
+            )
+    );
+    public static final RegisterServerPacketTypeC2S registerServerPacketTypeC2S = registerC2S(
+            new RegisterServerPacketTypeC2S(
+                    packet -> {/* TODO: Put a ACTUAL consumer here from commonoperationshandler or what not */}
+            )
+    );
 
     public static HashSet<PacketTypeC2S<?>> getC2SPackets() {
         return (HashSet<PacketTypeC2S<?>>) C2SPackets.clone();
