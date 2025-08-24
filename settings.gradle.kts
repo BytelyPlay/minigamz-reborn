@@ -14,3 +14,4 @@ pluginManagement {
 include("common")
 include("hub")
 include("random-items-minigame")
+include("velocity")
