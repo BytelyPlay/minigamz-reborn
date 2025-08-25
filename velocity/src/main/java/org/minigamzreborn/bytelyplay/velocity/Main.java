@@ -7,6 +7,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
 import org.minigamzreborn.bytelyplay.protocol.ProtoServer;
+import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
 import org.slf4j.Logger;
 
 @Plugin(
@@ -32,6 +33,6 @@ public class Main {
     }
     @Subscribe
     public void onProxyInitialized(ProxyInitializeEvent event) {
-        new ProtoServer().init();
+        ProtocolMain.initServer();
     }
 }
