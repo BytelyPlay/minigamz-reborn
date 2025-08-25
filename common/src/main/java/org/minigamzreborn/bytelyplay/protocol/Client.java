@@ -7,6 +7,7 @@ import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterCl
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.Server.ServerClientReadHandler;
 import org.minigamzreborn.bytelyplay.protocol.CompletionHandlers.Server.ServerClientWriteHandler;
+import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.wrappers.ServerReadAttachment;
 import org.minigamzreborn.bytelyplay.protocol.wrappers.ServerWriteAttachment;
@@ -29,7 +30,9 @@ public class Client {
     }
 
     public void sendPacket(WrappedPacketS2COuterClass.WrappedPacketS2C packet) {
-        ByteBuffer toSend = ByteBuffer.wrap(packet.toByteArray());
+        byte[] encoded = packet.toByteArray();
+        ByteBuffer toSend = ByteBuffer.allocate(encoded.length + 1);
+        toSend.put(SharedConstants.PACKET_DELIMITER);
         attachment.clientChannel.write(toSend, new ServerWriteAttachment(), new ServerClientWriteHandler());
     }
     public void receivePacket(WrappedPacketC2SOuterClass.WrappedPacketC2S packet) {
