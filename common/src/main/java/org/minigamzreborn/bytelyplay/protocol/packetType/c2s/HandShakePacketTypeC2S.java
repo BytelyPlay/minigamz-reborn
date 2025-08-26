@@ -1,14 +1,11 @@
 package org.minigamzreborn.bytelyplay.protocol.packetType.c2s;
 
-import com.google.protobuf.Parser;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.HandShakePacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
-import org.minigamzreborn.bytelyplay.protocol.Client;
-import org.minigamzreborn.bytelyplay.protocol.packetType.PacketType;
+import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class HandShakePacketTypeC2S extends PacketTypeC2S<HandShakePacketC2SOuterClass.HandShakePacketC2S> {
     public HandShakePacketTypeC2S(BiConsumer<HandShakePacketC2SOuterClass.HandShakePacketC2S, Client> handler) {

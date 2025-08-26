@@ -1,13 +1,11 @@
 package org.minigamzreborn.bytelyplay.protocol.packetType.c2s;
 
-import com.google.protobuf.Parser;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
-import org.minigamzreborn.bytelyplay.protocol.Client;
+import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class RegisterServerPacketTypeC2S extends PacketTypeC2S<RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S> {
     public RegisterServerPacketTypeC2S(BiConsumer<RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S, Client> handler) {

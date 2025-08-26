@@ -1,0 +1,17 @@
+package org.minigamzreborn.bytelyplay.protocol.handlers.decode;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageDecoder;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketS2COuterClass;
+
+import java.util.List;
+
+public class ClientPacketDecoder extends ByteToMessageDecoder {
+    @Override
+    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
+        list.add(
+                WrappedPacketS2COuterClass.WrappedPacketS2C.parseFrom(byteBuf.array())
+        );
+    }
+}

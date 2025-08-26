@@ -1,8 +1,8 @@
-package org.minigamzreborn.bytelyplay.protocol;
+package org.minigamzreborn.bytelyplay.protocol.utils;
 
 import com.google.protobuf.GeneratedMessage;
 import org.minigamzreborn.bytelyplay.protocol.operationHandlers.Server.CommonServerOperationsHandler;
-import org.minigamzreborn.bytelyplay.protocol.packetType.PacketType;
+import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.CommonClientOperationsHandler;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeS2C;
 import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.HandShakePacketTypeC2S;
@@ -23,7 +23,7 @@ public class Packets {
     );
     public static final HandShakePacketTypeS2C handShakePacketTypeS2C = registerS2C(
             new HandShakePacketTypeS2C(
-                    (packet, client) -> {/* TODO: Put a ACTUAL consumer here from commonoperationshandler or what not */}
+                    CommonClientOperationsHandler.getInstance()::handShaked
             )
     );
     public static final RegisterServerPacketTypeC2S registerServerPacketTypeC2S = registerC2S(

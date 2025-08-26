@@ -33,6 +33,6 @@ public class Main {
     }
     @Subscribe
     public void onProxyInitialized(ProxyInitializeEvent event) {
-        ProtocolMain.initServer();
+        ProtocolMain.initServer("0.0.0.0", 9485);
     }
 }

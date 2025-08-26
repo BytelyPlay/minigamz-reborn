@@ -1,16 +1,15 @@
 package org.minigamzreborn.bytelyplay.protocol.packetType.c2s;
 
-import com.google.protobuf.Parser;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.HandShakePacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketS2COuterClass;
-import org.minigamzreborn.bytelyplay.protocol.Client;
+import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeS2C;
+import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class HandShakePacketTypeS2C extends PacketTypeS2C<HandShakePacketS2COuterClass.HandShakePacketS2C> {
-    public HandShakePacketTypeS2C(BiConsumer<HandShakePacketS2COuterClass.HandShakePacketS2C, Client> handler) {
+    public HandShakePacketTypeS2C(BiConsumer<HandShakePacketS2COuterClass.HandShakePacketS2C, Server> handler) {
         super(HandShakePacketS2COuterClass.HandShakePacketS2C.parser(), handler, HandShakePacketS2COuterClass.HandShakePacketS2C.class);
     }
 
@@ -20,7 +19,7 @@ public class HandShakePacketTypeS2C extends PacketTypeS2C<HandShakePacketS2COute
     }
 
     @Override
-    public void receivedPacketWrapped(WrappedPacketS2COuterClass.WrappedPacketS2C packet, Client client) {
-        receivedPacket(packet.getHandShake(), client);
+    public void receivedPacketWrapped(WrappedPacketS2COuterClass.WrappedPacketS2C packet, Server server) {
+        receivedPacket(packet.getHandShake(), server);
     }
 }
