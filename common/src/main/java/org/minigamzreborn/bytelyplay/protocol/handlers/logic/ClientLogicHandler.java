@@ -29,6 +29,7 @@ public class ClientLogicHandler extends SimpleChannelInboundHandler<WrappedPacke
         for (PacketTypeS2C<?> packetTypeC2S : Packets.getS2CPackets()) {
             if (packetTypeC2S.isWrappedPacketThis(packet)) {
                 packetTypeC2S.receivedPacketWrapped(packet, server);
+                System.out.println("Received packet... client");
                 return;
             }
         }
@@ -47,5 +48,7 @@ public class ClientLogicHandler extends SimpleChannelInboundHandler<WrappedPacke
                                 .build())
                         .build()
         );
+        ctx.channel().flush();
+        System.out.println("flush and handshake client");
     }
 }

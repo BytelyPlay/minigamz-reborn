@@ -1,5 +1,6 @@
 package org.minigamzreborn.bytelyplay.protocol.utils;
 
+import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,11 @@ public class Server {
 
     public void sendPacket(WrappedPacketC2SOuterClass.WrappedPacketC2S packet) {
         channel.write(packet);
+        System.out.println("Written");
+        if (channel.isActive()) {
+            System.out.println("flush");
+            channel.flush();
+        }
     }
     public void disconnect() {
         // TODO: send disconnect packet

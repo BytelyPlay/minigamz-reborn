@@ -11,6 +11,7 @@ public class CommonClientOperationsHandler {
 
     public void handShaked(HandShakePacketS2COuterClass.HandShakePacketS2C packet, Server server) {
         if (packet.getId() == SharedConstants.HAND_SHAKE_ID_VALUE) {
+            System.out.println("Server has shaken hands.");
             server.setHandShaked(true);
         }
     }

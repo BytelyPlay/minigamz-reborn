@@ -13,11 +13,12 @@ import org.slf4j.Logger;
 @Plugin(
         id = "minigamzreborn-velocity",
         name = "MinigamzReborn velocity",
-        version = "TODO",
+        // figure out a way to use this from something in the gradle.properties
+        version = "1.0-INDEV",
         description = "The velocity plugin to connect all the servers"
 )
 public class Main {
-    @Getter()
+    @Getter
     private final Logger logger;
     @Getter
     private final ProxyServer server;
@@ -33,6 +34,9 @@ public class Main {
     }
     @Subscribe
     public void onProxyInitialized(ProxyInitializeEvent event) {
-        ProtocolMain.initServer("0.0.0.0", 9485);
+        String ip = "0.0.0.0";
+        int port = 9485;
+        ProtocolMain.initServer(ip, port);
+        logger.info("Listening on {}:{}", ip, port);
     }
 }

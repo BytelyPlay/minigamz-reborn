@@ -27,7 +27,7 @@ public class ProtoServer {
                 .option(ChannelOption.SO_BACKLOG, 16)
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
         ChannelFuture acceptConnections = bootstrap.bind(new InetSocketAddress(ip, port));
-        acceptConnections.addListener(new CloseFutureListener(bossGroup, workerGroup));
+        acceptConnections.channel().closeFuture().addListener(new CloseFutureListener(bossGroup, workerGroup));
     }
     private void setupChannel(SocketChannel channel) {
         Client client = new Client(channel);

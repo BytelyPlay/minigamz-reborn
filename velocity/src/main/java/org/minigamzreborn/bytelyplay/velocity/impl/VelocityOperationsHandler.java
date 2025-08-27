@@ -19,5 +19,7 @@ public class VelocityOperationsHandler extends ServerOperationsHandler {
         ServerInfo info = new ServerInfo(UUID.randomUUID().toString(), new InetSocketAddress(address, port));
         ServerTypeRegistry.typeAndAddress.put(info, type);
         Main.getInstance().getServer().registerServer(info);
+
+        Main.getInstance().getLogger().info("Successfully added a server as requested by the protocol: {} ServerType: {}", info, type);
     }
 }

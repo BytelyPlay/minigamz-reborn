@@ -19,6 +19,7 @@ public class Client {
 
     public void sendPacket(WrappedPacketS2COuterClass.WrappedPacketS2C packet) {
         channel.write(packet);
+        if (channel.isActive()) channel.flush();
     }
     public void disconnect() {
         // TODO: send disconnect packet
