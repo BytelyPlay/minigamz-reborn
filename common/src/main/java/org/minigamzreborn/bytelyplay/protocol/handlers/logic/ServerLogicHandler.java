@@ -17,24 +17,12 @@ public class ServerLogicHandler extends SimpleChannelInboundHandler<WrappedPacke
     @Override
     protected void channelRead0(ChannelHandlerContext ctx,
                                 WrappedPacketC2SOuterClass.WrappedPacketC2S packet) {
-        if (!client.isHandShaked()) {
-            log.warn("Client tried to send a packet while not handshaken.");
-            return;
-        }
         for (PacketTypeC2S<?> packetTypeC2S : Packets.getC2SPackets()) {
             if (packetTypeC2S.isWrappedPacketThis(packet)) {
                 packetTypeC2S.receivedPacketWrapped(packet, client);
-                System.out.println("Received packet... server");
                 return;
             }
         }
         log.error("Received unknown packet?");
-    }
-
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        super.channelActive(ctx);
-        ctx.channel().flush();
-        System.out.println("server flushed");
     }
 }

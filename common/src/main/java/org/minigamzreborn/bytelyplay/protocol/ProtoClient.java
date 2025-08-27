@@ -44,7 +44,7 @@ public class ProtoClient {
     private void setupChannel(SocketChannel channel) {
         Server server = new Server(channel);
         channel.pipeline().addLast(
-                new DelimiterBasedFrameDecoder(1024, SharedConstants.PACKET_DELIMITER),
+                new DelimiterBasedFrameDecoder(1024, SharedConstants.PACKET_DELIMITER_BYTEBUF),
                 new ClientPacketDecoder(),
                 new ClientLogicHandler(server),
                 new ClientPacketEncoder()

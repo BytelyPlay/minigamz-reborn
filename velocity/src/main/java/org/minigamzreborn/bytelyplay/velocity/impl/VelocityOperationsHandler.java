@@ -11,15 +11,10 @@ import java.net.InetSocketAddress;
 import java.util.UUID;
 
 public class VelocityOperationsHandler extends ServerOperationsHandler {
-    public VelocityOperationsHandler() {
-        ServerOperationsHandler.setInstance(this);
-    }
     @Override
     public void addServer(String address, int port, ServerTypeOuterClass.ServerType type) {
         ServerInfo info = new ServerInfo(UUID.randomUUID().toString(), new InetSocketAddress(address, port));
         ServerTypeRegistry.typeAndAddress.put(info, type);
         Main.getInstance().getServer().registerServer(info);
-
-        Main.getInstance().getLogger().info("Successfully added a server as requested by the protocol: {} ServerType: {}", info, type);
     }
 }

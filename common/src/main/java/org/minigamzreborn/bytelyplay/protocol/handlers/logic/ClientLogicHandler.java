@@ -22,14 +22,9 @@ public class ClientLogicHandler extends SimpleChannelInboundHandler<WrappedPacke
     }
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WrappedPacketS2COuterClass.WrappedPacketS2C packet) throws Exception {
-        if (!server.isHandShaked()) {
-            log.warn("Server tried to send a packet while not fully completing the handshake.");
-            return;
-        }
         for (PacketTypeS2C<?> packetTypeC2S : Packets.getS2CPackets()) {
             if (packetTypeC2S.isWrappedPacketThis(packet)) {
                 packetTypeC2S.receivedPacketWrapped(packet, server);
-                System.out.println("Received packet... client");
                 return;
             }
         }
@@ -49,6 +44,5 @@ public class ClientLogicHandler extends SimpleChannelInboundHandler<WrappedPacke
                         .build()
         );
         ctx.channel().flush();
-        System.out.println("flush and handshake client");
     }
 }

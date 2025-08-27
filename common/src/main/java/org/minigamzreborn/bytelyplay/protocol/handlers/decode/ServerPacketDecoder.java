@@ -10,6 +10,8 @@ import java.util.List;
 public class ServerPacketDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
-        list.add(WrappedPacketC2SOuterClass.WrappedPacketC2S.parseFrom(byteBuf.array()));
+        byte[] bytes = new byte[byteBuf.readableBytes()];
+        byteBuf.readBytes(bytes);
+        list.add(WrappedPacketC2SOuterClass.WrappedPacketC2S.parseFrom(bytes));
     }
 }

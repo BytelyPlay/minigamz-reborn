@@ -23,7 +23,7 @@ public class Packets {
     );
     public static final HandShakePacketTypeS2C handShakePacketTypeS2C = registerS2C(
             new HandShakePacketTypeS2C(
-                    CommonClientOperationsHandler.getInstance()::handShaked
+                    CommonClientOperationsHandler::handShaked
             )
     );
     public static final RegisterServerPacketTypeC2S registerServerPacketTypeC2S = registerC2S(

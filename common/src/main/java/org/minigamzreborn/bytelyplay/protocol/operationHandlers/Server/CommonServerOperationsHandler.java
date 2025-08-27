@@ -24,9 +24,10 @@ public class CommonServerOperationsHandler {
                             .build())
                     .build());
             client.setHandShaked(true);
-            System.out.println("Handshake success client is good");
+            client.flush();
+        } else {
+            client.disconnect();
         }
-        System.out.println("Handshake is bad client is bad.");
     }
 
     public static void registerServer(RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S packet, Client client) {
@@ -35,6 +36,5 @@ public class CommonServerOperationsHandler {
             return;
         }
         ServerOperationsHandler.getInstance().addServer(packet.getAddress(), packet.getPort(), packet.getType());
-        System.out.println("registered server.");
     }
 }

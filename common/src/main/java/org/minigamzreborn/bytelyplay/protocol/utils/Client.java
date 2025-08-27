@@ -19,10 +19,17 @@ public class Client {
 
     public void sendPacket(WrappedPacketS2COuterClass.WrappedPacketS2C packet) {
         channel.write(packet);
-        if (channel.isActive()) channel.flush();
+        if (channel.isActive() && handShaked) channel.flush();
     }
     public void disconnect() {
         // TODO: send disconnect packet
         channel.close();
+    }
+    public void flush() {
+        if (handShaked) {
+            channel.flush();
+        } else {
+            log.warn("Tried to server tried to flush client but isn't handshaken...");
+        }
     }
 }

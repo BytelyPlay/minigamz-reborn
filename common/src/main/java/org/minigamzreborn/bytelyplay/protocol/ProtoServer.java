@@ -32,7 +32,7 @@ public class ProtoServer {
     private void setupChannel(SocketChannel channel) {
         Client client = new Client(channel);
         channel.pipeline().addLast(
-                new DelimiterBasedFrameDecoder(1024, SharedConstants.PACKET_DELIMITER),
+                new DelimiterBasedFrameDecoder(1024, SharedConstants.PACKET_DELIMITER_BYTEBUF),
                 new ServerPacketDecoder(),
                 new ServerLogicHandler(client),
                 new ServerPacketEncoder()
