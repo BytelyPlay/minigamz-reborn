@@ -6,7 +6,9 @@ import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.CommonCli
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeS2C;
 import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.HandShakePacketTypeC2S;
-import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.HandShakePacketTypeS2C;
+import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.TransferPlayerPacketTypeC2S;
+import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.UnregisterServerPacketTypeC2S;
+import org.minigamzreborn.bytelyplay.protocol.packetType.s2c.HandShakePacketTypeS2C;
 import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.RegisterServerPacketTypeC2S;
 
 import java.util.HashSet;
@@ -30,6 +32,16 @@ public class Packets {
             new RegisterServerPacketTypeC2S(
                     CommonServerOperationsHandler::registerServer
             )
+    );
+    public static final UnregisterServerPacketTypeC2S unregisterServerPacketTypeC2S = registerC2S(
+            new UnregisterServerPacketTypeC2S(
+                    CommonServerOperationsHandler::unregisterServer
+            )
+    );
+    public static final TransferPlayerPacketTypeC2S transferPlayerPacketTypeC2S = registerC2S(
+      new TransferPlayerPacketTypeC2S(
+              CommonServerOperationsHandler::transferPlayer
+      )
     );
 
     public static HashSet<PacketTypeC2S<?>> getC2SPackets() {

@@ -1,8 +1,7 @@
-package org.minigamzreborn.bytelyplay.protocol.packetType.c2s;
+package org.minigamzreborn.bytelyplay.protocol.packetType.s2c;
 
 import org.minigamzreborn.bytelyplay.protobuffer.packets.HandShakePacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketS2COuterClass;
-import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeS2C;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 

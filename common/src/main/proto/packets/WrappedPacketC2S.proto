@@ -3,10 +3,14 @@ package org.minigamzreborn.bytelyplay.protobuffer.packets;
 
 import "packets/HandShakePacketC2S.proto";
 import "packets/RegisterServerPacketC2S.proto";
+import "packets/UnregisterServerPacketC2S.proto";
+import "packets/TransferPlayerPacketC2S.proto";
 
 message WrappedPacketC2S {
   oneof body {
     HandShakePacketC2S handShake = 1;
     RegisterServerPacketC2S registerServerPacket = 2;
+    UnregisterServerPacketC2S unregisterServerPacket = 3;
+    TransferPlayerPacketC2S transferPlayerPacket = 4;
   }
 }
