@@ -23,7 +23,16 @@ public class Main implements ModInitializer {
     @Override
     public void onInitialize() {
         instance = this;
+    }
 
+    public static void setMinecraftServer(MinecraftServer mcServer) {
+        if (minecraftServer != null) {
+            log.warn("this.minecraftServer doesn't equal null but is being set? why is it being set twice? mod bugged?");
+            return;
+        }
+        minecraftServer = mcServer;
+    }
+    public void initializeProtocol(MinecraftServer mcServer) {
         protocolServer = ProtocolMain.initClient("127.0.0.1", 9485);
         protocolServer.sendPacket(
                 WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
@@ -35,13 +44,5 @@ public class Main implements ModInitializer {
                         )
                         .build()
         );
-    }
-
-    public static void setMinecraftServer(MinecraftServer mcServer) {
-        if (minecraftServer != null) {
-            log.warn("this.minecraftServer doesn't equal null but is being set? why is it being set twice? mod bugged?");
-            return;
-        }
-        minecraftServer = mcServer;
     }
 }

@@ -49,16 +49,13 @@ public class VelocityOperationsHandler extends ServerOperationsHandler {
     @Override
     public void transferPlayer(UUID playerUUID, ServerTypeOuterClass.ServerType toServer) {
         ProxyServer server = Main.getInstance().getServer();
-        List<RegisteredServer> options = new ArrayList<>();
-        ServerTypeRegistry.typeAndAddress.forEach((regServer, type) -> {
-            if (type == toServer) options.add(regServer);
-        });
-        if (options.isEmpty()) {
+        Optional<RegisteredServer> optionalChosen = Main.getInstance().getRandomServerOfType(toServer);
+        if (optionalChosen.isEmpty()) {
             log.warn("Tried to send a player but there are no servers available.");
             return;
         }
+        RegisteredServer chosen = optionalChosen.orElse(null);
 
-        RegisteredServer chosen = options.get(ThreadLocalRandom.current().nextInt(0, options.size()));
         Optional<Player> optionalPlayer = server.getPlayer(playerUUID);
         if (optionalPlayer.isPresent()) {
             Player p = optionalPlayer.get();

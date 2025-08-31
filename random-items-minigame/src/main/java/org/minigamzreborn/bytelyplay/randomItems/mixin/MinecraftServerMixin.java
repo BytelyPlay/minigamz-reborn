@@ -2,6 +2,7 @@ package org.minigamzreborn.bytelyplay.randomItems.mixin;
 
 import net.minecraft.server.MinecraftServer;
 import org.minigamzreborn.bytelyplay.randomItems.Main;
+import org.minigamzreborn.bytelyplay.randomItems.listeners.ServerStartedListener;
 import org.minigamzreborn.bytelyplay.randomItems.listeners.TickListener;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,6 +24,6 @@ public abstract class MinecraftServerMixin {
     }
     @Inject(at = @At("RETURN"), method = "startServer")
     private static void startServer(Function<Thread, MinecraftServer> serverFactory, CallbackInfoReturnable<MinecraftServer> cir) {
-        Main.setMinecraftServer(cir.getReturnValue());
+        ServerStartedListener.started(cir.getReturnValue());
     }
 }
