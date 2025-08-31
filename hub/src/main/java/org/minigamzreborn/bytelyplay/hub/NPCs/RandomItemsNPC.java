@@ -15,6 +15,7 @@ import org.abstractvault.bytelyplay.data.DataSetter;
 import org.abstractvault.bytelyplay.enums.DataFormat;
 import org.jetbrains.annotations.NotNull;
 import org.minigamzreborn.bytelyplay.hub.Main;
+import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.TransferPlayerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 
@@ -68,6 +69,7 @@ public class RandomItemsNPC extends NPC {
         Main.getInstance().getServer().sendPacket(WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
                 .setTransferPlayerPacket(TransferPlayerPacketC2SOuterClass.TransferPlayerPacketC2S.newBuilder()
                         .setUuid(p.getUuid().toString())
+                        .setType(ServerTypeOuterClass.ServerType.RANDOM_ITEMS)
                         .build())
                 .build());
     }
