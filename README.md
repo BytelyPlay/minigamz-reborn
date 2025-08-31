@@ -25,3 +25,4 @@ UnregisterServerPacketC2S (Removes a server with a specific ip and port, server 
 1. NPCs (Base class done just need to actually add the NPCs)
 2. finish the protocol
 3. convert to 100% gradle KTS
+4. add some way to configure where the server is...

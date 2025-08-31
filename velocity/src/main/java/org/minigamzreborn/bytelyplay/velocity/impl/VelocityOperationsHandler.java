@@ -21,6 +21,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class VelocityOperationsHandler extends ServerOperationsHandler {
     @Override
     public void addServer(String address, int port, ServerTypeOuterClass.ServerType type) {
+        /* if (ServerTypeOuterClass.ServerType.RANDOM_ITEMS && ServerTypeRegistry.typeAndAddress.containsValue(type)) {
+            log.warn("Not adding server because of a duplicated servertype of a servertype that doesn't support a second server of its type");
+        } */
         ProxyServer server = Main.getInstance().getServer();
         ServerInfo info = new ServerInfo(UUID.randomUUID().toString(), new InetSocketAddress(address, port));
         RegisteredServer registeredServer = server.registerServer(info);

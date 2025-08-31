@@ -10,6 +10,7 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0-rc1")
     implementation("ch.qos.logback:logback-classic:1.5.18")
+    implementation(files("../libs/AbstractVault.jar"))
 }
 application {
     mainClass.set("org.minigamzreborn.bytelyplay.hub.Main")
