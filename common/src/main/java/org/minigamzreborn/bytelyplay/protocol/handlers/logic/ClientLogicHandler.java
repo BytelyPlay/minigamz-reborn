@@ -7,10 +7,7 @@ import org.minigamzreborn.bytelyplay.protobuffer.packets.HandShakePacketC2SOuter
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
-import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeS2C;
-import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.HandShakePacketTypeC2S;
-import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 import org.minigamzreborn.bytelyplay.protocol.utils.Packets;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 

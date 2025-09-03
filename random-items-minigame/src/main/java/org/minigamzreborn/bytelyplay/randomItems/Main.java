@@ -1,12 +1,10 @@
 package org.minigamzreborn.bytelyplay.randomItems;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.tick.SimpleTickScheduler;
-import net.minecraft.world.tick.TickScheduler;
+import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
@@ -40,6 +38,7 @@ public class Main implements ModInitializer {
                                 RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S.newBuilder()
                                         .setAddress("127.0.0.1")
                                         .setPort(minecraftServer.getServerPort())
+                                        .setType(ServerTypeOuterClass.ServerType.RANDOM_ITEMS)
                                         .build()
                         )
                         .build()

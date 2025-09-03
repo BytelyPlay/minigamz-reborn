@@ -3,20 +3,13 @@ package org.minigamzreborn.bytelyplay.protocol;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioIoHandler;
-import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import lombok.Getter;
-import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
 import org.minigamzreborn.bytelyplay.protocol.handlers.decode.ClientPacketDecoder;
-import org.minigamzreborn.bytelyplay.protocol.handlers.decode.ServerPacketDecoder;
 import org.minigamzreborn.bytelyplay.protocol.handlers.encode.ClientPacketEncoder;
-import org.minigamzreborn.bytelyplay.protocol.handlers.encode.ServerPacketEncoder;
 import org.minigamzreborn.bytelyplay.protocol.handlers.logic.ClientLogicHandler;
-import org.minigamzreborn.bytelyplay.protocol.handlers.logic.ServerLogicHandler;
-import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 import org.minigamzreborn.bytelyplay.protocol.utils.CloseFutureListener;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
@@ -44,7 +37,7 @@ public class ProtoClient {
     private void setupChannel(SocketChannel channel) {
         Server server = new Server(channel);
         channel.pipeline().addLast(
-                new DelimiterBasedFrameDecoder(1024, SharedConstants.PACKET_DELIMITER_BYTEBUF),
+                new LengthFieldBasedFrameDecoder(1024, 0, 4),
                 new ClientPacketDecoder(),
                 new ClientLogicHandler(server),
                 new ClientPacketEncoder()

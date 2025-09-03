@@ -1,6 +1,5 @@
 package org.minigamzreborn.bytelyplay.protocol.operationHandlers.client;
 
-import lombok.Getter;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.HandShakePacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;

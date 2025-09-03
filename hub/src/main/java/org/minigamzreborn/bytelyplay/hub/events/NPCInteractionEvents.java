@@ -1,7 +1,6 @@
 package org.minigamzreborn.bytelyplay.hub.events;
 
 import net.minestom.server.entity.Entity;
-import net.minestom.server.entity.Player;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import org.minigamzreborn.bytelyplay.hub.NPCs.NPC;

@@ -8,7 +8,7 @@ Runs on port 9485.
 All packets have a PacketType and a class associated with the data. \
 We want to use ProtoBuffers AS MUCH as possible... \
 The Proto file (PacketWrapper) will wrap any sent packet... \
-uses delimiters since tcp is a stream based protocol. delimiter in hex: 0x99, 0x11, 0x91, 0xFF, 0xF5, 0xF2
+uses length prefixes since tcp is a stream based protocol.
 
 The server is the proxy...
 Client initializes the handshake server responds...

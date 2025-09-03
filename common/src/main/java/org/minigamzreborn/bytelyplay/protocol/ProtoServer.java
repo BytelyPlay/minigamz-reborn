@@ -5,11 +5,10 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioIoHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import org.minigamzreborn.bytelyplay.protocol.handlers.decode.ServerPacketDecoder;
 import org.minigamzreborn.bytelyplay.protocol.handlers.encode.ServerPacketEncoder;
 import org.minigamzreborn.bytelyplay.protocol.handlers.logic.ServerLogicHandler;
-import org.minigamzreborn.bytelyplay.protocol.handlers.decode.ServerPacketDecoder;
 import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 import org.minigamzreborn.bytelyplay.protocol.utils.CloseFutureListener;
 
@@ -32,7 +31,7 @@ public class ProtoServer {
     private void setupChannel(SocketChannel channel) {
         Client client = new Client(channel);
         channel.pipeline().addLast(
-                new DelimiterBasedFrameDecoder(1024, SharedConstants.PACKET_DELIMITER_BYTEBUF),
+                new LengthFieldBasedFrameDecoder(1024, 0, 4),
                 new ServerPacketDecoder(),
                 new ServerLogicHandler(client),
                 new ServerPacketEncoder()

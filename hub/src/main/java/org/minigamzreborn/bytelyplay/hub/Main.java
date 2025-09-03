@@ -2,25 +2,23 @@ package org.minigamzreborn.bytelyplay.hub;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
-import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.event.player.PlayerSkinInitEvent;
-import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.anvil.AnvilLoader;
-import net.minestom.server.utils.mojang.MojangUtils;
+import org.minigamzreborn.bytelyplay.hub.NPCs.RandomItemsNPC;
 import org.minigamzreborn.bytelyplay.hub.events.NPCInteractionEvents;
 import org.minigamzreborn.bytelyplay.hub.events.PlayerLoginHandler;
 import org.minigamzreborn.bytelyplay.hub.events.PlayerSkinEvent;
 import org.minigamzreborn.bytelyplay.hub.utils.Config;
 import org.minigamzreborn.bytelyplay.hub.utils.Constants;
 import org.minigamzreborn.bytelyplay.hub.utils.Instances;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.HandShakePacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
@@ -28,14 +26,10 @@ import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
 
 import static org.minigamzreborn.bytelyplay.hub.utils.Constants.HUB_CONFIG_PATH;
 import static org.minigamzreborn.bytelyplay.hub.utils.Constants.HUB_WORLD_PATH;
@@ -47,7 +41,7 @@ public class Main {
     private final Server server;
     // Should run under proxy so no auth required.
     public Main() {
-        MinecraftServer server = MinecraftServer.init();
+        MinecraftServer server = MinecraftServer.init(new Auth.Velocity("ZWjlD8NI4gBp"));
 
         instance = this;
 
@@ -59,6 +53,7 @@ public class Main {
         setupServer();
 
         server.start(new InetSocketAddress("0.0.0.0", 25566));
+        setupNPCs();
     }
     public static void main(String[] args) {
         new Main();
@@ -106,5 +101,9 @@ public class Main {
                 )
                 .build()
         );
+    }
+    private void setupNPCs() {
+        RandomItemsNPC randomItemsNPC = new RandomItemsNPC();
+        randomItemsNPC.setInstance(Instances.hub, new Pos(0, 11, 3));
     }
 }

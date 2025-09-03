@@ -4,7 +4,6 @@ import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Parser;
 import org.jetbrains.annotations.Nullable;
-import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 
 import java.nio.ByteBuffer;
 import java.util.function.BiConsumer;

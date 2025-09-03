@@ -5,10 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import net.minestom.server.coordinate.Pos;
 
-import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class Config {
     public Pos spawnPoint = Pos.ZERO;
     private static Config instance;

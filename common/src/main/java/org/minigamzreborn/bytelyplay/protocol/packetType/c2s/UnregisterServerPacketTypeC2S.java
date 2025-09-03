@@ -1,6 +1,5 @@
 package org.minigamzreborn.bytelyplay.protocol.packetType.c2s;
 
-import com.google.protobuf.Parser;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.UnregisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;

@@ -11,11 +11,8 @@ import org.minigamzreborn.bytelyplay.velocity.Main;
 import org.minigamzreborn.bytelyplay.velocity.utils.ServerTypeRegistry;
 
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 public class VelocityOperationsHandler extends ServerOperationsHandler {

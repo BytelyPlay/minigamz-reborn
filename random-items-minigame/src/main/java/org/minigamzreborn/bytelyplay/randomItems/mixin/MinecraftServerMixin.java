@@ -1,7 +1,6 @@
 package org.minigamzreborn.bytelyplay.randomItems.mixin;
 
 import net.minecraft.server.MinecraftServer;
-import org.minigamzreborn.bytelyplay.randomItems.Main;
 import org.minigamzreborn.bytelyplay.randomItems.listeners.ServerStartedListener;
 import org.minigamzreborn.bytelyplay.randomItems.listeners.TickListener;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,11 +1,9 @@
 package org.minigamzreborn.bytelyplay.hub.events;
 
-import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
 import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.player.PlayerSkinInitEvent;
-import net.minestom.server.utils.mojang.MojangUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;

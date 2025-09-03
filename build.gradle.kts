@@ -10,14 +10,20 @@ allprojects {
 }
 subprojects {
     version = "1.0-INDEV"
+
     apply(plugin = "java")
     apply(plugin = "com.gradleup.shadow")
     apply(plugin = "io.freefair.lombok")
-    tasks.named("build") {
-        dependsOn("shadowJar");
-    }
+
     dependencies {
         compileOnly("org.jetbrains:annotations:26.0.2")
         compileOnly("com.google.protobuf", "protobuf-java", project.property("PROTOBUF_VERSION") as String?)
+    }
+
+    tasks.shadowJar {
+        minimize()
+    }
+    tasks.named("build") {
+        dependsOn("shadowJar");
     }
 }

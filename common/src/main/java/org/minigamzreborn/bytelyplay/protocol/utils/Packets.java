@@ -6,10 +6,10 @@ import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.CommonCli
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeS2C;
 import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.HandShakePacketTypeC2S;
+import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.RegisterServerPacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.TransferPlayerPacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.UnregisterServerPacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.s2c.HandShakePacketTypeS2C;
-import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.RegisterServerPacketTypeC2S;
 
 import java.util.HashSet;
 
