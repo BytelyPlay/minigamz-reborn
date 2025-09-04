@@ -4,7 +4,8 @@
   "package": "org.minigamzreborn.bytelyplay.randomItems.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MinecraftServerMixin"
+    "MinecraftServerMixin",
+    "NoiseChunkGeneratorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

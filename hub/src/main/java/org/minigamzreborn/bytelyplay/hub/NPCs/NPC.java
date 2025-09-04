@@ -8,7 +8,6 @@ import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.network.packet.server.play.PlayerInfoRemovePacket;
 import net.minestom.server.network.packet.server.play.PlayerInfoUpdatePacket;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -35,9 +34,6 @@ public abstract class NPC extends Entity {
         }
 
         this.username = hex.toString();
-
-        this.get(DataComponents.CUSTOM_NAME, displayName);
-        this.setCustomNameVisible(true);
     }
 
     @Override
@@ -47,7 +43,7 @@ public abstract class NPC extends Entity {
 
         PlayerInfoUpdatePacket.Entry entry = new PlayerInfoUpdatePacket.Entry(this.getUuid(), this.username,
                 properties, false, -1,
-                GameMode.SURVIVAL, null, null, 0);
+                GameMode.SURVIVAL, displayName, null, 0);
 
         p.sendPacket(new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER, entry));
 
@@ -59,6 +55,12 @@ public abstract class NPC extends Entity {
         super.updateOldViewer(p);
 
         p.sendPacket(new PlayerInfoRemovePacket(this.getUuid()));
+    }
+
+    @Override
+    public void spawn() {
+        this.set(DataComponents.CUSTOM_NAME, displayName);
+        this.setCustomNameVisible(true);
     }
 
     public abstract void entityAttack(EntityAttackEvent event);
