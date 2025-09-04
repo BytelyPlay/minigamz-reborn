@@ -1,6 +1,7 @@
 package org.minigamzreborn.bytelyplay.hub.NPCs;
 
 import net.kyori.adventure.text.Component;
+import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.*;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
@@ -34,6 +35,9 @@ public abstract class NPC extends Entity {
         }
 
         this.username = hex.toString();
+
+        this.get(DataComponents.CUSTOM_NAME, displayName);
+        this.setCustomNameVisible(true);
     }
 
     @Override
@@ -43,7 +47,7 @@ public abstract class NPC extends Entity {
 
         PlayerInfoUpdatePacket.Entry entry = new PlayerInfoUpdatePacket.Entry(this.getUuid(), this.username,
                 properties, false, -1,
-                GameMode.SURVIVAL, displayName, null, 0);
+                GameMode.SURVIVAL, null, null, 0);
 
         p.sendPacket(new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER, entry));
 

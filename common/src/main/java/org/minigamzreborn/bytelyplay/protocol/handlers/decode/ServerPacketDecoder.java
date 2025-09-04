@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ServerPacketDecoder extends ByteToMessageDecoder {

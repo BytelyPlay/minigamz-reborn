@@ -56,7 +56,7 @@ public class VelocityOperationsHandler extends ServerOperationsHandler {
         Optional<Player> optionalPlayer = server.getPlayer(playerUUID);
         if (optionalPlayer.isPresent()) {
             Player p = optionalPlayer.get();
-            p.createConnectionRequest(chosen);
+            p.createConnectionRequest(chosen).fireAndForget();
         } else {
             log.warn("Tried to send a not-logged-in player to a server.");
         }

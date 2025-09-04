@@ -12,10 +12,12 @@ import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.event.player.PlayerSkinInitEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.anvil.AnvilLoader;
+import net.minestom.server.timer.SchedulerManager;
 import org.minigamzreborn.bytelyplay.hub.NPCs.RandomItemsNPC;
 import org.minigamzreborn.bytelyplay.hub.events.NPCInteractionEvents;
 import org.minigamzreborn.bytelyplay.hub.events.PlayerLoginHandler;
 import org.minigamzreborn.bytelyplay.hub.events.PlayerSkinEvent;
+import org.minigamzreborn.bytelyplay.hub.scheduled.ShutdownHandler;
 import org.minigamzreborn.bytelyplay.hub.utils.Config;
 import org.minigamzreborn.bytelyplay.hub.utils.Constants;
 import org.minigamzreborn.bytelyplay.hub.utils.Instances;
@@ -36,12 +38,18 @@ import static org.minigamzreborn.bytelyplay.hub.utils.Constants.HUB_WORLD_PATH;
 
 public class Main {
     @Getter
+    private final String ipToRegisterWith;
+    @Getter
+    private final int port;
+    @Getter
     private static Main instance;
     @Getter
     private final Server server;
     // Should run under proxy so no auth required.
     public Main() {
         MinecraftServer server = MinecraftServer.init(new Auth.Velocity("ZWjlD8NI4gBp"));
+        ipToRegisterWith = "127.0.0.1";
+        port = 25567;
 
         instance = this;
 
@@ -51,8 +59,9 @@ public class Main {
         this.server = setupProtocol();
 
         setupServer();
+        setupScheduledTasks();
 
-        server.start(new InetSocketAddress("0.0.0.0", 25566));
+        server.start(new InetSocketAddress("0.0.0.0", port));
         setupNPCs();
     }
     public static void main(String[] args) {
@@ -95,8 +104,8 @@ public class Main {
                 .setRegisterServerPacket(
                         RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S
                                 .newBuilder()
-                                .setAddress("127.0.0.1")
-                                .setPort(25566)
+                                .setAddress(ipToRegisterWith)
+                                .setPort(port)
                                 .build()
                 )
                 .build()
@@ -105,5 +114,9 @@ public class Main {
     private void setupNPCs() {
         RandomItemsNPC randomItemsNPC = new RandomItemsNPC();
         randomItemsNPC.setInstance(Instances.hub, new Pos(0, 11, 3));
+    }
+    private void setupScheduledTasks() {
+        SchedulerManager manager = MinecraftServer.getSchedulerManager();
+        manager.buildShutdownTask(ShutdownHandler::shutdown);
     }
 }
