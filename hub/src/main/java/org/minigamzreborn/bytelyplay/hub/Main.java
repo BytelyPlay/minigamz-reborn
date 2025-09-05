@@ -49,7 +49,7 @@ public class Main {
     public Main() {
         MinecraftServer server = MinecraftServer.init(new Auth.Velocity("ZWjlD8NI4gBp"));
         ipToRegisterWith = "127.0.0.1";
-        port = 25567;
+        port = 25566;
 
         instance = this;
 
@@ -113,7 +113,7 @@ public class Main {
     }
     private void setupNPCs() {
         RandomItemsNPC randomItemsNPC = new RandomItemsNPC();
-        randomItemsNPC.setInstance(Instances.hub, new Pos(0, 11, 3));
+        randomItemsNPC.setInstance(Instances.hub, new Pos(0.5, 11, 2.5, -180, 0));
     }
     private void setupScheduledTasks() {
         SchedulerManager manager = MinecraftServer.getSchedulerManager();

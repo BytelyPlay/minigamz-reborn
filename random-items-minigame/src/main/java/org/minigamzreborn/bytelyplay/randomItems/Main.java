@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Position;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
@@ -18,6 +20,7 @@ public class Main implements ModInitializer {
     private Server protocolServer;
     @Getter
     private static MinecraftServer minecraftServer;
+    public static BlockPos SPAWN_POINT = new BlockPos(0, 3, 0);
     @Override
     public void onInitialize() {
         instance = this;
@@ -36,7 +39,7 @@ public class Main implements ModInitializer {
                 WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
                         .setRegisterServerPacket(
                                 RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S.newBuilder()
-                                        .setAddress("127.0.0.1")
+                                        .setAddress(minecraftServer.getServerIp())
                                         .setPort(minecraftServer.getServerPort())
                                         .setType(ServerTypeOuterClass.ServerType.RANDOM_ITEMS)
                                         .build()

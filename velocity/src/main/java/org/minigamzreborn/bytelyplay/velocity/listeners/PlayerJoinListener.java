@@ -1,4 +1,4 @@
-package listeners;
+package org.minigamzreborn.bytelyplay.velocity.listeners;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;

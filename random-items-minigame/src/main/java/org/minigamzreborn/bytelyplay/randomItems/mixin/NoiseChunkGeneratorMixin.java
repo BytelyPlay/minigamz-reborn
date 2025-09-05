@@ -1,6 +1,9 @@
 package org.minigamzreborn.bytelyplay.randomItems.mixin;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkRegion;
+import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.Blender;
@@ -18,10 +21,18 @@ import java.util.concurrent.CompletableFuture;
 public class NoiseChunkGeneratorMixin {
     @Inject(at = @At("HEAD"), cancellable = true, method = "buildSurface(Lnet/minecraft/world/ChunkRegion;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/world/gen/noise/NoiseConfig;Lnet/minecraft/world/chunk/Chunk;)V")
     public void buildSurface(ChunkRegion region, StructureAccessor structures, NoiseConfig noiseConfig, Chunk chunk, CallbackInfo ci) {
+        int chunkX = chunk.getPos().x;
+        int chunkY = chunk.getPos().z;
+        if (chunkX == 0 && chunkY == 0) {
+            for (int x = 0; x < 3; x++) {
+                for (int z = 0; z < 3; z++) {
+                    chunk.setBlockState(new BlockPos(x, 0, z), Blocks.BEDROCK.getDefaultState());
+                }
+            }
+        }
         ci.cancel();
     }
-    @Inject(at = @At("HEAD"), cancellable = true, method = "populateNoise(Lnet/minecraft/world/gen/chunk/Blender;Lnet/minecraft/world/gen/noise" +
-            "/NoiseConfig;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/world/chunk/Chunk;)Ljava/util/concurrent/CompletableFuture;")
+    @Inject(at = @At("HEAD"), cancellable = true, method = "populateNoise(Lnet/minecraft/world/gen/chunk/Blender;Lnet/minecraft/world/gen/noise/NoiseConfig;Lnet/minecraft/world/gen/StructureAccessor;Lnet/minecraft/world/chunk/Chunk;)Ljava/util/concurrent/CompletableFuture;")
     public void populateNoise(Blender blender, NoiseConfig noiseConfig, StructureAccessor structureAccessor, Chunk chunk, CallbackInfoReturnable<CompletableFuture<Chunk>> cir) {
         cir.setReturnValue(CompletableFuture.completedFuture(chunk));
     }
@@ -39,6 +50,10 @@ public class NoiseChunkGeneratorMixin {
     }
     @Inject(at = @At("HEAD"), cancellable = true, method = "populateEntities")
     public void populateEntities(ChunkRegion region, CallbackInfo ci) {
+        ci.cancel();
+    }
+    @Inject(at = @At("HEAD"), cancellable = true, method = "carve")
+    public void carve(ChunkRegion chunkRegion, long seed, NoiseConfig noiseConfig, BiomeAccess biomeAccess, StructureAccessor structureAccessor, Chunk chunk, CallbackInfo ci) {
         ci.cancel();
     }
 }
