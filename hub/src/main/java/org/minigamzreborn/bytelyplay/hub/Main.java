@@ -2,6 +2,7 @@ package org.minigamzreborn.bytelyplay.hub;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
@@ -36,11 +37,10 @@ import java.nio.file.Files;
 import static org.minigamzreborn.bytelyplay.hub.utils.Constants.HUB_CONFIG_PATH;
 import static org.minigamzreborn.bytelyplay.hub.utils.Constants.HUB_WORLD_PATH;
 
+@Slf4j
 public class Main {
     @Getter
     private final String ipToRegisterWith;
-    @Getter
-    private final int port;
     @Getter
     private static Main instance;
     @Getter
@@ -51,7 +51,7 @@ public class Main {
 
         MinecraftServer server = MinecraftServer.init(new Auth.Velocity(Config.getInstance().getSecret()));
         ipToRegisterWith = "127.0.0.1";
-        port = 25566;
+        int port = Config.getInstance().getPort();
 
         instance = this;
 
@@ -106,7 +106,7 @@ public class Main {
                         RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S
                                 .newBuilder()
                                 .setAddress(ipToRegisterWith)
-                                .setPort(port)
+                                .setPort(Config.getInstance().getPort())
                                 .build()
                 )
                 .build()

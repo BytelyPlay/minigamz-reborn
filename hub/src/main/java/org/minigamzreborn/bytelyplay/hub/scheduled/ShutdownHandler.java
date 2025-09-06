@@ -1,6 +1,7 @@
 package org.minigamzreborn.bytelyplay.hub.scheduled;
 
 import org.minigamzreborn.bytelyplay.hub.Main;
+import org.minigamzreborn.bytelyplay.hub.utils.Config;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.UnregisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
@@ -10,7 +11,7 @@ public class ShutdownHandler {
         Main.getInstance().getServer().sendPacket(WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
                 .setUnregisterServerPacket(UnregisterServerPacketC2SOuterClass.UnregisterServerPacketC2S.newBuilder()
                         .setIp(Main.getInstance().getIpToRegisterWith())
-                        .setPort(Main.getInstance().getPort())
+                        .setPort(Config.getInstance().getPort())
                         .build())
                 .build());
     }
