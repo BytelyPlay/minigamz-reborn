@@ -47,13 +47,14 @@ public class Main {
     private final Server server;
     // Should run under proxy so no auth required.
     public Main() {
-        MinecraftServer server = MinecraftServer.init(new Auth.Velocity("ZWjlD8NI4gBp"));
+        parseConfig();
+
+        MinecraftServer server = MinecraftServer.init(new Auth.Velocity(Config.getInstance().getSecret()));
         ipToRegisterWith = "127.0.0.1";
         port = 25566;
 
         instance = this;
 
-        parseJson();
         setupEvents();
         setupInstances();
         this.server = setupProtocol();
@@ -80,7 +81,7 @@ public class Main {
         globalEventHandler.addListener(EntityAttackEvent.class, NPCInteractionEvents::entityAttackEvent);
         // EventNode<InstanceEvent> hubEventNode = Instances.hub.eventNode();
     }
-    private void parseJson() {
+    private void parseConfig() {
         try {
             ObjectMapper mapper = new ObjectMapper();
             if (Files.exists(Constants.HUB_CONFIG_PATH)) {

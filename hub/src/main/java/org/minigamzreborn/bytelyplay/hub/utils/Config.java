@@ -3,10 +3,14 @@ package org.minigamzreborn.bytelyplay.hub.utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 
 public class Config {
-    public Pos spawnPoint = Pos.ZERO;
+    @Getter
+    private String secret = "";
+    @Getter
+    private Pos spawnPoint = Pos.ZERO;
     private static Config instance;
     public static Config getInstance() {
         if (instance == null) return new Config();
@@ -21,6 +25,9 @@ public class Config {
         double spawnX = spawnPointNode.get("x").asDouble();
         double spawnY = spawnPointNode.get("y").asDouble();
         double spawnZ = spawnPointNode.get("z").asDouble();
+        String secret = rootNode.get("secret").asText();
+
+        config.secret = secret;
         config.spawnPoint = new Pos(spawnX, spawnY, spawnZ);
     }
     public static JsonNode serialize() {
@@ -32,6 +39,7 @@ public class Config {
         spawnPointNode.put("y", config.spawnPoint.y());
         spawnPointNode.put("z", config.spawnPoint.z());
 
+        rootNode.put("secret", config.secret);
         rootNode.set("spawn_point", spawnPointNode);
         return rootNode;
     }

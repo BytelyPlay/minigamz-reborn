@@ -7,6 +7,6 @@ import org.minigamzreborn.bytelyplay.hub.utils.Instances;
 public class PlayerLoginHandler {
     public static void asyncPlayerConfigEvent(AsyncPlayerConfigurationEvent e) {
         e.setSpawningInstance(Instances.hub);
-        e.getPlayer().setRespawnPoint(Config.getInstance().spawnPoint);
+        e.getPlayer().setRespawnPoint(Config.getInstance().getSpawnPoint());
     }
 }
