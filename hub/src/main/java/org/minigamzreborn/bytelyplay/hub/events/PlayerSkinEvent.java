@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.Duration;
 import java.util.UUID;
 
-public class PlayerSkinEvent {
+public final class PlayerSkinEvent {
     private static LoadingCache<@NotNull UUID, PlayerSkin> skinCache = Caffeine.newBuilder()
             .maximumSize(10000)
             .expireAfterWrite(Duration.ofDays(2))

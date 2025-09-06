@@ -20,7 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class RandomItemsNPC extends NPC {
+public final class RandomItemsNPC extends NPC {
     private static final DataSetter SKIN_SETTER = new DataSetter.Builder()
             .getterSetter(RandomItemsNPC::getSkin, RandomItemsNPC::setSkin)
             .build();

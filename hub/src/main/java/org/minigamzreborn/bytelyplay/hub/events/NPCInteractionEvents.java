@@ -5,7 +5,7 @@ import net.minestom.server.event.entity.EntityAttackEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import org.minigamzreborn.bytelyplay.hub.NPCs.NPC;
 
-public class NPCInteractionEvents {
+public final class NPCInteractionEvents {
     public static void playerEntityInteractEvent(PlayerEntityInteractEvent e) {
         Entity clickedEntity = e.getTarget();
 

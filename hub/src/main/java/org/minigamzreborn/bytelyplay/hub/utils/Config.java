@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
 
-public class Config {
+public final class Config {
     @Getter
     private String secret = "";
     @Getter

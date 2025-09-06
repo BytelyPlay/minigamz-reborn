@@ -6,7 +6,7 @@ import org.minigamzreborn.bytelyplay.protobuffer.packets.UnregisterServerPacketC
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
-public class ShutdownHandler {
+public final class ShutdownHandler {
     public static void shutdown() {
         Main.getInstance().getServer().sendPacket(WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
                 .setUnregisterServerPacket(UnregisterServerPacketC2SOuterClass.UnregisterServerPacketC2S.newBuilder()
