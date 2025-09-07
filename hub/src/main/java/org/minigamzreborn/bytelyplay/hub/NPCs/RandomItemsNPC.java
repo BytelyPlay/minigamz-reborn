@@ -49,24 +49,18 @@ public final class RandomItemsNPC extends NPC {
         Entity attacker = event.getEntity();
 
         if (attacker instanceof Player p) {
-            sendPlayerToRandomItems(p);
+            Main.getInstance().getServer().sendPlayerToServer(p.getUuid(),
+                    ServerTypeOuterClass.ServerType.RANDOM_ITEMS);
         }
     }
 
     @Override
     public void playerInteract(PlayerEntityInteractEvent event) {
-        sendPlayerToRandomItems(event.getPlayer());
+        Main.getInstance().getServer().sendPlayerToServer(event.getPlayer().getUuid(),
+                ServerTypeOuterClass.ServerType.RANDOM_ITEMS);
     }
 
     public static PlayerSkin getSkin() {
         return PlayerSkin.fromUuid("8667ba71-b85a-4004-af54-457a9734eed7");
-    }
-    private static void sendPlayerToRandomItems(Player p) {
-        Main.getInstance().getServer().sendPacket(WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
-                .setTransferPlayerPacket(TransferPlayerPacketC2SOuterClass.TransferPlayerPacketC2S.newBuilder()
-                        .setUuid(p.getUuid().toString())
-                        .setType(ServerTypeOuterClass.ServerType.RANDOM_ITEMS)
-                        .build())
-                .build());
     }
 }

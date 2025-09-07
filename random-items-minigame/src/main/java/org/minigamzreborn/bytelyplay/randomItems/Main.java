@@ -1,9 +1,11 @@
 package org.minigamzreborn.bytelyplay.randomItems;
 
+import com.mojang.brigadier.CommandDispatcher;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;

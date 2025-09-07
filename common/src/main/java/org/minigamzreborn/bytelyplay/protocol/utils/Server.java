@@ -5,7 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.TransferPlayerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
+
+import java.util.UUID;
 
 @Slf4j
 public class Server {
@@ -32,5 +36,13 @@ public class Server {
         } else {
             log.warn("Tried to flush while not handshaken.");
         }
+    }
+    public void sendPlayerToServer(UUID uuid, ServerTypeOuterClass.ServerType type) {
+        this.sendPacket(WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
+                .setTransferPlayerPacket(TransferPlayerPacketC2SOuterClass.TransferPlayerPacketC2S.newBuilder()
+                        .setType(type)
+                        .setUuid(uuid.toString())
+                        .build())
+                .build());
     }
 }
