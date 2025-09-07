@@ -50,8 +50,9 @@ public final class Config {
         spawnPointNode.put("y", config.spawnPoint.y());
         spawnPointNode.put("z", config.spawnPoint.z());
 
-        rootNode.put("secret", config.secret);
         rootNode.set("spawn_point", spawnPointNode);
+
+        rootNode.put("secret", config.secret);
         rootNode.put("listenIp", config.listenIp);
         rootNode.put("port", config.port);
         return rootNode;
