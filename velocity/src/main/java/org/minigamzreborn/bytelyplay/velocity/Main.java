@@ -6,7 +6,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
-import org.minigamzreborn.bytelyplay.velocity.listeners.DisableAllCommands;
+import org.minigamzreborn.bytelyplay.velocity.listeners.HandleAllCommands;
 import org.minigamzreborn.bytelyplay.velocity.listeners.PlayerJoinListener;
 import lombok.Getter;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
@@ -53,7 +53,7 @@ public class Main {
         logger.info("Listening on {}:{}", ip, port);
 
         server.getEventManager().register(this, new PlayerJoinListener());
-        server.getEventManager().register(this, new DisableAllCommands());
+        server.getEventManager().register(this, new HandleAllCommands());
     }
     public Optional<RegisteredServer> getRandomServerOfType(ServerTypeOuterClass.ServerType toType) {
         List<RegisteredServer> options = new ArrayList<>();
