@@ -4,7 +4,7 @@ plugins {
     id("com.gradleup.shadow") version "9.0.1";
 }
 
-group = "org.modernforward.bytelyplay.dirtbox"
+group = "org.minigamzreborn.bytelyplay.dirtbox"
 
 repositories {
     mavenCentral()

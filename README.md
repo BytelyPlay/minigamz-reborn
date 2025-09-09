@@ -24,3 +24,4 @@ UnregisterServerPacketC2S (Removes a server with a specific ip and port, server 
 # TODO
 1. convert to 100% gradle KTS
 2. add some way to configure where the server is and also the port and ip of which it is hosted if using minestom.
+3. get inventory persistence in dirtbox

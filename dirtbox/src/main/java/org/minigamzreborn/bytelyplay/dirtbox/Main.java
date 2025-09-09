@@ -1,19 +1,21 @@
-package org.modernforward.bytelyplay.dirtbox;
+package org.minigamzreborn.bytelyplay.dirtbox;
 
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import net.minestom.server.instance.Instance;
+import net.minestom.server.event.player.PlayerBlockBreakEvent;
+import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
+import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockBreakHandler;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
-import org.modernforward.bytelyplay.dirtbox.listeners.PlayerJoinHandlers;
-import org.modernforward.bytelyplay.dirtbox.utils.Instances;
+import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerJoinHandlers;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.Instances;
 
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 
 public class Main {
     public Server protocolServer;
@@ -35,7 +37,10 @@ public class Main {
     }
     private void setupEvents() {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
-        globalEventHandler.addListener(AsyncPlayerConfigurationEvent.class, PlayerJoinHandlers::asyncPlayerConfigEvent);
+        globalEventHandler.addListener(AsyncPlayerConfigurationEvent.class, PlayerJoinHandlers.getInstance()::asyncPlayerConfigEvent);
+
+        EventNode<InstanceEvent> node = Instances.dirtbox.eventNode();
+        node.addListener(PlayerBlockBreakEvent.class, PlayerBlockBreakHandler.getInstance()::blockBrokenDirtbox);
     }
     private void setupProtocol() {
         protocolServer = ProtocolMain.initClient("127.0.0.1", 9485);

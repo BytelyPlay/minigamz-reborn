@@ -1,4 +1,4 @@
-package org.modernforward.bytelyplay.dirtbox.utils;
+package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
 import net.minestom.server.instance.Instance;
 
