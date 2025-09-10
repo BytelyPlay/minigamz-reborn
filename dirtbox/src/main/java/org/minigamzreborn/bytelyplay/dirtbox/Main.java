@@ -9,6 +9,7 @@ import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.anvil.AnvilLoader;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockBreakHandler;
+import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
@@ -50,6 +51,7 @@ public class Main {
                 .setRegisterServerPacket(RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S.newBuilder()
                         .setAddress("127.0.0.1")
                         .setPort(25569)
+                        .setType(ServerTypeOuterClass.ServerType.DIRTBOX)
                         .build())
                 .build());
     }
