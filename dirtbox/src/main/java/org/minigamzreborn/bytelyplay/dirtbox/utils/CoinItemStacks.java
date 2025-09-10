@@ -19,6 +19,7 @@ public class CoinItemStacks {
                     Component.text("Coin")
                             .color(NamedTextColor.YELLOW)
                             .decorate(TextDecoration.BOLD)
+                            .decoration(TextDecoration.ITALIC, false)
             );
     private static final String COMPRESSED_COIN_BLOCK_COMPRESSION_AMOUNT_KEY = "compression_amount";
 
@@ -61,9 +62,11 @@ public class CoinItemStacks {
                         Component.text(times + "x ")
                                 .color(NamedTextColor.YELLOW)
                                 .decorate(TextDecoration.BOLD)
+                                .decoration(TextDecoration.ITALIC, false)
                                 .append(
                                         Component.text("Compressed Coin Block")
                                                 .color(NamedTextColor.GREEN)
+                                                .decoration(TextDecoration.ITALIC, false)
                                 )
                 )
                 .with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder()

@@ -27,4 +27,5 @@ DisconnectPacketS2C (Self explanatory, its contents are irrelevant whatever it i
 # TODO
 1. convert to 100% gradle KTS
 2. add some way to configure where the server is and also the port and ip of which it is hosted if using minestom.
-3. get inventory persistence in dirtbox
+3. get inventory persistence and synchronize all servers together properly with a mongodb database or such
+4. employ a permission system and once again save all data in the mongodb database but permissions should be enums and ranks should be enums too, static not dynamic but you should be able to change a player's rank and change the player's permissions too but nothing else should be dynamic

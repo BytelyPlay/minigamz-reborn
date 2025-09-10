@@ -6,10 +6,14 @@ import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
+import net.minestom.server.event.player.PlayerBlockPlaceEvent;
+import net.minestom.server.event.player.PlayerMoveEvent;
 import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.anvil.AnvilLoader;
+import org.minigamzreborn.bytelyplay.dirtbox.listeners.NoVoidFalling;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockBreakHandler;
+import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockPlaceHandler;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
@@ -43,8 +47,10 @@ public class Main {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
         globalEventHandler.addListener(AsyncPlayerConfigurationEvent.class, PlayerJoinHandlers.getInstance()::asyncPlayerConfigEvent);
 
-        EventNode<InstanceEvent> node = Instances.dirtbox.eventNode();
-        node.addListener(PlayerBlockBreakEvent.class, PlayerBlockBreakHandler.getInstance()::blockBrokenDirtbox);
+        EventNode<InstanceEvent> dirtboxNode = Instances.dirtbox.eventNode();
+        dirtboxNode.addListener(PlayerBlockBreakEvent.class, PlayerBlockBreakHandler.getInstance()::blockBrokenDirtbox);
+        dirtboxNode.addListener(PlayerMoveEvent.class, NoVoidFalling::playerMove);
+        dirtboxNode.addListener(PlayerBlockPlaceEvent.class, PlayerBlockPlaceHandler::blockPlace);
     }
     private void setupProtocol() {
         protocolServer = ProtocolMain.initClient("127.0.0.1", 9485);

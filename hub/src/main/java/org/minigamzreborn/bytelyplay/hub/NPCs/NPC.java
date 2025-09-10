@@ -2,10 +2,16 @@ package org.minigamzreborn.bytelyplay.hub.NPCs;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.component.DataComponents;
+import net.minestom.server.coordinate.Pos;
+import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.*;
 import net.minestom.server.entity.metadata.EntityMeta;
+import net.minestom.server.entity.metadata.display.AbstractDisplayMeta;
+import net.minestom.server.entity.metadata.display.TextDisplayMeta;
 import net.minestom.server.entity.metadata.other.ArmorStandMeta;
+import net.minestom.server.entity.metadata.other.InteractionMeta;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.network.packet.server.ServerPacket;
@@ -13,7 +19,11 @@ import net.minestom.server.network.packet.server.play.*;
 import net.minestom.server.scoreboard.Team;
 import net.minestom.server.scoreboard.TeamBuilder;
 import net.minestom.server.scoreboard.TeamManager;
+import net.minestom.server.timer.TaskSchedule;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,9 +35,9 @@ public abstract class NPC extends Entity {
     private final Component displayName;
     private final String username;
     private final PlayerSkin skin;
-    private final Entity armorStand;
 
-    // TODO spawn an armor stand intead of the teams trick.
+    private final Entity textDisplayNameTag;
+    private final Entity interactionEntityAnchor;
 
     public NPC(@NotNull Component displayName, @NotNull PlayerSkin skin) {
         super(EntityType.PLAYER);
@@ -35,15 +45,18 @@ public abstract class NPC extends Entity {
         this.displayName = displayName;
         this.skin = skin;
 
-        this.username = this.getUuid().toString().substring(0, 15);
+        this.username = this.getUuid().toString().substring(0, 16);
 
-        armorStand = new Entity(EntityType.ARMOR_STAND);
+        this.textDisplayNameTag = new Entity(EntityType.TEXT_DISPLAY);
+        this.textDisplayNameTag.editEntityMeta(TextDisplayMeta.class, metadata -> {
+            metadata.setBillboardRenderConstraints(AbstractDisplayMeta.BillboardConstraints.CENTER);
+            metadata.setText(displayName);
+        });
 
-        armorStand.setInvisible(true);
-        armorStand.set(DataComponents.CUSTOM_NAME, displayName);
-        armorStand.setCustomNameVisible(true);
-
-        armorStand.addPassenger(this);
+        this.interactionEntityAnchor = new Entity(EntityType.INTERACTION);
+        this.interactionEntityAnchor.editEntityMeta(InteractionMeta.class, metadata -> {
+            metadata.setHeight(0.25f);
+        });
     }
 
     @Override
@@ -81,6 +94,22 @@ public abstract class NPC extends Entity {
 
         p.sendPacket(new PlayerInfoRemovePacket(this.getUuid()));
         p.sendPacket(new TeamsPacket("NPC-" + this.getUuid(), new TeamsPacket.RemoveTeamAction()));
+    }
+
+    @Override
+    public void spawn() {
+        interactionEntityAnchor.setInstance(this.getInstance());
+        textDisplayNameTag.setInstance(this.getInstance());
+
+        this.addPassenger(interactionEntityAnchor);
+
+        interactionEntityAnchor.addPassenger(textDisplayNameTag);
+    }
+
+    @Override
+    protected void despawn() {
+        interactionEntityAnchor.remove();
+        textDisplayNameTag.remove();
     }
 
     public abstract void entityAttack(EntityAttackEvent event);

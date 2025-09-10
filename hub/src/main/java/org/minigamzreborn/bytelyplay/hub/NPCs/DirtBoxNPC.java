@@ -43,7 +43,7 @@ public class DirtBoxNPC extends NPC {
     }
 
     public DirtBoxNPC() {
-        super(Component.text("DirtBox NPC")
+        super(Component.text("DirtBox")
                 .color(NamedTextColor.YELLOW)
                 .decorate(TextDecoration.BOLD), skin);
     }
