@@ -38,9 +38,7 @@ public class PlayerBlockBreakHandler {
                 int tier = shovelTier.orElseThrow();
                 List<ItemStack> notAdded = p.getInventory().addItemStacks(CoinItemStacks.getCoins(tier  * 2), TransactionOption.ALL);
 
-                if (!notAdded.isEmpty()) {
-                    p.sendMessage(Messages.NOT_ENOUGH_SPACE_IN_INVENTORY);
-                }
+                if (!notAdded.isEmpty()) p.sendMessage(Messages.NOT_ENOUGH_SPACE_IN_INVENTORY);
             }
         } else {
             event.setCancelled(true);

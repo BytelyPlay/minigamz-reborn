@@ -6,7 +6,8 @@
   "mixins": [
     "GeneratorOptionsMixin",
     "MinecraftServerMixin",
-    "NoiseChunkGeneratorMixin"
+    "NoiseChunkGeneratorMixin",
+    "ServerCommandManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
