@@ -4,4 +4,5 @@ package org.minigamzreborn.bytelyplay.protobuffer.enums;
 enum ServerType {
   HUB = 0;
   RANDOM_ITEMS = 1;
+  DIRTBOX = 2;
 }
