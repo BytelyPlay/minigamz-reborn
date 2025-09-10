@@ -34,6 +34,13 @@ public class PlayerBlockBreakHandler {
                 List<ItemStack> notAdded = p.getInventory().addItemStacks(CoinItemStacks.getCoins(1), TransactionOption.ALL);
 
                 if (!notAdded.isEmpty()) p.sendMessage(Messages.NOT_ENOUGH_SPACE_IN_INVENTORY);
+            } else {
+                int tier = shovelTier.orElseThrow();
+                List<ItemStack> notAdded = p.getInventory().addItemStacks(CoinItemStacks.getCoins(tier  * 2), TransactionOption.ALL);
+
+                if (!notAdded.isEmpty()) {
+                    p.sendMessage(Messages.NOT_ENOUGH_SPACE_IN_INVENTORY);
+                }
             }
         } else {
             event.setCancelled(true);

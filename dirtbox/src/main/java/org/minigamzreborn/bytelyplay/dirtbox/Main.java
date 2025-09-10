@@ -7,6 +7,7 @@ import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.event.player.PlayerBlockBreakEvent;
 import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
+import net.minestom.server.instance.anvil.AnvilLoader;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockBreakHandler;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
@@ -16,6 +17,8 @@ import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerJoinHandlers;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Instances;
 
 import java.net.InetSocketAddress;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
     public Server protocolServer;
@@ -25,9 +28,7 @@ public class Main {
     public Main() {
         MinecraftServer server = MinecraftServer.init();
 
-        InstanceManager instanceManager = MinecraftServer.getInstanceManager();
-
-        Instances.dirtbox = instanceManager.createInstanceContainer();
+        setupInstances();
 
         setupEvents();
         setupProtocol();
@@ -51,5 +52,10 @@ public class Main {
                         .setPort(25569)
                         .build())
                 .build());
+    }
+    private void setupInstances() {
+        InstanceManager instanceManager = MinecraftServer.getInstanceManager();
+
+        Instances.dirtbox = instanceManager.createInstanceContainer(new AnvilLoader(Path.of("./dirtbox_world/")));
     }
 }
