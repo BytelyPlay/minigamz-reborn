@@ -21,6 +21,9 @@ TransferPlayerPacketC2S (contains an enum representing a server type which the p
 RegisterServerPacketC2S (Add a server with a specific ip and port to the server list thing and set the server type)
 UnregisterServerPacketC2S (Removes a server with a specific ip and port, server type shouldn't be required though.)
 
+DisconnectPacketC2S (Self explanatory, its contents are irrelevant whatever it is, disconnect IMMEDIATELY when receiving this packet)
+DisconnectPacketS2C (Self explanatory, its contents are irrelevant whatever it is, disconnect IMMEDIATELY when receiving this packet)
+
 # TODO
 1. convert to 100% gradle KTS
 2. add some way to configure where the server is and also the port and ip of which it is hosted if using minestom.

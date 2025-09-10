@@ -19,15 +19,15 @@ public class HandleAllCommands {
         if (e.getCommand().equals("hub")) {
             CommandSource source = e.getCommandSource();
             if (source instanceof Player p) {
-                Optional<RegisteredServer> hubServer = Main.getInstance().getRandomServerOfType(ServerTypeOuterClass.ServerType.RANDOM_ITEMS);
+                Optional<RegisteredServer> hubServer = Main.getInstance().getRandomServerOfType(ServerTypeOuterClass.ServerType.HUB);
                 if (hubServer.isEmpty()) {
                     p.sendMessage(Messages.NO_SERVER_FOUND_TO_TRANSFER);
                     e.setResult(CommandExecuteEvent.CommandResult.allowed());
                     return;
                 }
-                p.createConnectionRequest(hubServer.orElseThrow());
+                p.createConnectionRequest(hubServer.orElseThrow()).fireAndForget();
 
-                e.setResult(CommandExecuteEvent.CommandResult.allowed());
+                e.setResult(CommandExecuteEvent.CommandResult.denied());
                 return;
             }
         }

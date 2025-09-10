@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation("net.minestom:minestom:2025.08.18-1.21.8")
+    implementation("ch.qos.logback:logback-classic:1.5.18")
     implementation(project((":common")))
 }
 

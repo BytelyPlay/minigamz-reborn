@@ -1,5 +1,6 @@
 package org.minigamzreborn.bytelyplay.dirtbox;
 
+import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
@@ -27,7 +28,8 @@ public class Main {
         new Main();
     }
     public Main() {
-        MinecraftServer server = MinecraftServer.init();
+        // TODO: no hardcoding the secret in a release...
+        MinecraftServer server = MinecraftServer.init(new Auth.Velocity("ZWjlD8NI4gBp"));
 
         setupInstances();
 

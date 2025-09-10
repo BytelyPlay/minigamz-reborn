@@ -1,8 +1,8 @@
 package org.minigamzreborn.bytelyplay.hub.NPCs;
 
-import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.Player;
@@ -11,6 +11,7 @@ import net.minestom.server.event.entity.EntityAttackEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import org.abstractvault.bytelyplay.data.DataSetter;
 import org.abstractvault.bytelyplay.enums.DataFormat;
+import org.jetbrains.annotations.NotNull;
 import org.minigamzreborn.bytelyplay.hub.Main;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.TransferPlayerPacketC2SOuterClass;
@@ -19,17 +20,20 @@ import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterCl
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
-public final class RandomItemsNPC extends NPC {
+@Slf4j
+public class DirtBoxNPC extends NPC {
+    private static PlayerSkin skin;
+    private static final Path SKIN_CONFIG_PATH = Paths.get("./configuration/dirt_box_npc_skin.cbor");
     private static final DataSetter SKIN_SETTER = new DataSetter.Builder()
-            .getterSetter(RandomItemsNPC::getSkin, RandomItemsNPC::setSkin)
+            .getterSetter(DirtBoxNPC::makeSkin, DirtBoxNPC::setSkin)
             .build();
-    private static final Path SKIN_CONFIG_PATH = Paths.get("./configuration/random_items_npc_skin.cbor");
-    private static final Component USERNAME = Component.text("Random Items").style(
-            style -> style
-                    .color(TextColor.color(0, 255, 0))
-                    .decorate(TextDecoration.BOLD)
-    );
+
     static {
         if (Files.exists(SKIN_CONFIG_PATH)) {
             SKIN_SETTER.load(SKIN_CONFIG_PATH);
@@ -37,30 +41,35 @@ public final class RandomItemsNPC extends NPC {
             SKIN_SETTER.save(SKIN_CONFIG_PATH, DataFormat.BINARY_CBOR);
         }
     }
-    @Setter
-    private static PlayerSkin skin;
 
-    public RandomItemsNPC() {
-        super(USERNAME, skin);
+    public DirtBoxNPC() {
+        super(Component.text("DirtBox NPC")
+                .color(NamedTextColor.YELLOW)
+                .decorate(TextDecoration.BOLD), skin);
     }
 
     @Override
     public void entityAttack(EntityAttackEvent event) {
         Entity attacker = event.getEntity();
-
-        if (attacker instanceof Player p) {
-            Main.getInstance().getServer().sendPlayerToServer(p.getUuid(),
-                    ServerTypeOuterClass.ServerType.RANDOM_ITEMS);
-        }
+        if (attacker instanceof Player p)
+            Main.getInstance().getServer().sendPlayerToServer(p.getUuid(), ServerTypeOuterClass.ServerType.DIRTBOX);
     }
 
     @Override
     public void playerInteract(PlayerEntityInteractEvent event) {
-        Main.getInstance().getServer().sendPlayerToServer(event.getPlayer().getUuid(),
-                ServerTypeOuterClass.ServerType.RANDOM_ITEMS);
+        Player p = event.getPlayer();
+
+        Main.getInstance().getServer().sendPlayerToServer(p.getUuid(), ServerTypeOuterClass.ServerType.DIRTBOX);
     }
 
-    public static PlayerSkin getSkin() {
-        return PlayerSkin.fromUuid("8667ba71-b85a-4004-af54-457a9734eed7");
+    private static void setSkin(PlayerSkin playerSkin) {
+        skin = playerSkin;
+    }
+
+    private static PlayerSkin makeSkin() {
+        PlayerSkin pSkin = PlayerSkin.fromUuid("bcbaabb3-f21a-4927-94ad-2979c54f67fc");
+        skin = pSkin;
+
+        return pSkin;
     }
 }

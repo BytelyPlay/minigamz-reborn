@@ -14,6 +14,7 @@ import net.minestom.server.event.player.PlayerSkinInitEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.timer.SchedulerManager;
+import org.minigamzreborn.bytelyplay.hub.NPCs.DirtBoxNPC;
 import org.minigamzreborn.bytelyplay.hub.NPCs.RandomItemsNPC;
 import org.minigamzreborn.bytelyplay.hub.events.NPCInteractionEvents;
 import org.minigamzreborn.bytelyplay.hub.events.PlayerLoginHandler;
@@ -114,7 +115,11 @@ public class Main {
     }
     private void setupNPCs() {
         RandomItemsNPC randomItemsNPC = new RandomItemsNPC();
+        DirtBoxNPC dirtBoxNPC = new DirtBoxNPC();
+
         randomItemsNPC.setInstance(Instances.hub, new Pos(0.5, 11, 2.5, -180, 0));
+        // TODO: place it on a diamond block.
+        dirtBoxNPC.setInstance(Instances.hub, new Pos(-1.5, 11, 0.5, 90, 0));
     }
     private void setupScheduledTasks() {
         SchedulerManager manager = MinecraftServer.getSchedulerManager();

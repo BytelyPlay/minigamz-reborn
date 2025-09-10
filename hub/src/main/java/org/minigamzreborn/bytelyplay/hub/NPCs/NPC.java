@@ -15,6 +15,7 @@ import net.minestom.server.scoreboard.TeamManager;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class NPC extends Entity {
@@ -22,13 +23,15 @@ public abstract class NPC extends Entity {
     private final String username;
     private final PlayerSkin skin;
 
+    // TODO spawn an armor stand intead of the teams trick.
+
     public NPC(@NotNull Component displayName, @NotNull PlayerSkin skin) {
         super(EntityType.PLAYER);
 
         this.displayName = displayName;
         this.skin = skin;
 
-        this.username = "";
+        this.username = this.getUuid().toString();
     }
 
     @Override
