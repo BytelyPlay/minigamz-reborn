@@ -11,7 +11,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0-rc1")
     implementation("ch.qos.logback:logback-classic:1.5.18")
     // from maven local, check out abstract-vault github repository.
-    implementation("org.abstractvault.bytelyplay:AbstractVault:1.1.1-BETA")
+    implementation("org.abstractvault.bytelyplay:AbstractVault:1.2.0-BETA")
 }
 application {
     mainClass.set("org.minigamzreborn.bytelyplay.hub.Main")
