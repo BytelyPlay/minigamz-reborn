@@ -1,19 +1,20 @@
 package org.minigamzreborn.bytelyplay.dirtbox;
 
+import lombok.Getter;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
-import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import net.minestom.server.event.player.PlayerBlockBreakEvent;
-import net.minestom.server.event.player.PlayerBlockPlaceEvent;
-import net.minestom.server.event.player.PlayerMoveEvent;
+import net.minestom.server.event.player.*;
 import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.anvil.AnvilLoader;
+import net.minestom.server.timer.SchedulerManager;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.NoVoidFalling;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockBreakHandler;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockPlaceHandler;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.ChunkLoaders;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.MapRegenerationHelpers;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
@@ -25,13 +26,24 @@ import org.minigamzreborn.bytelyplay.dirtbox.utils.Instances;
 import java.net.InetSocketAddress;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
-    public Server protocolServer;
+    @Getter
+    private static Main instance;
+
+    @Getter
+    private Server protocolServer;
+    @Getter
+    private ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
     public static void main(String[] args) {
         new Main();
     }
     public Main() {
+        instance = this;
+
         // TODO: no hardcoding the secret in a release...
         MinecraftServer server = MinecraftServer.init(new Auth.Velocity("ZWjlD8NI4gBp"));
 
@@ -39,6 +51,7 @@ public class Main {
 
         setupEvents();
         setupProtocol();
+        setupScheduledTasks();
 
         // TODO: Make this configurable.
         server.start(new InetSocketAddress("0.0.0.0", 25569));
@@ -66,6 +79,12 @@ public class Main {
     private void setupInstances() {
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
 
-        Instances.dirtbox = instanceManager.createInstanceContainer(new AnvilLoader(Path.of("./dirtbox_world/")));
+        Instances.dirtbox = instanceManager.createInstanceContainer(ChunkLoaders.dirtboxChunkLoader);
+    }
+    private void setupScheduledTasks() {
+        SchedulerManager manager = MinecraftServer.getSchedulerManager();
+
+        manager.buildShutdownTask(protocolServer::disconnect);
+        manager.buildTask(MapRegenerationHelpers::regenerateDirtboxMap);
     }
 }
