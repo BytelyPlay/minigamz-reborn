@@ -11,7 +11,7 @@ import org.minigamzreborn.bytelyplay.velocity.listeners.PlayerJoinListener;
 import lombok.Getter;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
-import org.minigamzreborn.bytelyplay.protocol.operationHandlers.Server.ServerOperationsHandler;
+import org.minigamzreborn.bytelyplay.protocol.operationHandlers.server.ServerOperationsHandler;
 import org.minigamzreborn.bytelyplay.velocity.impl.VelocityOperationsHandler;
 import org.minigamzreborn.bytelyplay.velocity.utils.ServerTypeRegistry;
 import org.slf4j.Logger;

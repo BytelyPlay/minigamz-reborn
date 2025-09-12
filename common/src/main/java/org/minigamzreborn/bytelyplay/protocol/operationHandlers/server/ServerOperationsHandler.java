@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.protocol.operationHandlers.Server;
+package org.minigamzreborn.bytelyplay.protocol.operationHandlers.server;
 
 import lombok.Getter;
 import lombok.Setter;

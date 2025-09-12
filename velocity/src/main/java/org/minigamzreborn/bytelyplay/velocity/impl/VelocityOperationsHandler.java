@@ -6,7 +6,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import com.velocitypowered.api.proxy.server.ServerInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
-import org.minigamzreborn.bytelyplay.protocol.operationHandlers.Server.ServerOperationsHandler;
+import org.minigamzreborn.bytelyplay.protocol.operationHandlers.server.ServerOperationsHandler;
 import org.minigamzreborn.bytelyplay.velocity.Main;
 import org.minigamzreborn.bytelyplay.velocity.utils.Messages;
 import org.minigamzreborn.bytelyplay.velocity.utils.ServerTypeRegistry;
