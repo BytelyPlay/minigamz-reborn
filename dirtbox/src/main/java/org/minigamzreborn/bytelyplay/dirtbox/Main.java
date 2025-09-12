@@ -23,6 +23,7 @@ import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerJoinHandlers;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Instances;
 
 import java.net.InetSocketAddress;
+import java.time.Duration;
 
 public class Main {
     @Getter
@@ -78,6 +79,8 @@ public class Main {
 
         manager.buildShutdownTask(protocolServer::disconnect);
 
-        manager.buildTask(MapRegenerationHelpers::regenerateDirtboxMap);
+        manager.buildTask(MapRegenerationHelpers::regenerateDirtboxMap)
+                .repeat(Duration.ofMinutes(5))
+                .schedule();
     }
 }
