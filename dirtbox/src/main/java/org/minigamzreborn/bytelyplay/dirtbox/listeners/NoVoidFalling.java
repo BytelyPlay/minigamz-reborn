@@ -26,7 +26,7 @@ public class NoVoidFalling {
         if (oldPos.samePoint(newPos)) return;
         if (newPos.y() <= -50) {
             event.setCancelled(true);
-            p.teleport(Config.SPAWN_POINT);
+            p.teleport(Config.getInstance().getSpawnPoint());
         }
     }
 }

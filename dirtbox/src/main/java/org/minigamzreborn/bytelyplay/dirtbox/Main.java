@@ -9,10 +9,13 @@ import net.minestom.server.event.player.*;
 import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.timer.SchedulerManager;
+import org.abstractvault.bytelyplay.data.DataSetter;
+import org.abstractvault.bytelyplay.enums.DataFormat;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.NoVoidFalling;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockBreakHandler;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockPlaceHandler;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.ChunkLoaders;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.MapRegenerationHelpers;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
@@ -23,6 +26,8 @@ import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerJoinHandlers;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Instances;
 
 import java.net.InetSocketAddress;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.Duration;
 
 public class Main {
@@ -38,7 +43,9 @@ public class Main {
         instance = this;
 
         // TODO: no hardcoding the secret in a release...
-        MinecraftServer server = MinecraftServer.init(new Auth.Velocity("ZWjlD8NI4gBp"));
+        MinecraftServer server = MinecraftServer.init(new Auth.Velocity(Config.getInstance().getForwardingSecret()));
+
+        loadConfig();
 
         setupInstances();
 
@@ -82,5 +89,8 @@ public class Main {
         manager.buildTask(MapRegenerationHelpers::regenerateDirtboxMap)
                 .repeat(Duration.ofMinutes(5))
                 .schedule();
+    }
+    private void loadConfig() {
+        Config.getInstance().loadConfig();
     }
 }

@@ -18,6 +18,6 @@ public class PlayerJoinHandlers {
     }
     public void asyncPlayerConfigEvent(AsyncPlayerConfigurationEvent event) {
         event.setSpawningInstance(Instances.dirtbox);
-        event.getPlayer().setRespawnPoint(Config.SPAWN_POINT);
+        event.getPlayer().setRespawnPoint(Config.getInstance().getSpawnPoint());
     }
 }

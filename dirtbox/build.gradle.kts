@@ -13,6 +13,7 @@ repositories {
 dependencies {
     implementation("net.minestom:minestom:2025.08.18-1.21.8")
     implementation("ch.qos.logback:logback-classic:1.5.18")
+    implementation("org.abstractvault.bytelyplay:AbstractVault:1.2.0-BETA")
     implementation(project((":common")))
 }
 
