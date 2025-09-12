@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 public class MapRegenerationHelpers {
-    public static CompletableFuture<Void> regenerateDirtboxMap() {
+    public static void regenerateDirtboxMap() {
         Instance dirtbox = Instances.dirtbox;
         ArrayList<Chunk> chunksToLoad = new ArrayList<>();
         dirtbox.getChunks().forEach(chunk -> {
@@ -25,12 +25,9 @@ public class MapRegenerationHelpers {
                 chunksToLoad.add(chunk);
             }
         });
-        return CompletableFuture.runAsync(() ->
-                chunksToLoad.forEach(MapRegenerationHelpers::regenerateChunkDirtbox),
-                Main.getInstance().getExecutorService());
+        chunksToLoad.forEach(MapRegenerationHelpers::regenerateChunkDirtbox);
     }
     private static void regenerateChunkDirtbox(Chunk chunk) {
-        System.out.println("a");
         Chunk loadedChunk = ChunkLoaders.dirtboxChunkLoader.loadChunk(chunk.getInstance(), chunk.getChunkX(), chunk.getChunkZ());
         if (loadedChunk == null) {
             chunk.getSections().forEach(section -> section.blockPalette().fill(Block.AIR.id()));

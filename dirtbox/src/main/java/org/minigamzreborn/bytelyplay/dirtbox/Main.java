@@ -8,7 +8,6 @@ import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.*;
 import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
-import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.timer.SchedulerManager;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.NoVoidFalling;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockBreakHandler;
@@ -24,19 +23,12 @@ import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerJoinHandlers;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Instances;
 
 import java.net.InetSocketAddress;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Main {
     @Getter
     private static Main instance;
-
     @Getter
     private Server protocolServer;
-    @Getter
-    private ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     public static void main(String[] args) {
         new Main();
@@ -85,6 +77,7 @@ public class Main {
         SchedulerManager manager = MinecraftServer.getSchedulerManager();
 
         manager.buildShutdownTask(protocolServer::disconnect);
+
         manager.buildTask(MapRegenerationHelpers::regenerateDirtboxMap);
     }
 }

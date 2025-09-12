@@ -32,4 +32,4 @@ DisconnectPacketS2C (Self explanatory, its contents are irrelevant whatever it i
 3. get inventory persistence and synchronize all servers together properly with a mongodb database or such
 4. employ a permission system and once again save all data in the mongodb database but permissions should be enums and ranks should be enums too, static not dynamic but you should be able to change a player's rank and change the player's permissions too but nothing else should be dynamic
 5. fully implement the protocol
-6. if even possible try to ix the SIGFPE whenever you regenerate the dirtbox world.
+6. if even possible try to ix the SIGFPE whenever you regenerate the dirtbox world. maybe a different approach has to be taken
