@@ -1,9 +1,8 @@
 package org.minigamzreborn.bytelyplay.dirtbox.listeners;
 
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
-import org.minigamzreborn.bytelyplay.dirtbox.utils.Instances;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.Config;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.Instances;
 
 import java.util.Objects;
 

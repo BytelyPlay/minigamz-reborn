@@ -1,6 +1,5 @@
-package org.minigamzreborn.bytelyplay.dirtbox.utils;
+package org.minigamzreborn.bytelyplay.dirtbox.constants;
 
-import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.IChunkLoader;
 import net.minestom.server.instance.anvil.AnvilLoader;
 

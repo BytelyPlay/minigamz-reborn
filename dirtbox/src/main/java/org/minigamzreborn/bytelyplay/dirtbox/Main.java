@@ -1,5 +1,8 @@
 package org.minigamzreborn.bytelyplay.dirtbox;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClients;
 import lombok.Getter;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
@@ -9,13 +12,12 @@ import net.minestom.server.event.player.*;
 import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.timer.SchedulerManager;
-import org.abstractvault.bytelyplay.data.DataSetter;
-import org.abstractvault.bytelyplay.enums.DataFormat;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.NoVoidFalling;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockBreakHandler;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockPlaceHandler;
-import org.minigamzreborn.bytelyplay.dirtbox.utils.ChunkLoaders;
-import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.ChunkLoaders;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.MapRegenerationHelpers;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
@@ -23,11 +25,9 @@ import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterCl
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerJoinHandlers;
-import org.minigamzreborn.bytelyplay.dirtbox.utils.Instances;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.Instances;
 
 import java.net.InetSocketAddress;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Duration;
 
 public class Main {
@@ -42,10 +42,11 @@ public class Main {
     public Main() {
         instance = this;
 
-        // TODO: no hardcoding the secret in a release...
         MinecraftServer server = MinecraftServer.init(new Auth.Velocity(Config.getInstance().getForwardingSecret()));
 
         loadConfig();
+
+        setupMongoDB();
 
         setupInstances();
 
@@ -64,6 +65,7 @@ public class Main {
         dirtboxNode.addListener(PlayerBlockBreakEvent.class, PlayerBlockBreakHandler.getInstance()::blockBrokenDirtbox);
         dirtboxNode.addListener(PlayerMoveEvent.class, NoVoidFalling::playerMove);
         dirtboxNode.addListener(PlayerBlockPlaceEvent.class, PlayerBlockPlaceHandler::blockPlace);
+        dirtboxNode.addListener(PlayerDisconnectEvent.class, )
     }
     private void setupProtocol() {
         protocolServer = ProtocolMain.initClient("127.0.0.1", 9485);
@@ -85,6 +87,7 @@ public class Main {
         SchedulerManager manager = MinecraftServer.getSchedulerManager();
 
         manager.buildShutdownTask(protocolServer::disconnect);
+        manager.buildShutdownTask(MongoDBConstants.client::close);
 
         manager.buildTask(MapRegenerationHelpers::regenerateDirtboxMap)
                 .repeat(Duration.ofMinutes(5))
@@ -92,5 +95,13 @@ public class Main {
     }
     private void loadConfig() {
         Config.getInstance().loadConfig();
+    }
+
+    private void setupMongoDB() {
+        MongoDBConstants.client = MongoClients.create(
+                new ConnectionString(
+                        Config.getInstance().getMongoDBConnectionString()
+                )
+        );
     }
 }

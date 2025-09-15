@@ -1,18 +1,13 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
-import net.minestom.server.coordinate.BlockVec;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.Instance;
-import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.Section;
-import net.minestom.server.instance.anvil.AnvilLoader;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.instance.palette.Palette;
-import org.minigamzreborn.bytelyplay.dirtbox.Main;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.ChunkLoaders;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.Instances;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
 
 public class MapRegenerationHelpers {
     public static void regenerateDirtboxMap() {

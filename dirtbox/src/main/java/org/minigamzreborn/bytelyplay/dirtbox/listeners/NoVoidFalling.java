@@ -3,7 +3,7 @@ package org.minigamzreborn.bytelyplay.dirtbox.listeners;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerMoveEvent;
-import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.Config;
 
 import java.util.Objects;
 
