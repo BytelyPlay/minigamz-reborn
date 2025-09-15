@@ -1,6 +1,7 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minestom.server.inventory.PlayerInventory;
 
@@ -22,5 +23,8 @@ public class PlayerInventorySerializerDeserializer {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+    public static JsonNode buildJsonTree(PlayerInventory inv) {
+        return mapper.valueToTree(inv);
     }
 }

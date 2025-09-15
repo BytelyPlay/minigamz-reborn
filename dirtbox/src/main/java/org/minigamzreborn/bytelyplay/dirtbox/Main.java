@@ -13,9 +13,7 @@ import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.timer.SchedulerManager;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
-import org.minigamzreborn.bytelyplay.dirtbox.listeners.NoVoidFalling;
-import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockBreakHandler;
-import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerBlockPlaceHandler;
+import org.minigamzreborn.bytelyplay.dirtbox.listeners.*;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.ChunkLoaders;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.MapRegenerationHelpers;
@@ -24,7 +22,6 @@ import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2S
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
-import org.minigamzreborn.bytelyplay.dirtbox.listeners.PlayerJoinHandlers;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.Instances;
 
 import java.net.InetSocketAddress;
@@ -65,7 +62,7 @@ public class Main {
         dirtboxNode.addListener(PlayerBlockBreakEvent.class, PlayerBlockBreakHandler.getInstance()::blockBrokenDirtbox);
         dirtboxNode.addListener(PlayerMoveEvent.class, NoVoidFalling::playerMove);
         dirtboxNode.addListener(PlayerBlockPlaceEvent.class, PlayerBlockPlaceHandler::blockPlace);
-        dirtboxNode.addListener(PlayerDisconnectEvent.class, )
+        dirtboxNode.addListener(PlayerDisconnectEvent.class, SavePlayerData::saveData);
     }
     private void setupProtocol() {
         protocolServer = ProtocolMain.initClient("127.0.0.1", 9485);
