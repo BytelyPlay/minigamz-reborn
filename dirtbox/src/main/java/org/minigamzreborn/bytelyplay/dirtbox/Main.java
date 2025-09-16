@@ -1,7 +1,6 @@
 package org.minigamzreborn.bytelyplay.dirtbox;
 
 import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClients;
 import lombok.Getter;
 import net.minestom.server.Auth;
@@ -62,7 +61,7 @@ public class Main {
         dirtboxNode.addListener(PlayerBlockBreakEvent.class, PlayerBlockBreakHandler.getInstance()::blockBrokenDirtbox);
         dirtboxNode.addListener(PlayerMoveEvent.class, NoVoidFalling::playerMove);
         dirtboxNode.addListener(PlayerBlockPlaceEvent.class, PlayerBlockPlaceHandler::blockPlace);
-        dirtboxNode.addListener(PlayerDisconnectEvent.class, SavePlayerData::saveData);
+        dirtboxNode.addListener(PlayerDisconnectEvent.class, SaveLoadPlayerData::saveData);
     }
     private void setupProtocol() {
         protocolServer = ProtocolMain.initClient("127.0.0.1", 9485);
@@ -100,5 +99,7 @@ public class Main {
                         Config.getInstance().getMongoDBConnectionString()
                 )
         );
+        MongoDBConstants.database = MongoDBConstants.client.getDatabase("MinigamzReborn");
+        MongoDBConstants.playerInventoryCollection = MongoDBConstants.database.getCollection("playerInventories");
     }
 }
