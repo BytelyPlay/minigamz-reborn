@@ -1,6 +1,7 @@
 package org.minigamzreborn.bytelyplay.dirtbox;
 
 import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClients;
 import lombok.Getter;
 import net.minestom.server.Auth;
@@ -11,6 +12,7 @@ import net.minestom.server.event.player.*;
 import net.minestom.server.event.trait.InstanceEvent;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.timer.SchedulerManager;
+import org.bson.UuidRepresentation;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.*;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.ChunkLoaders;
@@ -93,12 +95,18 @@ public class Main {
     }
 
     private void setupMongoDB() {
-        MongoDBConstants.client = MongoClients.create(
-                new ConnectionString(
-                        Config.getInstance().getMongoDBConnectionString()
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(
+                        new ConnectionString(
+                                Config.getInstance().getMongoDBConnectionString()
+                        )
                 )
+                .uuidRepresentation(UuidRepresentation.STANDARD)
+                .build();
+        MongoDBConstants.client = MongoClients.create(
+                settings
         );
-        MongoDBConstants.database = MongoDBConstants.client.getDatabase("MinigamzReborn");
-        MongoDBConstants.playerInventoryCollection = MongoDBConstants.database.getCollection("playerInventories");
+        MongoDBConstants.database = MongoDBConstants.client.getDatabase("minigamz_reborn");
+        MongoDBConstants.playerInventoryCollection = MongoDBConstants.database.getCollection("player_inventories");
     }
 }

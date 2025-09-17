@@ -13,11 +13,10 @@ import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
 import java.io.UncheckedIOException;
 
 public class SavePlayerInventory {
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
     public static void savePlayerInventory(Player p) {
         try {
-            Document doc = new Document();
-            doc.append("_id", p.getUuid().toString());
+            Document doc = new Document("_id", p.getUuid());
             doc.append(
                     p.getUuid().toString(),
                     Document.parse(
