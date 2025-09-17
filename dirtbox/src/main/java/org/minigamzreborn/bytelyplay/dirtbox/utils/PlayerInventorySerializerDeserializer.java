@@ -41,7 +41,7 @@ public class PlayerInventorySerializerDeserializer {
                 log.warn("ItemStack encoding failed...");
                 continue;
             }
-            rootNode.put(String.valueOf(i), result.orElseThrow().getAsString());
+            rootNode.put(String.valueOf(i), result.orElseThrow().toString());
         }
         return rootNode;
     }

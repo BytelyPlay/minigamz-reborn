@@ -14,7 +14,7 @@ import net.minestom.server.timer.SchedulerManager;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.*;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.ChunkLoaders;
-import org.minigamzreborn.bytelyplay.dirtbox.constants.Config;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.MapRegenerationHelpers;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
@@ -37,16 +37,15 @@ public class Main {
     }
     public Main() {
         instance = this;
+        loadConfig();
 
         MinecraftServer server = MinecraftServer.init(new Auth.Velocity(Config.getInstance().getForwardingSecret()));
-
-        loadConfig();
 
         setupMongoDB();
 
         setupInstances();
-
         setupEvents();
+
         setupProtocol();
         setupScheduledTasks();
 

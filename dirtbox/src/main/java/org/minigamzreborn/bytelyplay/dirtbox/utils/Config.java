@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.dirtbox.constants;
+package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -7,14 +7,15 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.minestom.server.coordinate.Pos;
-import org.abstractvault.bytelyplay.data.DataSetter;
-import org.abstractvault.bytelyplay.enums.DataFormat;
 
-import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+@Slf4j
 public class Config {
     private final ObjectMapper mapper = new ObjectMapper();
     private static final Path CONFIG_FILE_PATH = Path.of("./configuration", "config.json");
@@ -36,21 +37,46 @@ public class Config {
     public static Config getInstance() {
         return instance == null ? new Config() : instance;
     }
-    // TODO: don't use datasetter for this... use jackson itself directly...
     public void loadConfig() {
         try {
             if (!Files.exists(CONFIG_FOLDER)) Files.createDirectories(CONFIG_FOLDER);
 
             if (Files.exists(CONFIG_FILE_PATH)) {
-                serialize(Files.readString(CONFIG_FILE_PATH));
+                deserialize(Files.readString(CONFIG_FILE_PATH));
+                log.debug("Deserializing config since there is a config.");
             } else {
-                Files.writeString(CONFIG_FILE_PATH, deserialize());
+                Files.writeString(CONFIG_FILE_PATH, serialize());
+                log.debug("Serializing config since there is no config.");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
-    private String deserialize() {
+    private String serialize() {
+        try {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildJsonTree());
+        } catch (JsonProcessingException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+    private void deserialize(String data) {
+        try {
+            JsonNode rootNode = mapper.readTree(data);
+
+            JsonNode spawnPoint = rootNode.get("spawn_point");
+            this.setSpawnPoint(new Pos(spawnPoint.get("x").asDouble(),
+                    spawnPoint.get("y").asDouble(),
+                    spawnPoint.get("z").asDouble(),
+                    spawnPoint.get("yaw").floatValue(),
+                    spawnPoint.get("pitch").floatValue()));
+
+            this.setForwardingSecret(rootNode.get("forwarding_secret").asText());
+            this.setMongoDBConnectionString(rootNode.get("mongodb_connection_url").asText());
+        } catch (JsonProcessingException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+    private JsonNode buildJsonTree() {
         ObjectNode rootNode = mapper.createObjectNode();
         ObjectNode spawnPoint = mapper.createObjectNode();
 
@@ -65,23 +91,6 @@ public class Config {
 
         rootNode.set("spawn_point", spawnPoint);
 
-        return rootNode.asText();
-    }
-    private void serialize(String data) {
-        try {
-            JsonNode rootNode = mapper.readTree(data);
-
-            JsonNode spawnPoint = rootNode.get("spawn_point");
-            this.setSpawnPoint(new Pos(spawnPoint.get("x").asDouble(),
-                    spawnPoint.get("y").asDouble(),
-                    spawnPoint.get("z").asDouble(),
-                    spawnPoint.get("yaw").floatValue(),
-                    spawnPoint.get("pitch").floatValue()));
-
-            this.setForwardingSecret(rootNode.get("forwarding_secret").asText());
-            this.setMongoDBConnectionString(rootNode.get("mongodb_connection_url").asText());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return rootNode;
     }
 }
