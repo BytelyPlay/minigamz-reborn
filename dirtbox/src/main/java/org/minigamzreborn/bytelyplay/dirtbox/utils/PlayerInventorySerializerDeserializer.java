@@ -14,11 +14,14 @@ import net.minestom.server.codec.Result;
 import net.minestom.server.codec.Transcoder;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.utils.inventory.PlayerInventoryUtils;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -43,17 +46,20 @@ public class PlayerInventorySerializerDeserializer {
         return rootNode;
     }
     public static void fillInventory(JsonNode rootNode, PlayerInventory inv) {
-        for (int i = 0; i < rootNode.size(); i++) {
-            JsonNode subNode = rootNode.get(String.valueOf(i));
+        Set<Map.Entry<String, JsonNode>> entries = rootNode.properties();
+
+        for (Map.Entry<String, JsonNode> entry : entries) {
+            JsonNode subNode = entry.getValue();
             if (subNode == null) continue;
 
             Result<ItemStack> result = ItemStack.CODEC.decode(Transcoder.JSON, JsonParser.parseString(subNode.textValue()));
             ItemStack resultStack = result.orElse(null);
+
             if (resultStack == null) {
                 log.warn("Couldn't decode ItemStack.");
                 continue;
             }
-            inv.setItemStack(i, resultStack);
+            inv.setItemStack(Integer.parseInt(entry.getKey()), resultStack);
         }
     }
 }
