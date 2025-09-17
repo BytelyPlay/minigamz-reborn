@@ -10,7 +10,7 @@ allprojects {
     }
 }
 subprojects {
-    version = "1.0.1-ALPHA"
+    version = "1.0.0-BETA"
 
     apply(plugin = "java")
     apply(plugin = "com.gradleup.shadow")
