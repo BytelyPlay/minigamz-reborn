@@ -16,8 +16,10 @@ import org.bson.UuidRepresentation;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.*;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.ChunkLoaders;
+import org.minigamzreborn.bytelyplay.dirtbox.minestom.CPlayer;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.MapRegenerationHelpers;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.SavePlayerInventory;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
@@ -84,10 +86,14 @@ public class Main {
         SchedulerManager manager = MinecraftServer.getSchedulerManager();
 
         manager.buildShutdownTask(protocolServer::disconnect);
+        manager.buildShutdownTask(SavePlayerInventory::saveAllPlayerInventories);
         manager.buildShutdownTask(MongoDBConstants.client::close);
 
         manager.buildTask(MapRegenerationHelpers::regenerateDirtboxMap)
                 .repeat(Duration.ofMinutes(5))
+                .schedule();
+        manager.buildTask(SavePlayerInventory::saveAllPlayerInventories)
+                .repeat(Duration.ofSeconds(30))
                 .schedule();
     }
     private void loadConfig() {

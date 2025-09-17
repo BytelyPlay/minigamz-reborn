@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 public class PlayerInventorySerializerDeserializer {
+    // TODO: also do the cursor so yeah.
     private static final ObjectMapper mapper = new ObjectMapper();
 
     public static JsonNode buildJsonTree(PlayerInventory inv) {
