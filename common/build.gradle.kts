@@ -6,7 +6,7 @@ group = "org.minigamzreborn.bytelyplay.common"
 dependencies {
     implementation("com.google.protobuf", "protobuf-java", "4.32.0")
     implementation("org.slf4j:slf4j-api:2.0.17")
-    implementation("io.netty:netty-all:4.2.4.Final")
+    implementation("io.netty:netty-all:4.2.6.Final")
 }
 protobuf {
     protoc {
