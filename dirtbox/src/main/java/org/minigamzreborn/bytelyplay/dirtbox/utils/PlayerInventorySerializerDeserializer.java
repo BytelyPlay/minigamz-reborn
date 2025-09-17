@@ -1,5 +1,6 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,34 +34,43 @@ public class PlayerInventorySerializerDeserializer {
         ObjectNode rootNode = mapper.createObjectNode();
 
         for (int i = 0; i < inv.getItemStacks().length; i++) {
-            ItemStack stack = inv.getItemStack(i);
-            if (stack.isAir()) continue;
+            try {
+                ItemStack stack = inv.getItemStack(i);
+                if (stack.isAir()) continue;
 
-            Result<@NotNull JsonElement> result = ItemStack.CODEC.encode(Transcoder.JSON, stack);
-            JsonElement jsonElement = result.orElse(null);
-            if (jsonElement == null) {
-                log.warn("ItemStack encoding failed...");
-                continue;
+                Result<@NotNull JsonElement> result = ItemStack.CODEC.encode(Transcoder.JSON, stack);
+                JsonElement jsonElement = result.orElse(null);
+                if (jsonElement == null) {
+                    log.warn("ItemStack encoding failed...");
+                    continue;
+                }
+                JsonNode node = mapper.readTree(result.orElseThrow().toString());
+                rootNode.set(String.valueOf(i), node);
+            } catch (JsonProcessingException e) {
+                log.error("JsonProcessingException happened while building json tree for a player inventory, continuing to the get itemstack", e);
             }
-            rootNode.put(String.valueOf(i), result.orElseThrow().toString());
         }
         return rootNode;
     }
     public static void fillInventory(JsonNode rootNode, PlayerInventory inv) {
-        Set<Map.Entry<String, JsonNode>> entries = rootNode.properties();
+        try {
+            Set<Map.Entry<String, JsonNode>> entries = rootNode.properties();
 
-        for (Map.Entry<String, JsonNode> entry : entries) {
-            JsonNode subNode = entry.getValue();
-            if (subNode == null) continue;
+            for (Map.Entry<String, JsonNode> entry : entries) {
+                JsonNode subNode = entry.getValue();
+                if (subNode == null) continue;
 
-            Result<ItemStack> result = ItemStack.CODEC.decode(Transcoder.JSON, JsonParser.parseString(subNode.textValue()));
-            ItemStack resultStack = result.orElse(null);
+                Result<ItemStack> result = ItemStack.CODEC.decode(Transcoder.JSON, JsonParser.parseString(mapper.writeValueAsString(subNode)));
+                ItemStack resultStack = result.orElse(null);
 
-            if (resultStack == null) {
-                log.warn("Couldn't decode ItemStack.");
-                continue;
+                if (resultStack == null) {
+                    log.warn("Couldn't decode ItemStack.");
+                    continue;
+                }
+                inv.setItemStack(Integer.parseInt(entry.getKey()), resultStack);
             }
-            inv.setItemStack(Integer.parseInt(entry.getKey()), resultStack);
+        } catch (JsonProcessingException e) {
+            throw new UncheckedIOException(e);
         }
     }
 }

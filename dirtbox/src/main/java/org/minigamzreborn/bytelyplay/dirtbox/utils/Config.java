@@ -43,10 +43,8 @@ public class Config {
 
             if (Files.exists(CONFIG_FILE_PATH)) {
                 deserialize(Files.readString(CONFIG_FILE_PATH));
-                log.debug("Deserializing config since there is a config.");
             } else {
                 Files.writeString(CONFIG_FILE_PATH, serialize());
-                log.debug("Serializing config since there is no config.");
             }
         } catch (IOException e) {
             throw new UncheckedIOException(e);

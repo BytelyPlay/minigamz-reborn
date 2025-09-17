@@ -16,10 +16,9 @@ import org.bson.UuidRepresentation;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.*;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.ChunkLoaders;
-import org.minigamzreborn.bytelyplay.dirtbox.minestom.CPlayer;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.MapRegenerationHelpers;
-import org.minigamzreborn.bytelyplay.dirtbox.utils.SavePlayerInventory;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.SaveLoadPlayerData;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
@@ -64,7 +63,7 @@ public class Main {
         dirtboxNode.addListener(PlayerBlockBreakEvent.class, PlayerBlockBreakHandler.getInstance()::blockBrokenDirtbox);
         dirtboxNode.addListener(PlayerMoveEvent.class, NoVoidFalling::playerMove);
         dirtboxNode.addListener(PlayerBlockPlaceEvent.class, PlayerBlockPlaceHandler::blockPlace);
-        dirtboxNode.addListener(PlayerDisconnectEvent.class, SaveLoadPlayerData::saveData);
+        dirtboxNode.addListener(PlayerDisconnectEvent.class, SavePlayerDataListeners::saveData);
     }
     private void setupProtocol() {
         protocolServer = ProtocolMain.initClient("127.0.0.1", 9485);
@@ -86,13 +85,13 @@ public class Main {
         SchedulerManager manager = MinecraftServer.getSchedulerManager();
 
         manager.buildShutdownTask(protocolServer::disconnect);
-        manager.buildShutdownTask(SavePlayerInventory::saveAllPlayerInventories);
+        manager.buildShutdownTask(SaveLoadPlayerData::saveAllPlayerInventories);
         manager.buildShutdownTask(MongoDBConstants.client::close);
 
         manager.buildTask(MapRegenerationHelpers::regenerateDirtboxMap)
                 .repeat(Duration.ofMinutes(5))
                 .schedule();
-        manager.buildTask(SavePlayerInventory::saveAllPlayerInventories)
+        manager.buildTask(SaveLoadPlayerData::saveAllPlayerInventories)
                 .repeat(Duration.ofSeconds(30))
                 .schedule();
     }
