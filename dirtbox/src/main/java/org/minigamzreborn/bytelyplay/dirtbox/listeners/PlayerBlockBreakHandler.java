@@ -6,6 +6,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.inventory.TransactionOption;
 import net.minestom.server.item.ItemStack;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.CoinItemStacks;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.ItemStackHelpers;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Messages;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.ShovelItemStacks;
 
@@ -32,25 +33,18 @@ public class PlayerBlockBreakHandler {
             Optional<Integer> shovelTier = ShovelItemStacks.getShovelTier(stack);
             if (shovelTier.isEmpty()) {
                 List<ItemStack> notAddedRaw = p.getInventory().addItemStacks(CoinItemStacks.getCoins(1), TransactionOption.ALL);
-                List<ItemStack> notAdded = removeUselessItemStacks(notAddedRaw);
+                List<ItemStack> notAdded = ItemStackHelpers.removeUselessItemStacks(notAddedRaw);
 
                 if (!notAdded.isEmpty()) p.sendMessage(Messages.NOT_ENOUGH_SPACE_IN_INVENTORY);
             } else {
                 int tier = shovelTier.orElseThrow();
                 List<ItemStack> notAddedRaw = p.getInventory().addItemStacks(CoinItemStacks.getCoins(tier  * 2), TransactionOption.ALL);
-                List<ItemStack> notAdded = removeUselessItemStacks(notAddedRaw);
+                List<ItemStack> notAdded = ItemStackHelpers.removeUselessItemStacks(notAddedRaw);
 
                 if (!notAdded.isEmpty()) p.sendMessage(Messages.NOT_ENOUGH_SPACE_IN_INVENTORY);
             }
         } else {
             event.setCancelled(true);
         }
-    }
-    private List<ItemStack> removeUselessItemStacks(List<ItemStack> stacks) {
-        ArrayList<ItemStack> updatedStacks = new ArrayList<>(stacks);
-
-        updatedStacks.removeIf(stack -> stack.isAir() || stack.amount() <= 0);
-
-        return List.copyOf(updatedStacks);
     }
 }
