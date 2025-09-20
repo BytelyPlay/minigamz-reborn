@@ -54,7 +54,7 @@ public class ProtoServer {
     }
     public void shutdown() {
         connectedClients.stream()
-                .filter(Client::isDisconnected)
+                .filter(client -> !client.isDisconnected())
                 .forEach(Client::disconnect);
         connectedClients.clear();
 

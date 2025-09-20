@@ -1,5 +1,6 @@
 package org.minigamzreborn.bytelyplay.velocity.listeners;
 
+import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.command.CommandExecuteEvent;
@@ -31,6 +32,7 @@ public class HandleAllCommands {
                 return;
             }
         }
+        if (e.getCommand().equals("shutdown")) return;
         e.setResult(CommandExecuteEvent.CommandResult.forwardToServer());
     }
 }

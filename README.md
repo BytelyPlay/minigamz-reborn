@@ -30,5 +30,4 @@ DisconnectPacketS2C (Self explanatory, its contents are irrelevant whatever it i
 1. convert to 100% gradle KTS
 2. add some way to configure where the server is and also the port and ip of which it is hosted if using minestom.
 3. employ a permission system and once again save all data in the mongodb database but permissions should be enums and ranks should be enums too, static not dynamic but you should be able to change a player's rank and change the player's permissions too but nothing else should be dynamic this would be in common and saved to the mongodb database (just because we already are using mongodb so yeah)
-4. ~~fully implement the protocol~~ (just needs testing now)
-5. (MAYBE) make an installer that installs all servers into a certain folder... written in java C++ whatever just one that works, should be fully automatic OR another option is to give users the option to run it in a docker container which would be 100% automatic too
+4. (MAYBE) make an installer that installs all servers into a certain folder... written in java C++ whatever just one that works, should be fully automatic OR another option is to give users the option to run it in a docker container which would be 100% automatic too
