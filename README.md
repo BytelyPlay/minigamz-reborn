@@ -3,7 +3,7 @@ A Velocity server with a Velocity plugin using a custom protocol that uses Proto
 Minestom, fabric whatever is used doesn't matter! \
 the only thing that DOES matter is EVERYTHING has to be custom-made (libraries are allowed)
 
-By the way, the implementation uses JDK 24 (had some JIT problems with jdk 23, still have them but... less i guess? to be specific a SIGFPE which indicates an invalid arthemtic operation on an integer, natively... JIT probably compiled my world regeneration thing and then yeah)
+This project uses JDK 21
 
 # The Protocol
 All packets have a PacketType and a class associated with the data. \
@@ -30,7 +30,6 @@ DisconnectPacketS2C (Self explanatory, its contents are irrelevant whatever it i
 1. convert to 100% gradle KTS
 2. add some way to configure where the server is and also the port and ip of which it is hosted if using minestom.
 3. get inventory persistence and synchronize all servers together properly with a mongodb database or such
-4. employ a permission system and once again save all data in the mongodb database but permissions should be enums and ranks should be enums too, static not dynamic but you should be able to change a player's rank and change the player's permissions too but nothing else should be dynamic
+4. employ a permission system and once again save all data in the mongodb database but permissions should be enums and ranks should be enums too, static not dynamic but you should be able to change a player's rank and change the player's permissions too but nothing else should be dynamic this would be in common and saved to the mongodb database (just because we already are using mongodb so yeah)
 5. fully implement the protocol
-6. if even possible try to ix the SIGFPE whenever you regenerate the dirtbox world. maybe a different approach has to be taken
-7. (MAYBE) make an installer that installs all servers into a certain folder... written in java C++ whatever just one that works, should be fully automatic OR another option is to give users the option to run it in a docker container which would be 100% automatic too
+6. (MAYBE) make an installer that installs all servers into a certain folder... written in java C++ whatever just one that works, should be fully automatic OR another option is to give users the option to run it in a docker container which would be 100% automatic too

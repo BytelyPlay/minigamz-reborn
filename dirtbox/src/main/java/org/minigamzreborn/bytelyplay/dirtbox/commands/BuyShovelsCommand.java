@@ -15,7 +15,7 @@ public class BuyShovelsCommand extends Command {
 
     private void execute(CommandSender sender, CommandContext ctx) {
         if (sender instanceof Player p) {
-            p.openInventory(new ShovelBuyingGUI().getInventory());
+            p.openInventory(new ShovelBuyingGUI());
         }
     }
 }

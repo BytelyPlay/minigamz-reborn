@@ -3,6 +3,7 @@ package org.minigamzreborn.bytelyplay.dirtbox.utils;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
@@ -22,10 +23,13 @@ public class ShovelItemStacks {
                                 .color(NamedTextColor.DARK_RED))
                         .append(Component.text(" Shovel")
                                 .color(NamedTextColor.AQUA))
+                        .decoration(TextDecoration.ITALIC, false)
         ).withLore(
                 Component.text(
                         "This shovel doubles your coins, this tier gives you " + tier * 2 + " coins per block broken."
                 )
+                        .decoration(TextDecoration.ITALIC, false)
+                        .color(NamedTextColor.GREEN)
         ).with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder()
                 .putInt(SHOVEL_TIER_KEY, tier)
                 .build()));
