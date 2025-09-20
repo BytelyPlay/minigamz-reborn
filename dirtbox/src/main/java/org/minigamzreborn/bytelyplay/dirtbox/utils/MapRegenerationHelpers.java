@@ -34,10 +34,7 @@ public class MapRegenerationHelpers {
             Section loadedSection = loadedChunk.getSection(sectionIndex);
 
             realSection.blockPalette().fill(Block.AIR.id());
-            // this line causes some bug in the JRE and makes it do something that makes it do an invalid arithmetic operation with integers... (SIGFPE)
-            // realSection.blockPalette().setAll((x, y, z) -> loadedSection.blockPalette().get(x, y, z));
 
-            // this should be just as good performance wise, also added a few things so it is an absolute copy
             loadedSection.blockPalette().getAll(realSection.blockPalette()::set);
             loadedSection.biomePalette().getAll(realSection.biomePalette()::set);
             realSection.setBlockLight(loadedSection.blockLight().array());
