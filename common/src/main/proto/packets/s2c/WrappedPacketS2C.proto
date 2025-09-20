@@ -1,0 +1,10 @@
+syntax = "proto3";
+package org.minigamzreborn.bytelyplay.protobuffer.packets.s2c;
+
+import "packets/s2c/HandShakePacketS2C.proto";
+
+message WrappedPacketS2C {
+  oneof body {
+    HandShakePacketS2C handShake = 1;
+  }
+}

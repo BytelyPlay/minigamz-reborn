@@ -1,10 +1,10 @@
 syntax = "proto3";
-package org.minigamzreborn.bytelyplay.protobuffer.packets;
+package org.minigamzreborn.bytelyplay.protobuffer.packets.c2s;
 
-import "packets/HandShakePacketC2S.proto";
-import "packets/RegisterServerPacketC2S.proto";
-import "packets/UnregisterServerPacketC2S.proto";
-import "packets/TransferPlayerPacketC2S.proto";
+import "packets/c2s/HandShakePacketC2S.proto";
+import "packets/c2s/RegisterServerPacketC2S.proto";
+import "packets/c2s/UnregisterServerPacketC2S.proto";
+import "packets/c2s/TransferPlayerPacketC2S.proto";
 
 message WrappedPacketC2S {
   oneof body {

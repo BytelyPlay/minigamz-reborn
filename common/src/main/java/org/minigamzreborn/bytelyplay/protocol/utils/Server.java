@@ -6,8 +6,8 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.TransferPlayerPacketC2SOuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.TransferPlayerPacketC2SOuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 
 import java.util.UUID;
 

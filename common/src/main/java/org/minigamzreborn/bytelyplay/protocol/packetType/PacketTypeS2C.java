@@ -2,7 +2,7 @@ package org.minigamzreborn.bytelyplay.protocol.packetType;
 
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.Parser;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketS2COuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.WrappedPacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
 import java.util.function.BiConsumer;

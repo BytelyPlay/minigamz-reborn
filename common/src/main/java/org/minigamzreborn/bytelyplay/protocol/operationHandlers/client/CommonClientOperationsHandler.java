@@ -1,6 +1,6 @@
 package org.minigamzreborn.bytelyplay.protocol.operationHandlers.client;
 
-import org.minigamzreborn.bytelyplay.protobuffer.packets.HandShakePacketS2COuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.HandShakePacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 

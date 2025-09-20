@@ -1,0 +1,4 @@
+syntax = "proto3";
+package org.minigamzreborn.bytelyplay.protobuffer.packets.s2c;
+
+message DisconnectPacketS2C {}

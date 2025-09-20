@@ -3,7 +3,7 @@ package org.minigamzreborn.bytelyplay.protocol.handlers.decode;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 
 import java.util.Arrays;
 import java.util.List;

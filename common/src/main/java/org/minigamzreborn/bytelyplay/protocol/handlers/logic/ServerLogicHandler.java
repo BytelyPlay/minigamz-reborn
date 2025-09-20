@@ -3,7 +3,7 @@ package org.minigamzreborn.bytelyplay.protocol.handlers.logic;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 import org.minigamzreborn.bytelyplay.protocol.utils.Packets;

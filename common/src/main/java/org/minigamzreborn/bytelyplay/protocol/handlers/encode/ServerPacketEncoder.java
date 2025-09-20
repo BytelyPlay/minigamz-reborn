@@ -3,7 +3,7 @@ package org.minigamzreborn.bytelyplay.protocol.handlers.encode;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketS2COuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.WrappedPacketS2COuterClass;
 
 public class ServerPacketEncoder extends MessageToByteEncoder<WrappedPacketS2COuterClass.WrappedPacketS2C> {
     @Override

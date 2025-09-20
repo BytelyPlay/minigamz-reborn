@@ -25,8 +25,8 @@ import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.MapRegenerationHelpers;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.SaveLoadPlayerData;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.RegisterServerPacketC2SOuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.RegisterServerPacketC2SOuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 

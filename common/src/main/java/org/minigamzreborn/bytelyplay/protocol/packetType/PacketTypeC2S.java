@@ -3,7 +3,7 @@ package org.minigamzreborn.bytelyplay.protocol.packetType;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.Parser;
 import lombok.extern.slf4j.Slf4j;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.WrappedPacketC2SOuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 
 import java.util.function.BiConsumer;

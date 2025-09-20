@@ -21,10 +21,10 @@ public abstract class PacketType<T extends GeneratedMessage, V> {
         this.packetDataClass = packetDataClass;
     }
 
-    public ByteBuffer encode(T packet) {
+    public final ByteBuffer encode(T packet) {
         return ByteBuffer.wrap(packet.toByteArray());
     }
-    public @Nullable T decode(ByteBuffer buffer) {
+    public final @Nullable T decode(ByteBuffer buffer) {
         try {
             return parser.parseFrom(buffer);
         } catch (InvalidProtocolBufferException e) {
