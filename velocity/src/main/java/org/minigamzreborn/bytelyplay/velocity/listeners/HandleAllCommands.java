@@ -16,7 +16,7 @@ import java.util.Optional;
 public class HandleAllCommands {
     @Subscribe
     public void onCommandExecuteEvent(CommandExecuteEvent e) {
-        // please make this some better system with like brigadier
+        // TODO: please make this some better system with like brigadier
         if (e.getCommand().equals("hub")) {
             CommandSource source = e.getCommandSource();
             if (source instanceof Player p) {
