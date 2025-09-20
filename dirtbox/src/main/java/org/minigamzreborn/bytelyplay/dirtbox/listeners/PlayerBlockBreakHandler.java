@@ -10,7 +10,6 @@ import org.minigamzreborn.bytelyplay.dirtbox.utils.ItemStackHelpers;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Messages;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.ShovelItemStacks;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

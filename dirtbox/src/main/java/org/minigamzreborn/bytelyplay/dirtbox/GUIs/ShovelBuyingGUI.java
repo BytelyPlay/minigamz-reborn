@@ -1,5 +1,6 @@
 package org.minigamzreborn.bytelyplay.dirtbox.GUIs;
 
+import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.Player;
@@ -13,9 +14,7 @@ import net.minestom.server.item.ItemStack;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Messages;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.ShovelItemStacks;
 
-import java.util.List;
-import java.util.Optional;
-
+@Slf4j
 public class ShovelBuyingGUI extends Gui {
     private final Inventory inv = new Inventory(InventoryType.CHEST_3_ROW, Component
             .text("Buy Shovels")
@@ -23,6 +22,7 @@ public class ShovelBuyingGUI extends Gui {
 
     public ShovelBuyingGUI() {
         inv.setItemStack(10, ShovelItemStacks.getShovel(1));
+        setup();
     }
 
     @Override
@@ -32,6 +32,7 @@ public class ShovelBuyingGUI extends Gui {
 
     @Override
     public void preClick(InventoryPreClickEvent e) {
+        log.debug("delme");
         e.setCancelled(true);
 
         Player p = e.getPlayer();

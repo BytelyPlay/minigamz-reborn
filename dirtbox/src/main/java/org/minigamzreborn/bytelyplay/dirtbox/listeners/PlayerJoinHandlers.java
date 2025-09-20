@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
-import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.Instances;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.PlayerInventorySerializerDeserializer;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.SaveLoadPlayerData;
 

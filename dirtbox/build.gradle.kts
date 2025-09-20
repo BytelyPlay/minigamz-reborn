@@ -8,6 +8,7 @@ group = "org.minigamzreborn.bytelyplay.dirtbox"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {

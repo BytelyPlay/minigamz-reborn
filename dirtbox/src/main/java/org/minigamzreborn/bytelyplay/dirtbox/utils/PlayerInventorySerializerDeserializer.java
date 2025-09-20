@@ -1,29 +1,21 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.minestom.server.codec.Result;
 import net.minestom.server.codec.Transcoder;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
-import net.minestom.server.utils.inventory.PlayerInventoryUtils;
-import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 public class PlayerInventorySerializerDeserializer {

@@ -1,15 +1,12 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
-import net.kyori.adventure.nbt.BinaryTag;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.minestom.server.component.DataComponent;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.CustomData;
-import net.minestom.server.recipe.display.SlotDisplay;
 
 import java.util.Optional;
 
@@ -18,7 +15,7 @@ public class ShovelItemStacks {
 
     public static ItemStack getShovel(int tier) {
         if (tier <= 0) throw new IllegalArgumentException("tier cannot be less than 1");
-        return ItemStack.of(Material.AIR).withCustomName(
+        return ItemStack.of(Material.DIAMOND_SHOVEL).withCustomName(
                 Component.text("Tier ")
                         .color(NamedTextColor.GREEN)
                         .append(Component.text(tier)
