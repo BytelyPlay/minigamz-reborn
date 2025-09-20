@@ -7,10 +7,10 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import lombok.Getter;
-import org.minigamzreborn.bytelyplay.protocol.handlers.decode.ClientPacketDecoder;
-import org.minigamzreborn.bytelyplay.protocol.handlers.encode.ClientPacketEncoder;
-import org.minigamzreborn.bytelyplay.protocol.handlers.logic.ClientLogicHandler;
-import org.minigamzreborn.bytelyplay.protocol.utils.CloseFutureListener;
+import org.minigamzreborn.bytelyplay.protocol.pipeline.decode.ClientPacketDecoder;
+import org.minigamzreborn.bytelyplay.protocol.pipeline.encode.ClientPacketEncoder;
+import org.minigamzreborn.bytelyplay.protocol.pipeline.logic.ClientLogicHandler;
+import org.minigamzreborn.bytelyplay.protocol.utils.CloseEventLoopFutureListener;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
 import java.net.InetSocketAddress;
@@ -26,7 +26,7 @@ public class ProtoClient {
                 .option(ChannelOption.SO_KEEPALIVE, true)
                 .handler(getInitializer());
         ChannelFuture future = bootstrap.connect(new InetSocketAddress(ip, port));
-        future.channel().closeFuture().addListener(new CloseFutureListener(workerGroup));
+        future.channel().closeFuture().addListener(new CloseEventLoopFutureListener(workerGroup));
         try {
             future.sync();
         } catch (InterruptedException e) {

@@ -1,5 +1,6 @@
 package org.minigamzreborn.bytelyplay.protocol.operationHandlers.client;
 
+import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.DisconnectPacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.HandShakePacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
@@ -10,5 +11,12 @@ public class CommonClientOperationsHandler {
             server.setHandShaked(true);
             server.flush();
         }
+    }
+
+    public static void disconnect(DisconnectPacketS2COuterClass.DisconnectPacketS2C disconnect, Server server) {
+        server.setDisconnected(true);
+        server.disconnect();
+        
+        ClientOperationsHandler.getInstance().serverDisconnected();
     }
 }

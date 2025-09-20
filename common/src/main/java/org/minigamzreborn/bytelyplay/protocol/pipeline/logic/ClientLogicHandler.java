@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.protocol.handlers.logic;
+package org.minigamzreborn.bytelyplay.protocol.pipeline.logic;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

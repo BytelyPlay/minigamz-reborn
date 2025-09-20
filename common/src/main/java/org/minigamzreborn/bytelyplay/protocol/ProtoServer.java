@@ -6,11 +6,11 @@ import io.netty.channel.nio.NioIoHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import org.minigamzreborn.bytelyplay.protocol.handlers.decode.ServerPacketDecoder;
-import org.minigamzreborn.bytelyplay.protocol.handlers.encode.ServerPacketEncoder;
-import org.minigamzreborn.bytelyplay.protocol.handlers.logic.ServerLogicHandler;
+import org.minigamzreborn.bytelyplay.protocol.pipeline.decode.ServerPacketDecoder;
+import org.minigamzreborn.bytelyplay.protocol.pipeline.encode.ServerPacketEncoder;
+import org.minigamzreborn.bytelyplay.protocol.pipeline.logic.ServerLogicHandler;
 import org.minigamzreborn.bytelyplay.protocol.utils.Client;
-import org.minigamzreborn.bytelyplay.protocol.utils.CloseFutureListener;
+import org.minigamzreborn.bytelyplay.protocol.utils.CloseEventLoopFutureListener;
 
 import java.net.InetSocketAddress;
 
@@ -26,7 +26,7 @@ public class ProtoServer {
                 .option(ChannelOption.SO_BACKLOG, 16)
                 .childOption(ChannelOption.SO_KEEPALIVE, true);
         ChannelFuture acceptConnections = bootstrap.bind(new InetSocketAddress(ip, port));
-        acceptConnections.channel().closeFuture().addListener(new CloseFutureListener(bossGroup, workerGroup));
+        acceptConnections.channel().closeFuture().addListener(new CloseEventLoopFutureListener(bossGroup, workerGroup));
     }
     private void setupChannel(SocketChannel channel) {
         Client client = new Client(channel);

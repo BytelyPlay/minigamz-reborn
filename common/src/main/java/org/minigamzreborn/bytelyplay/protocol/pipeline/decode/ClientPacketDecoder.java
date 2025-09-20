@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.protocol.handlers.decode;
+package org.minigamzreborn.bytelyplay.protocol.pipeline.decode;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

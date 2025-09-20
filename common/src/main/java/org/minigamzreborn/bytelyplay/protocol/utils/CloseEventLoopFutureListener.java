@@ -7,9 +7,9 @@ import io.netty.util.concurrent.GenericFutureListener;
 
 import java.util.List;
 
-public class CloseFutureListener implements GenericFutureListener<ChannelFuture> {
+public class CloseEventLoopFutureListener implements GenericFutureListener<ChannelFuture> {
     private final List<EventLoopGroup> closeOnShutdown;
-    public CloseFutureListener(EventLoopGroup... toCloseOnShutdown) {
+    public CloseEventLoopFutureListener(EventLoopGroup... toCloseOnShutdown) {
         closeOnShutdown = List.of(toCloseOnShutdown);
     }
     @Override

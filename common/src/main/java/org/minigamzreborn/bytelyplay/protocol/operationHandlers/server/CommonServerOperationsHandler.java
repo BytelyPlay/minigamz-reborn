@@ -2,10 +2,7 @@ package org.minigamzreborn.bytelyplay.protocol.operationHandlers.server;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.HandShakePacketC2SOuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.RegisterServerPacketC2SOuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.TransferPlayerPacketC2SOuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.UnregisterServerPacketC2SOuterClass;
+import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.*;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.HandShakePacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.WrappedPacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
@@ -49,5 +46,10 @@ public class CommonServerOperationsHandler {
     public static void transferPlayer(TransferPlayerPacketC2SOuterClass.TransferPlayerPacketC2S packet, Client client) {
         UUID uuid = UUID.fromString(packet.getUuid());
         ServerOperationsHandler.getInstance().transferPlayer(uuid, packet.getType());
+    }
+
+    public static void disconnect(DisconnectPacketC2SOuterClass.DisconnectPacketC2S disconnect, Client client) {
+        client.setDisconnected(true);
+        client.disconnect();
     }
 }

@@ -5,6 +5,7 @@ import "packets/c2s/HandShakePacketC2S.proto";
 import "packets/c2s/RegisterServerPacketC2S.proto";
 import "packets/c2s/UnregisterServerPacketC2S.proto";
 import "packets/c2s/TransferPlayerPacketC2S.proto";
+import "packets/c2s/DisconnectPacketC2S.proto";
 
 message WrappedPacketC2S {
   oneof body {
@@ -12,5 +13,6 @@ message WrappedPacketC2S {
     RegisterServerPacketC2S registerServerPacket = 2;
     UnregisterServerPacketC2S unregisterServerPacket = 3;
     TransferPlayerPacketC2S transferPlayerPacket = 4;
+    DisconnectPacketC2S disconnectPacket = 5;
   }
 }

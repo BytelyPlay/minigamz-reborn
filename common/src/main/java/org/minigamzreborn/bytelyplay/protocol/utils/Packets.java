@@ -5,10 +5,8 @@ import org.minigamzreborn.bytelyplay.protocol.operationHandlers.server.CommonSer
 import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.CommonClientOperationsHandler;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeS2C;
-import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.HandShakePacketTypeC2S;
-import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.RegisterServerPacketTypeC2S;
-import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.TransferPlayerPacketTypeC2S;
-import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.UnregisterServerPacketTypeC2S;
+import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.*;
+import org.minigamzreborn.bytelyplay.protocol.packetType.s2c.DisconnectPacketTypeS2C;
 import org.minigamzreborn.bytelyplay.protocol.packetType.s2c.HandShakePacketTypeS2C;
 
 import java.util.HashSet;
@@ -39,21 +37,34 @@ public class Packets {
             )
     );
     public static final TransferPlayerPacketTypeC2S transferPlayerPacketTypeC2S = registerC2S(
-      new TransferPlayerPacketTypeC2S(
-              CommonServerOperationsHandler::transferPlayer
-      )
+            new TransferPlayerPacketTypeC2S(
+                    CommonServerOperationsHandler::transferPlayer
+            )
+    );
+    public static final DisconnectPacketTypeC2S disconnectPacketTypeC2S = registerC2S(
+            new DisconnectPacketTypeC2S(
+                    CommonServerOperationsHandler::disconnect
+            )
+    );
+    public static final DisconnectPacketTypeS2C disconnectPacketTypeS2C = registerS2C(
+            new DisconnectPacketTypeS2C(
+                    CommonClientOperationsHandler::disconnect
+            )
     );
 
     public static HashSet<PacketTypeC2S<?>> getC2SPackets() {
         return (HashSet<PacketTypeC2S<?>>) C2SPackets.clone();
     }
+
     public static HashSet<PacketTypeS2C<?>> getS2CPackets() {
         return (HashSet<PacketTypeS2C<?>>) S2CPackets.clone();
     }
+
     public static <M extends GeneratedMessage, T extends PacketTypeS2C<M>> T registerS2C(T register) {
         S2CPackets.add(register);
         return register;
     }
+
     public static <M extends GeneratedMessage, T extends PacketTypeC2S<M>> T registerC2S(T register) {
         C2SPackets.add(register);
         return register;
