@@ -11,9 +11,5 @@ public class ServerStartedListener {
         Main main = Main.getInstance();
         Main.setMinecraftServer(server);
         main.initializeProtocol(server);
-
-        CommandDispatcher<ServerCommandSource> dispatcher = server.getCommandManager().getDispatcher();
-
-        // Commands.registerCommands(dispatcher);
     }
 }

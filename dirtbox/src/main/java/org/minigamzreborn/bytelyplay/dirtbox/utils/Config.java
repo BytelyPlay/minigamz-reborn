@@ -27,6 +27,10 @@ public class Config {
     private String forwardingSecret = "";
     @Getter @Setter(value = AccessLevel.PRIVATE)
     private String mongoDBConnectionString = "mongodb://localhost:27017";
+    @Getter @Setter(value = AccessLevel.PRIVATE)
+    private String ip = "127.0.0.1";
+    @Getter @Setter(value = AccessLevel.PRIVATE)
+    private int port = 25569;
 
     private static Config instance;
 

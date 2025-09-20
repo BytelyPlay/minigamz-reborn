@@ -3,9 +3,12 @@ package org.minigamzreborn.bytelyplay.velocity;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import org.minigamzreborn.bytelyplay.protocol.ProtoServer;
+import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 import org.minigamzreborn.bytelyplay.velocity.listeners.HandleAllCommands;
 import org.minigamzreborn.bytelyplay.velocity.listeners.PlayerJoinListener;
 import lombok.Getter;
@@ -33,6 +36,8 @@ public class Main {
     private final Logger logger;
     @Getter
     private final ProxyServer server;
+    @Getter
+    private ProtoServer protocolServer;
 
     @Getter
     private static Main instance;
@@ -49,11 +54,16 @@ public class Main {
     public void onProxyInitialized(ProxyInitializeEvent event) {
         String ip = "0.0.0.0";
         int port = 9485;
-        ProtocolMain.initServer(ip, port);
+        protocolServer = ProtocolMain.initServer(ip, port);
         logger.info("Listening on {}:{}", ip, port);
 
         server.getEventManager().register(this, new PlayerJoinListener());
         server.getEventManager().register(this, new HandleAllCommands());
+    }
+    @Subscribe
+    public void onProxyShutdown(ProxyShutdownEvent e) {
+        logger.info("Shutting down Server.");
+        protocolServer.shutdown();
     }
     public Optional<RegisteredServer> getRandomServerOfType(ServerTypeOuterClass.ServerType toType) {
         List<RegisteredServer> options = new ArrayList<>();

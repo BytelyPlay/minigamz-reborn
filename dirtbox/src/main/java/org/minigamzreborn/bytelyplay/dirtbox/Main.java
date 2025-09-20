@@ -7,7 +7,6 @@ import lombok.Getter;
 import net.minestom.server.Auth;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandManager;
-import net.minestom.server.command.builder.Command;
 import net.minestom.server.event.EventNode;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.*;
@@ -20,14 +19,17 @@ import org.minigamzreborn.bytelyplay.dirtbox.commands.BuyShovelsCommand;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.ChunkLoaders;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.Instances;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
+import org.minigamzreborn.bytelyplay.dirtbox.impl.ClientOperationsHandlerImpl;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.*;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.MapRegenerationHelpers;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.SaveLoadPlayerData;
+import org.minigamzreborn.bytelyplay.dirtbox.utils.ShutdownLogic;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
+import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.ClientOperationsHandler;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
 import java.net.InetSocketAddress;
@@ -58,7 +60,7 @@ public class Main {
         setupCommands();
 
         // TODO: Make this configurable.
-        server.start(new InetSocketAddress("0.0.0.0", 25569));
+        server.start(new InetSocketAddress(Config.getInstance().getIp(), Config.getInstance().getPort()));
     }
     private void setupEvents() {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
@@ -71,12 +73,13 @@ public class Main {
         dirtboxNode.addListener(PlayerDisconnectEvent.class, SavePlayerDataListeners::saveData);
     }
     private void setupProtocol() {
+        ClientOperationsHandler.setInstance(new ClientOperationsHandlerImpl());
         protocolServer = ProtocolMain.initClient("127.0.0.1", 9485);
 
         protocolServer.sendPacket(WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
                 .setRegisterServerPacket(RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S.newBuilder()
-                        .setAddress("127.0.0.1")
-                        .setPort(25569)
+                        .setAddress(Config.getInstance().getIp())
+                        .setPort(Config.getInstance().getPort())
                         .setType(ServerTypeOuterClass.ServerType.DIRTBOX)
                         .build())
                 .build());
@@ -89,6 +92,7 @@ public class Main {
     private void setupScheduledTasks() {
         SchedulerManager manager = MinecraftServer.getSchedulerManager();
 
+        manager.buildShutdownTask(ShutdownLogic::shutdownTasks);
         manager.buildShutdownTask(protocolServer::disconnect);
         manager.buildShutdownTask(SaveLoadPlayerData::saveAllPlayerInventories);
         manager.buildShutdownTask(MongoDBConstants.client::close);

@@ -19,6 +19,7 @@ import org.minigamzreborn.bytelyplay.hub.NPCs.RandomItemsNPC;
 import org.minigamzreborn.bytelyplay.hub.events.NPCInteractionEvents;
 import org.minigamzreborn.bytelyplay.hub.events.PlayerLoginHandler;
 import org.minigamzreborn.bytelyplay.hub.events.PlayerSkinEvent;
+import org.minigamzreborn.bytelyplay.hub.impl.ClientOperationsHandlerImpl;
 import org.minigamzreborn.bytelyplay.hub.scheduled.ShutdownHandler;
 import org.minigamzreborn.bytelyplay.hub.utils.Config;
 import org.minigamzreborn.bytelyplay.hub.utils.Constants;
@@ -27,6 +28,7 @@ import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.RegisterServerPacke
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
+import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.ClientOperationsHandler;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
 import java.io.BufferedOutputStream;
@@ -97,6 +99,7 @@ public class Main {
         }
     }
     private Server setupProtocol() {
+        ClientOperationsHandler.setInstance(new ClientOperationsHandlerImpl());
         return ProtocolMain.initClient("127.0.0.1", 9485);
     }
     private void setupServer() {

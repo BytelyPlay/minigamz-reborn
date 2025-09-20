@@ -12,7 +12,9 @@ import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
+import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.ClientOperationsHandler;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
+import org.minigamzreborn.bytelyplay.randomItems.impl.ClientOperationsHandlerImpl;
 
 @Slf4j
 public class Main implements ModInitializer {
@@ -36,6 +38,7 @@ public class Main implements ModInitializer {
         minecraftServer = mcServer;
     }
     public void initializeProtocol(MinecraftServer mcServer) {
+        ClientOperationsHandler.setInstance(new ClientOperationsHandlerImpl());
         protocolServer = ProtocolMain.initClient("127.0.0.1", 9485);
         protocolServer.sendPacket(
                 WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()

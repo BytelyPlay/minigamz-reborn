@@ -14,5 +14,6 @@ public final class ShutdownHandler {
                         .setPort(Config.getInstance().getPort())
                         .build())
                 .build());
+        Main.getInstance().getServer().disconnect();
     }
 }
