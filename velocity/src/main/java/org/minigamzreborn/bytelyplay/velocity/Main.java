@@ -1,14 +1,18 @@
 package org.minigamzreborn.bytelyplay.velocity;
 
 import com.google.inject.Inject;
+import com.mojang.brigadier.CommandDispatcher;
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import org.bytelyplay.brigadierHelpers.utils.Commands;
 import org.minigamzreborn.bytelyplay.protocol.ProtoServer;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
+import org.minigamzreborn.bytelyplay.velocity.commands.HubCommand;
 import org.minigamzreborn.bytelyplay.velocity.listeners.HandleAllCommands;
 import org.minigamzreborn.bytelyplay.velocity.listeners.PlayerJoinListener;
 import lombok.Getter;
@@ -33,6 +37,8 @@ import java.util.concurrent.ThreadLocalRandom;
 )
 public class Main {
     @Getter
+    private CommandDispatcher<CommandSource> dispatcher;
+    @Getter
     private final Logger logger;
     @Getter
     private final ProxyServer server;
@@ -52,6 +58,9 @@ public class Main {
     }
     @Subscribe
     public void onProxyInitialized(ProxyInitializeEvent event) {
+        dispatcher = new CommandDispatcher<>();
+        Commands<CommandSource> commands = new Commands<>(dispatcher);
+        // TODO: make these constants.
         String ip = "0.0.0.0";
         int port = 9485;
         protocolServer = ProtocolMain.initServer(ip, port);
@@ -59,6 +68,8 @@ public class Main {
 
         server.getEventManager().register(this, new PlayerJoinListener());
         server.getEventManager().register(this, new HandleAllCommands());
+
+        commands.register(new HubCommand());
     }
     @Subscribe
     public void onProxyShutdown(ProxyShutdownEvent e) {

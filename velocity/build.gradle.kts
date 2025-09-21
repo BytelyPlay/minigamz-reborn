@@ -7,6 +7,7 @@ group = "org.minigamzreborn.bytelyplay.velocity"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 repositories {
@@ -20,6 +21,11 @@ dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
     implementation(project(":common"))
+
+    // from maven local check https://github.com/BytelyPlay/brigadier-helper
+    implementation("org.bytelyplay.brigadierHelpers:BrigadierBytelyplayHelpersLib:1.0.0-ALPHA") {
+        isTransitive = false
+    }
 }
 
 tasks.test {
