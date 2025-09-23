@@ -65,6 +65,7 @@ public class Main {
         setupServer();
         setupScheduledTasks();
 
+        // make configurable
         server.start(new InetSocketAddress("0.0.0.0", port));
         setupNPCs();
     }
@@ -121,7 +122,6 @@ public class Main {
         DirtBoxNPC dirtBoxNPC = new DirtBoxNPC();
 
         randomItemsNPC.setInstance(Instances.hub, new Pos(0.5, 11, 2.5, -180, 0));
-        // TODO: place it on a diamond block.
         dirtBoxNPC.setInstance(Instances.hub, new Pos(-1.5, 11, 0.5, 90, 0));
     }
     private void setupScheduledTasks() {

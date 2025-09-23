@@ -59,7 +59,6 @@ public class Main {
         setupScheduledTasks();
         setupCommands();
 
-        // TODO: Make this configurable.
         server.start(new InetSocketAddress(Config.getInstance().getIp(), Config.getInstance().getPort()));
     }
     private void setupEvents() {

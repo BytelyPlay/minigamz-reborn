@@ -27,6 +27,7 @@ public class Config {
     private String forwardingSecret = "";
     @Getter @Setter(value = AccessLevel.PRIVATE)
     private String mongoDBConnectionString = "mongodb://localhost:27017";
+    // TODO: add the ip and port to the json so it is configurable also make a listening ip and ip for the velocity server to use.
     @Getter @Setter(value = AccessLevel.PRIVATE)
     private String ip = "127.0.0.1";
     @Getter @Setter(value = AccessLevel.PRIVATE)

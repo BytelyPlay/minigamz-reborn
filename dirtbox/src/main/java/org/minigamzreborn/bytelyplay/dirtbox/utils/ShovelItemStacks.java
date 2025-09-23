@@ -8,6 +8,8 @@ import net.minestom.server.component.DataComponents;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.item.component.CustomData;
+import net.minestom.server.item.component.EnchantmentList;
+import net.minestom.server.item.enchant.Enchantment;
 
 import java.util.Optional;
 
@@ -26,13 +28,17 @@ public class ShovelItemStacks {
                         .decoration(TextDecoration.ITALIC, false)
         ).withLore(
                 Component.text(
-                        "This shovel doubles your coins, this tier gives you " + tier * 2 + " coins per block broken."
-                )
+                                "This shovel doubles your coins, this tier gives you " + tier * 2 + " coins per block broken."
+                        )
                         .decoration(TextDecoration.ITALIC, false)
                         .color(NamedTextColor.GREEN)
         ).with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder()
                 .putInt(SHOVEL_TIER_KEY, tier)
-                .build()));
+                .build())
+        ).with(DataComponents.ENCHANTMENTS, new EnchantmentList(
+                        Enchantment.EFFICIENCY, Math.min(tier / 3, 10)
+                )
+        );
     }
     /* Returns an Optional.empty() if it isn't a shovel, so like a fist or a coin */
     public static Optional<Integer> getShovelTier(ItemStack stack) {

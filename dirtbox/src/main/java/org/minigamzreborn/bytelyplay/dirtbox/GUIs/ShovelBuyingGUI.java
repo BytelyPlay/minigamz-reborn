@@ -32,6 +32,7 @@ public class ShovelBuyingGUI extends Gui {
         boolean added = p.getInventory().addItemStack(clicked);
         if (!added)
             p.sendMessage(Messages.NOT_ENOUGH_SPACE_IN_INVENTORY);
+        // TODO: make it actually give more options and take coins etc.
         return true;
     }
 
