@@ -42,6 +42,7 @@ public class ShovelBuyingGUI extends Gui {
         price *= 8;
         int coins = CoinItemStacks.getCoinsInList(Arrays.stream(inv.getItemStacks()).toList());
         if (coins >= price) {
+            // TODO: Actually take the coins
             boolean added = p.getInventory().addItemStack(clicked);
             if (!added)
                 p.sendMessage(Messages.NOT_ENOUGH_SPACE_IN_INVENTORY);
