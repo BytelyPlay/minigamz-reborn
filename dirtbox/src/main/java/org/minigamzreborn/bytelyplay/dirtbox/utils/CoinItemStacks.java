@@ -84,4 +84,11 @@ public class CoinItemStacks {
         if (compressionAmount == -1) return Optional.empty();
         return Optional.of(compressionAmount);
     }
+    public static int getCoinsInList(List<ItemStack> stacks) {
+        int amount = 0;
+        for (ItemStack stack : stacks) {
+            amount += getCompressionAmount(stack).orElse(0);
+        }
+        return amount;
+    }
 }

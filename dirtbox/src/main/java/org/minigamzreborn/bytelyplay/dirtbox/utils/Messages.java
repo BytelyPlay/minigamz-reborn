@@ -9,4 +9,8 @@ public class Messages {
             .text("There was not enough space in your inventory to give you the items.")
             .color(NamedTextColor.GREEN)
             .decorate(TextDecoration.BOLD);
+    public static final Component NOT_ENOUGH_COINS = Component
+            .text("You don't have enough coins to do this.")
+            .color(NamedTextColor.YELLOW)
+            .decorate(TextDecoration.BOLD);
 }
