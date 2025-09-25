@@ -14,14 +14,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class CoinItemStacks {
+    private static final String COIN_WORTH = "coin_worth";
     private static final ItemStack SINGLE_COIN_ITEMSTACK = ItemStack.of(Material.SUNFLOWER)
             .withCustomName(
                     Component.text("Coin")
                             .color(NamedTextColor.YELLOW)
                             .decorate(TextDecoration.BOLD)
                             .decoration(TextDecoration.ITALIC, false)
-            );
-    private static final String COMPRESSED_COIN_BLOCK_COMPRESSION_AMOUNT_KEY = "compression_amount";
+            ).with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag
+                    .builder()
+                    .putInt(COIN_WORTH, 1)
+                    .build()));
 
     public static List<ItemStack> getCoins(int amount) {
         ArrayList<ItemStack> itemStacks = new ArrayList<>();
@@ -70,7 +73,7 @@ public class CoinItemStacks {
                                 )
                 )
                 .with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder()
-                        .putInt(COMPRESSED_COIN_BLOCK_COMPRESSION_AMOUNT_KEY, times)
+                        .putInt(COIN_WORTH, times)
                         .build()));
     }
     // Might not be there if COMPRESSED_COIN_BLOCK_COMPRESSION_AMOUNT_KEY isn't set.
@@ -79,7 +82,7 @@ public class CoinItemStacks {
         if (data == null) return Optional.empty();
 
         CompoundBinaryTag nbt = data.nbt();
-        int compressionAmount = nbt.getInt(COMPRESSED_COIN_BLOCK_COMPRESSION_AMOUNT_KEY, -1);
+        int compressionAmount = nbt.getInt(COIN_WORTH, -1) * stack.amount();
 
         if (compressionAmount == -1) return Optional.empty();
         return Optional.of(compressionAmount);

@@ -39,8 +39,9 @@ public class ShovelBuyingGUI extends Gui {
         int price = ShovelItemStacks.getShovelTier(clicked).orElse(-1);
         if (price == -1) return true;
 
-        price *= 8;
+        price *= 4;
         int coins = CoinItemStacks.getCoinsInList(Arrays.stream(inv.getItemStacks()).toList());
+        log.debug("Click costs {} coins player has {} coins, player username is {}", price, coins, p.getName());
         if (coins >= price) {
             // TODO: Actually take the coins
             boolean added = p.getInventory().addItemStack(clicked);

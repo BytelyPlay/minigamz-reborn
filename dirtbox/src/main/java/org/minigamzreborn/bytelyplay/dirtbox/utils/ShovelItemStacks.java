@@ -17,7 +17,7 @@ public class ShovelItemStacks {
     private static final String SHOVEL_TIER_KEY = "shovel_tier";
 
     public static ItemStack getShovel(int tier) {
-        if (tier <= 0) throw new IllegalArgumentException("tier cannot be less than 1");
+        if (tier < 1) throw new IllegalArgumentException("tier cannot be less than 1");
         return ItemStack.of(Material.DIAMOND_SHOVEL).withCustomName(
                 Component.text("Tier ")
                         .color(NamedTextColor.GREEN)
@@ -36,7 +36,7 @@ public class ShovelItemStacks {
                 .putInt(SHOVEL_TIER_KEY, tier)
                 .build())
         ).with(DataComponents.ENCHANTMENTS, new EnchantmentList(
-                        Enchantment.EFFICIENCY, Math.min(tier / 3, 10)
+                        Enchantment.EFFICIENCY, Math.min(tier >= 3 ? tier / 3 : tier, 10)
                 )
         );
     }
