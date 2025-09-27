@@ -26,29 +26,20 @@ public class CoinItemStacks {
                     .putInt(COIN_WORTH, 1)
                     .build()));
 
+    // TODO: Make this work properly
     public static List<ItemStack> getCoins(int amount) {
         ArrayList<ItemStack> itemStacks = new ArrayList<>();
-        if (amount < 9) {
-            itemStacks.addAll(addItemStackToListMultiple(SINGLE_COIN_ITEMSTACK, amount));
-        } else {
-            int singleCoins = amount % 9;
-            int trackingAmount = amount;
+        int compressionLevel = 1;
+        itemStacks.addAll(addItemStackToListMultiple(SINGLE_COIN_ITEMSTACK, amount % 9));
+        amount /= 9;
 
-            itemStacks.addAll(addItemStackToListMultiple(SINGLE_COIN_ITEMSTACK, singleCoins));
-            trackingAmount -= singleCoins;
-
-            int compressionAmount = 0;
-            while (trackingAmount > 9) {
-                trackingAmount = trackingAmount / 9;
-                compressionAmount++;
-            }
-            int singleAfterCoins = trackingAmount % 9;
-            itemStacks.addAll(addItemStackToListMultiple(SINGLE_COIN_ITEMSTACK, singleAfterCoins));
-            trackingAmount -= singleAfterCoins;
-
-            if (trackingAmount <= 0) return itemStacks;
-
-            itemStacks.addAll(addItemStackToListMultiple(getCompressedCoinBlock(compressionAmount), trackingAmount));
+        while (amount > 0) {
+            int amountOfTier = amount % 9;
+            itemStacks.addAll(
+                    addItemStackToListMultiple(CoinItemStacks
+                            .getCompressedCoinBlock(compressionLevel), amountOfTier)
+            );
+            amount /= 9;
         }
         return itemStacks;
     }
@@ -60,6 +51,7 @@ public class CoinItemStacks {
         return itemStacks;
     }
     public static ItemStack getCompressedCoinBlock(int times) {
+        int coinWorth = (int) Math.pow(9, times);
         return ItemStack.of(Material.GOLD_BLOCK)
                 .withCustomName(
                         Component.text(times + "x ")
@@ -73,11 +65,11 @@ public class CoinItemStacks {
                                 )
                 )
                 .with(DataComponents.CUSTOM_DATA, new CustomData(CompoundBinaryTag.builder()
-                        .putInt(COIN_WORTH, times)
+                        .putInt(COIN_WORTH, coinWorth)
                         .build()));
     }
     // Might not be there if COMPRESSED_COIN_BLOCK_COMPRESSION_AMOUNT_KEY isn't set.
-    public static Optional<Integer> getCompressionAmount(ItemStack stack) {
+    public static Optional<Integer> getCoinWorth(ItemStack stack) {
         CustomData data = stack.get(DataComponents.CUSTOM_DATA);
         if (data == null) return Optional.empty();
 
@@ -90,8 +82,30 @@ public class CoinItemStacks {
     public static int getCoinsInList(List<ItemStack> stacks) {
         int amount = 0;
         for (ItemStack stack : stacks) {
-            amount += getCompressionAmount(stack).orElse(0);
+            amount += getCoinWorth(stack).orElse(0);
         }
         return amount;
+    }
+    public static List<ItemStack> takeCoinsFromList(List<ItemStack> stacks, int amount) {
+        List<ItemStack> modifiedStacks = new ArrayList<>();
+        int left = amount;
+        for (ItemStack stack : stacks) {
+            int coinWorth = getCoinWorth(stack).orElse(0);
+
+            if (coinWorth == 0) {
+                modifiedStacks.add(stack);
+                continue;
+            }
+            if (coinWorth == left) {
+                modifiedStacks.remove(stack);
+                modifiedStacks.add(stack.consume(left));
+            }
+            if (coinWorth > left) {
+                // TODO
+                modifiedStacks.add(stack);
+            }
+            left -= coinWorth;
+        }
+        return modifiedStacks;
     }
 }
