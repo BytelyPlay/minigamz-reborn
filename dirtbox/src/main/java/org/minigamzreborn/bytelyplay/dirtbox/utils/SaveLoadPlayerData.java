@@ -22,22 +22,13 @@ import java.util.Optional;
 public class SaveLoadPlayerData {
     private static final ObjectMapper mapper = new ObjectMapper();
     public static void savePlayerData(Player p) {
-        try {
-            Document doc = new Document("_id", p.getUuid().toString());
-            doc.append(
-                    p.getUuid().toString(),
-                    Document.parse(
-                            mapper.writer().writeValueAsString(PlayerInventorySerializerDeserializer.buildJsonTree(p.getInventory()))
-                    )
-            );
-            MongoDBConstants.playerInventoryCollection.replaceOne(
-                    Filters.eq("_id", p.getUuid().toString()),
-                    doc,
-                    new ReplaceOptions().upsert(true)
-            );
-        } catch (JsonProcessingException e) {
-            throw new UncheckedIOException(e);
-        }
+        Document doc = PlayerInventorySerializerDeserializer.buildJsonTree(p);
+
+        MongoDBConstants.playerInventoryCollection.replaceOne(
+                Filters.eq("_id", p.getUuid().toString()),
+                doc,
+                new ReplaceOptions().upsert(true)
+        );
     }
     public static void saveAllPlayerInventories() {
         Collection<Player> players = MinecraftServer.getConnectionManager().getOnlinePlayers();
@@ -46,24 +37,19 @@ public class SaveLoadPlayerData {
             savePlayerData(p);
         }
     }
-    public static Optional<JsonNode> getPlayerData(Player p) {
-        try {
-            MongoCollection<Document> collection = MongoDBConstants.playerInventoryCollection;
+    public static Optional<Document> getPlayerData(Player p) {
+        MongoCollection<Document> collection = MongoDBConstants.playerInventoryCollection;
 
-            FindIterable<Document> findIterable = collection.find(Filters.eq("_id", p.getUuid().toString()));
+        FindIterable<Document> findIterable = collection.find(Filters.eq("_id", p.getUuid().toString()));
 
-            try (MongoCursor<Document> cursor = findIterable.iterator()) {
-                if (cursor.available() >= 1) {
-                    Document doc = cursor.next();
-                    JsonNode rootNode = mapper.readTree(doc.toJson());
+        try (MongoCursor<Document> cursor = findIterable.iterator()) {
+            if (cursor.available() >= 1) {
+                Document doc = cursor.next();
 
-                    return Optional.of(rootNode.get(p.getUuid().toString()));
-                } else {
-                    return Optional.empty();
-                }
+                return Optional.of(doc);
+            } else {
+                return Optional.empty();
             }
-        } catch (JsonProcessingException e) {
-            throw new UncheckedIOException(e);
         }
     }
 }

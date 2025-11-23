@@ -7,62 +7,78 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
+import net.kyori.adventure.nbt.BinaryTag;
+import net.kyori.adventure.nbt.BinaryTagIO;
+import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.minestom.server.codec.Result;
 import net.minestom.server.codec.Transcoder;
+import net.minestom.server.entity.Player;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.item.ItemStack;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressWarnings("UnstableApiUsage")
 @Slf4j
 public class PlayerInventorySerializerDeserializer {
     // TODO: also do the cursor so yeah.
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static JsonNode buildJsonTree(PlayerInventory inv) {
-        ObjectNode rootNode = mapper.createObjectNode();
+    public static Document buildJsonTree(Player player) {
+        Document doc = new Document("_id", player.getUuid().toString());
+        PlayerInventory inv = player.getInventory();
 
         for (int i = 0; i < inv.getItemStacks().length; i++) {
             try {
                 ItemStack stack = inv.getItemStack(i);
                 if (stack.isAir()) continue;
 
-                Result<@NotNull JsonElement> result = ItemStack.CODEC.encode(Transcoder.JSON, stack);
-                JsonElement jsonElement = result.orElse(null);
-                if (jsonElement == null) {
-                    log.warn("ItemStack encoding failed...");
-                    continue;
-                }
-                JsonNode node = mapper.readTree(result.orElseThrow().toString());
-                rootNode.set(String.valueOf(i), node);
+                Result<@NotNull BinaryTag> result = ItemStack.CODEC.encode(Transcoder.NBT, stack);
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                BinaryTagIO.writer().write((CompoundBinaryTag) result.orElseThrow(), stream);
+
+                doc.put(String.valueOf(i), stream.toByteArray());
             } catch (JsonProcessingException e) {
                 log.error("JsonProcessingException happened while building json tree for a player inventory, continuing to the get itemstack", e);
+            } catch (IOException e) {
+                log.error("Error occurred while trying to encode data", e);
             }
         }
-        return rootNode;
+        return doc;
     }
-    public static void fillInventory(JsonNode rootNode, PlayerInventory inv) {
-        try {
-            Set<Map.Entry<String, JsonNode>> entries = rootNode.properties();
 
-            for (Map.Entry<String, JsonNode> entry : entries) {
-                JsonNode subNode = entry.getValue();
-                if (subNode == null) continue;
+    public static void fillInventory(Document rootNode, PlayerInventory inv) {
+        for (Map.Entry<String, Object> entry : rootNode.entrySet()) {
+            try {
+                Object subNode = entry.getValue();
+                if (subNode instanceof byte[] stack) {
+                    ByteArrayInputStream stream = new ByteArrayInputStream(stack);
+                    CompoundBinaryTag tag = BinaryTagIO.reader().read(stream);
 
-                Result<ItemStack> result = ItemStack.CODEC.decode(Transcoder.JSON, JsonParser.parseString(mapper.writeValueAsString(subNode)));
-                ItemStack resultStack = result.orElse(null);
+                    Result<@NotNull ItemStack> result = ItemStack.CODEC.decode(Transcoder.NBT, tag);
 
-                if (resultStack == null) {
-                    log.warn("Couldn't decode ItemStack.");
-                    continue;
+                    inv.setItemStack(Integer.parseInt(entry.getKey()), result.orElseThrow());
+                } else {
+                    if (subNode instanceof String s) {
+                        if (!s.equals("_id")) {
+                            log.warn("Couldn't read a certain ItemStack because it isn't binary.");
+                        }
+                    }
                 }
-                inv.setItemStack(Integer.parseInt(entry.getKey()), resultStack);
+            } catch (JsonProcessingException e) {
+                log.error("Something went wrong processing json", e);
+            } catch (IOException e) {
+                log.error("Something went wrong decoding NBT", e);
             }
-        } catch (JsonProcessingException e) {
-            throw new UncheckedIOException(e);
         }
     }
 }

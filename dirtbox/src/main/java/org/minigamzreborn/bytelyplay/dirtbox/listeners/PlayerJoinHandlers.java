@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
+import org.bson.Document;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.Instances;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.PlayerInventorySerializerDeserializer;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.SaveLoadPlayerData;
 
+import java.lang.annotation.Documented;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,7 +31,8 @@ public class PlayerJoinHandlers {
         event.setSpawningInstance(Instances.dirtbox);
         p.setRespawnPoint(Config.getInstance().getSpawnPoint());
 
-        Optional<JsonNode> playerData = SaveLoadPlayerData.getPlayerData(p);
+        Optional<Document> playerData = SaveLoadPlayerData.getPlayerData(p);
+
         if (playerData.isPresent()) {
             PlayerInventorySerializerDeserializer.fillInventory(
                     playerData.orElseThrow(),
