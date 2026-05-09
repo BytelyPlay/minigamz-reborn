@@ -1,18 +1,11 @@
-package org.minigamzreborn.bytelyplay.dirtbox.GUIs;
+package org.minigamzreborn.bytelyplay.dirtbox.guis;
 
 import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.EventListener;
-import net.minestom.server.event.inventory.InventoryClickEvent;
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryOpenEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.event.trait.InventoryEvent;
 import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.click.Click;
-import net.minestom.server.inventory.click.ClickType;
 import org.jetbrains.annotations.NotNull;
 
 @Slf4j

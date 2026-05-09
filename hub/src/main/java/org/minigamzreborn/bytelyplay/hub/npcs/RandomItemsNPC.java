@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.hub.NPCs;
+package org.minigamzreborn.bytelyplay.hub.npcs;
 
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
@@ -13,8 +13,6 @@ import org.abstractvault.bytelyplay.data.DataSetter;
 import org.abstractvault.bytelyplay.enums.DataFormat;
 import org.minigamzreborn.bytelyplay.hub.Main;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.TransferPlayerPacketC2SOuterClass;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

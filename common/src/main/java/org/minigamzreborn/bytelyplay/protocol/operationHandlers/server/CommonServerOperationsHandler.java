@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.*;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.HandShakePacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.WrappedPacketS2COuterClass;
-import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
+import org.minigamzreborn.bytelyplay.protocol.constants.SharedConstants;
 import org.minigamzreborn.bytelyplay.protocol.utils.Client;
 
 import java.util.UUID;

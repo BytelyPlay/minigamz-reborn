@@ -3,7 +3,7 @@ package org.minigamzreborn.bytelyplay.protocol.operationHandlers.client;
 import lombok.extern.slf4j.Slf4j;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.DisconnectPacketS2COuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.HandShakePacketS2COuterClass;
-import org.minigamzreborn.bytelyplay.protocol.Constants.SharedConstants;
+import org.minigamzreborn.bytelyplay.protocol.constants.SharedConstants;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
 @Slf4j

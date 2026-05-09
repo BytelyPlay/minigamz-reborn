@@ -1,19 +1,12 @@
-package org.minigamzreborn.bytelyplay.dirtbox.GUIs;
+package org.minigamzreborn.bytelyplay.dirtbox.guis;
 
 import lombok.extern.slf4j.Slf4j;
 import net.kyori.adventure.nbt.CompoundBinaryTag;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import net.minestom.server.adventure.audience.Audiences;
-import net.minestom.server.component.DataComponent;
 import net.minestom.server.component.DataComponents;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.inventory.InventoryClickEvent;
-import net.minestom.server.event.inventory.InventoryCloseEvent;
-import net.minestom.server.event.inventory.InventoryOpenEvent;
-import net.minestom.server.event.inventory.InventoryPreClickEvent;
-import net.minestom.server.inventory.Inventory;
 import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.inventory.PlayerInventory;
 import net.minestom.server.inventory.click.Click;
@@ -24,7 +17,6 @@ import org.minigamzreborn.bytelyplay.dirtbox.utils.Messages;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.ShovelItemStacks;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class ShovelBuyingGUI extends Gui {

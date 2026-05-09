@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.protocol.Constants;
+package org.minigamzreborn.bytelyplay.protocol.constants;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

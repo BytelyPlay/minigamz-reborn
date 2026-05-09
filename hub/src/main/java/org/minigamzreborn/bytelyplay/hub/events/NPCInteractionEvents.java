@@ -3,7 +3,7 @@ package org.minigamzreborn.bytelyplay.hub.events;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.event.entity.EntityAttackEvent;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
-import org.minigamzreborn.bytelyplay.hub.NPCs.NPC;
+import org.minigamzreborn.bytelyplay.hub.npcs.NPC;
 
 public final class NPCInteractionEvents {
     public static void playerEntityInteractEvent(PlayerEntityInteractEvent e) {
