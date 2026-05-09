@@ -8,11 +8,10 @@ dependencies {
     implementation("net.minestom:minestom:2025.08.18-1.21.8")
     implementation(project((":common")))
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.2")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0-rc1")
-    implementation("ch.qos.logback:logback-classic:1.5.18")
+    implementation("tools.jackson.core:jackson-databind:3.1.3")
+    implementation("ch.qos.logback:logback-classic:1.5.32")
     implementation("org.slf4j:slf4j-api:2.0.17")
-    // maven-local check out https://github.com/BytelyPlay/abstract-vault
-    implementation("org.abstractvault.bytelyplay:AbstractVault:1.2.2-BETA")
+    implementation("com.github.bytelyplay:abstract-vault:v1.2.6-BETA")
 }
 application {
     mainClass.set("org.minigamzreborn.bytelyplay.hub.Main")

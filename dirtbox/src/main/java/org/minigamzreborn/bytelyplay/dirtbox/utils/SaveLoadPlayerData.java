@@ -1,7 +1,5 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -14,13 +12,13 @@ import net.minestom.server.entity.Player;
 import org.bson.Document;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
 
-import java.io.UncheckedIOException;
 import java.util.Collection;
 import java.util.Optional;
 
 @Slf4j
 public class SaveLoadPlayerData {
     private static final ObjectMapper mapper = new ObjectMapper();
+
     public static void savePlayerData(Player p) {
         Document doc = PlayerInventorySerializerDeserializer.buildJsonTree(p);
 

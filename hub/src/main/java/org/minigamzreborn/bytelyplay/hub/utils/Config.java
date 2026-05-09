@@ -1,21 +1,26 @@
 package org.minigamzreborn.bytelyplay.hub.utils;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import net.minestom.server.coordinate.Pos;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 
 public final class Config {
+    private static Config instance;
+
     @Getter
     private String secret = "";
+
     @Getter
     private String listenIp = "0.0.0.0";
+
     @Getter
     private int port = 25566;
+
     @Getter
     private Pos spawnPoint = Pos.ZERO;
-    private static Config instance;
+
     public static Config getInstance() {
         if (instance == null) return new Config();
         return instance;
@@ -29,11 +34,13 @@ public final class Config {
     public static void deserialize(JsonNode rootNode) {
         Config config = Config.getInstance();
         JsonNode spawnPointNode = rootNode.get("spawn_point");
+
         double spawnX = spawnPointNode.get("x").asDouble();
         double spawnY = spawnPointNode.get("y").asDouble();
         double spawnZ = spawnPointNode.get("z").asDouble();
-        String secret = rootNode.get("secret").asText();
-        String listenIP = rootNode.get("listenIp").asText();
+
+        String secret = rootNode.get("secret").asString();
+        String listenIP = rootNode.get("listenIp").asString();
         int port = rootNode.get("port").asInt();
 
         config.secret = secret;

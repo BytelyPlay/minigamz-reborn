@@ -6,7 +6,8 @@ plugins {
 allprojects {
     repositories {
         mavenCentral()
-        mavenLocal()
+
+        maven { url = uri("https://jitpack.io") }
     }
 }
 subprojects {
@@ -18,7 +19,9 @@ subprojects {
 
     dependencies {
         compileOnly("org.jetbrains:annotations:26.0.2")
-        compileOnly("com.google.protobuf", "protobuf-java", project.property("PROTOBUF_VERSION") as String?)
+        compileOnly(
+            "com.google.protobuf:protobuf-java:${project.property("PROTOBUF_VERSION") as String?}"
+        )
     }
 
     tasks.shadowJar {

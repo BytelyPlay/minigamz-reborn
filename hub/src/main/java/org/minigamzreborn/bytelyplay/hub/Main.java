@@ -1,6 +1,6 @@
 package org.minigamzreborn.bytelyplay.hub;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.minestom.server.Auth;
@@ -48,13 +48,14 @@ public class Main {
     private static Main instance;
     @Getter
     private final Server server;
+
     // Should run under proxy so no auth required.
     public Main() {
         parseConfig();
 
         MinecraftServer server = MinecraftServer.init(new Auth.Velocity(Config.getInstance().getSecret()));
+        // TODO: Make configurable
         ipToRegisterWith = "127.0.0.1";
-        int port = Config.getInstance().getPort();
 
         instance = this;
 
@@ -65,8 +66,10 @@ public class Main {
         setupServer();
         setupScheduledTasks();
 
-        // make configurable
-        server.start(new InetSocketAddress("0.0.0.0", port));
+        server.start(new InetSocketAddress(
+                Config.getInstance().getListenIp(),
+                Config.getInstance().getPort())
+        );
         setupNPCs();
     }
     public static void main(String[] args) {
@@ -96,7 +99,7 @@ public class Main {
                 mapper.writerWithDefaultPrettyPrinter().writeValue(outputStream, Config.serialize());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Something went wrong while parsing the config.", e);
         }
     }
     private Server setupProtocol() {

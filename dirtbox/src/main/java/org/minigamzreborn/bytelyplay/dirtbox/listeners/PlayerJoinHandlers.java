@@ -1,6 +1,5 @@
 package org.minigamzreborn.bytelyplay.dirtbox.listeners;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
