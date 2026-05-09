@@ -1,9 +1,9 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -55,29 +55,21 @@ public class Config {
             throw new UncheckedIOException(e);
         }
     }
-    private String serialize() {
-        try {
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildJsonTree());
-        } catch (JsonProcessingException e) {
-            throw new UncheckedIOException(e);
-        }
+    private String serialize() throws JacksonException {
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildJsonTree());
     }
-    private void deserialize(String data) {
-        try {
-            JsonNode rootNode = mapper.readTree(data);
+    private void deserialize(String data) throws JacksonException {
+        JsonNode rootNode = mapper.readTree(data);
 
-            JsonNode spawnPoint = rootNode.get("spawn_point");
-            this.setSpawnPoint(new Pos(spawnPoint.get("x").asDouble(),
-                    spawnPoint.get("y").asDouble(),
-                    spawnPoint.get("z").asDouble(),
-                    spawnPoint.get("yaw").floatValue(),
-                    spawnPoint.get("pitch").floatValue()));
+        JsonNode spawnPoint = rootNode.get("spawn_point");
+        this.setSpawnPoint(new Pos(spawnPoint.get("x").asDouble(),
+                spawnPoint.get("y").asDouble(),
+                spawnPoint.get("z").asDouble(),
+                spawnPoint.get("yaw").floatValue(),
+                spawnPoint.get("pitch").floatValue()));
 
-            this.setForwardingSecret(rootNode.get("forwarding_secret").asText());
-            this.setMongoDBConnectionString(rootNode.get("mongodb_connection_url").asText());
-        } catch (JsonProcessingException e) {
-            throw new UncheckedIOException(e);
-        }
+        this.setForwardingSecret(rootNode.get("forwarding_secret").asText());
+        this.setMongoDBConnectionString(rootNode.get("mongodb_connection_url").asText());
     }
     private JsonNode buildJsonTree() {
         ObjectNode rootNode = mapper.createObjectNode();

@@ -1,7 +1,7 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class PlayerInventorySerializerDeserializer {
     // TODO: also do the cursor so yeah.
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static Document buildJsonTree(Player player) {
+    public static Document buildJsonTree(Player player) throws JacksonException {
         Document doc = new Document("_id", player.getUuid().toString());
         PlayerInventory inv = player.getInventory();
 
@@ -45,8 +45,6 @@ public class PlayerInventorySerializerDeserializer {
                 BinaryTagIO.writer().write((CompoundBinaryTag) result.orElseThrow(), stream);
 
                 doc.put(String.valueOf(i), stream.toByteArray());
-            } catch (JsonProcessingException e) {
-                log.error("JsonProcessingException happened while building json tree for a player inventory, continuing to the get itemstack", e);
             } catch (IOException e) {
                 log.error("Error occurred while trying to encode data", e);
             }
@@ -54,28 +52,22 @@ public class PlayerInventorySerializerDeserializer {
         return doc;
     }
 
-    public static void fillInventory(Document rootNode, PlayerInventory inv) {
+    public static void fillInventory(Document rootNode, PlayerInventory inv) throws JacksonException, IOException {
         for (Map.Entry<String, Object> entry : rootNode.entrySet()) {
-            try {
-                Object subNode = entry.getValue();
-                if (subNode instanceof byte[] stack) {
-                    ByteArrayInputStream stream = new ByteArrayInputStream(stack);
-                    CompoundBinaryTag tag = BinaryTagIO.reader().read(stream);
+            Object subNode = entry.getValue();
+            if (subNode instanceof byte[] stack) {
+                ByteArrayInputStream stream = new ByteArrayInputStream(stack);
+                CompoundBinaryTag tag = BinaryTagIO.reader().read(stream);
 
-                    Result<@NotNull ItemStack> result = ItemStack.CODEC.decode(Transcoder.NBT, tag);
+                Result<@NotNull ItemStack> result = ItemStack.CODEC.decode(Transcoder.NBT, tag);
 
-                    inv.setItemStack(Integer.parseInt(entry.getKey()), result.orElseThrow());
-                } else {
-                    if (subNode instanceof String s) {
-                        if (!s.equals("_id")) {
-                            log.warn("Couldn't read a certain ItemStack because it isn't binary.");
-                        }
+                inv.setItemStack(Integer.parseInt(entry.getKey()), result.orElseThrow());
+            } else {
+                if (subNode instanceof String s) {
+                    if (!s.equals("_id")) {
+                        log.warn("Couldn't read a certain ItemStack because it isn't binary.");
                     }
                 }
-            } catch (JsonProcessingException e) {
-                log.error("Something went wrong processing json", e);
-            } catch (IOException e) {
-                log.error("Something went wrong decoding NBT", e);
             }
         }
     }

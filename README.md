@@ -3,7 +3,7 @@ A Velocity server with a Velocity plugin using a custom protocol that uses Proto
 Minestom, fabric whatever is used doesn't matter! \
 the only thing that DOES matter is EVERYTHING has to be custom-made (libraries are allowed)
 
-This project uses JDK 21
+This project uses JDK 25
 
 # The Protocol
 All packets have a PacketType and a class associated with the data. \

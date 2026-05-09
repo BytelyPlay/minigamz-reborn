@@ -12,10 +12,10 @@ repositories {
 }
 
 dependencies {
-    implementation("net.minestom:minestom:2025.08.18-1.21.8")
-    implementation("ch.qos.logback:logback-classic:1.5.18")
+    implementation("net.minestom:minestom:2026.04.13-1.21.11")
+    implementation("ch.qos.logback:logback-classic:1.5.32")
     // maven-local check out https://github.com/BytelyPlay/abstract-vault
-    implementation("org.abstractvault.bytelyplay:AbstractVault:1.2.2-BETA")
+    implementation("com.github.bytelyplay:abstract-vault:${project.property("abstract_vault_version") as String?}")
     implementation("org.mongodb:mongodb-driver-sync:5.6.0")
     implementation(project((":common")))
 }

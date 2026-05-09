@@ -47,9 +47,17 @@ public abstract class NPC extends Entity {
         ArrayList<PlayerInfoUpdatePacket.Property> properties = new ArrayList<>();
         properties.add(new PlayerInfoUpdatePacket.Property("textures", skin.textures(), skin.signature()));
 
-        PlayerInfoUpdatePacket.Entry entry = new PlayerInfoUpdatePacket.Entry(this.getUuid(), this.username,
-                properties, false, -1,
-                GameMode.SURVIVAL, null, null, 0);
+        PlayerInfoUpdatePacket.Entry entry = new PlayerInfoUpdatePacket.Entry(
+                this.getUuid(),
+                this.username,
+                properties,
+                false, -1,
+                GameMode.SURVIVAL,
+                null,
+                null,
+                0,
+                true
+        );
 
         p.sendPacket(new PlayerInfoUpdatePacket(PlayerInfoUpdatePacket.Action.ADD_PLAYER, entry));
 

@@ -13,6 +13,6 @@ pluginManagement {
 
 include("common")
 include("hub")
-include("random-items-minigame")
+// include("random-items-minigame")
 include("velocity")
 include("dirtbox")

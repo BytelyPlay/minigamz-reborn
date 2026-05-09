@@ -1,6 +1,7 @@
 package org.minigamzreborn.bytelyplay.dirtbox.listeners;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import org.bson.Document;
@@ -9,10 +10,12 @@ import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.PlayerInventorySerializerDeserializer;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.SaveLoadPlayerData;
 
+import java.io.IOException;
 import java.lang.annotation.Documented;
 import java.util.Objects;
 import java.util.Optional;
 
+@Slf4j
 public class PlayerJoinHandlers {
     private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -33,10 +36,15 @@ public class PlayerJoinHandlers {
         Optional<Document> playerData = SaveLoadPlayerData.getPlayerData(p);
 
         if (playerData.isPresent()) {
-            PlayerInventorySerializerDeserializer.fillInventory(
-                    playerData.orElseThrow(),
-                    p.getInventory()
-            );
+            try {
+                PlayerInventorySerializerDeserializer.fillInventory(
+                        playerData.orElseThrow(),
+                        p.getInventory()
+                );
+            } catch (IOException e) {
+                log.warn("Couldn't fill inventory... IOException thrown...");
+                p.kick("Sorry, something went wrong during configuration.");
+            }
         }
     }
 }

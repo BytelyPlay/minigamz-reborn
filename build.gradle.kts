@@ -20,7 +20,7 @@ subprojects {
     dependencies {
         compileOnly("org.jetbrains:annotations:26.0.2")
         compileOnly(
-            "com.google.protobuf:protobuf-java:${project.property("PROTOBUF_VERSION") as String?}"
+            "com.google.protobuf:protobuf-java:${project.property("protobuf_version") as String?}"
         )
     }
 
@@ -29,5 +29,9 @@ subprojects {
     }
     tasks.named("build") {
         dependsOn("shadowJar");
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_25
     }
 }
