@@ -18,7 +18,8 @@ public class CommandsMixin {
     private CommandDispatcher<CommandSourceStack> dispatcher;
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    public void constructor(Commands.CommandSelection commandSelection, CommandBuildContext context, CallbackInfo ci) {
+    public void constructor(Commands.CommandSelection commandSelection,
+                            CommandBuildContext context, CallbackInfo ci) {
         this.dispatcher.getRoot().getChildren().clear();
     }
 }
