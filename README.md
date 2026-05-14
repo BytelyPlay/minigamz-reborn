@@ -8,6 +8,7 @@ This project uses JDK 25
 Random-items-minigames is currently only really joinable with a mixture of ViaVersion and ViaBackwards on 1.21.11 \
 Because Minestom's latest version is 1.21.11 and it doesn't support ViaVersion nor ViaBackwards, \
 and if I put it on the proxy, it doesn't adjust the version every transfer.
+
 # The Protocol
 All packets have a PacketType and a class associated with the data. \
 We want to use ProtoBuffers AS MUCH as possible... \
