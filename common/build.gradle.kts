@@ -1,5 +1,5 @@
 plugins {
-    id("com.google.protobuf") version "0.9.5"
+    id("com.google.protobuf") version "0.10.0"
 }
 group = "org.minigamzreborn.bytelyplay.common"
 
@@ -13,7 +13,7 @@ dependencies {
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:" +
-                providers.gradleProperty("protobuf_version").toString()
+                providers.gradleProperty("protobuf_version").get()
     }
 }
 java {

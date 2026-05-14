@@ -1,5 +1,6 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
+import org.bson.types.Binary;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
@@ -55,19 +56,16 @@ public class PlayerInventorySerializerDeserializer {
     public static void fillInventory(Document rootNode, PlayerInventory inv) throws JacksonException, IOException {
         for (Map.Entry<String, Object> entry : rootNode.entrySet()) {
             Object subNode = entry.getValue();
-            if (subNode instanceof byte[] stack) {
-                ByteArrayInputStream stream = new ByteArrayInputStream(stack);
+            if (subNode instanceof Binary stack) {
+                ByteArrayInputStream stream = new ByteArrayInputStream(stack.getData());
                 CompoundBinaryTag tag = BinaryTagIO.reader().read(stream);
 
                 Result<@NotNull ItemStack> result = ItemStack.CODEC.decode(Transcoder.NBT, tag);
 
                 inv.setItemStack(Integer.parseInt(entry.getKey()), result.orElseThrow());
             } else {
-                if (subNode instanceof String s) {
-                    if (!s.equals("_id")) {
-                        log.warn("Couldn't read a certain ItemStack because it isn't binary.");
-                    }
-                }
+                if (entry.getKey().equals("_id")) continue;
+                log.warn("Couldn't read a certain ItemStack because it isn't binary.");
             }
         }
     }
