@@ -4,7 +4,7 @@ import net.minecraft.server.MinecraftServer;
 
 public class TickListener {
     public static void tick(MinecraftServer server) {
-        if (server.getTickCount() % 201 == 200) {
+        if (server.getTickCount() % 200 == 0) {
             RandomItem.giveRandomItem(server);
         }
     }
