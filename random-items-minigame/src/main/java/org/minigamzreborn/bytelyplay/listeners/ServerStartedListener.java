@@ -1,13 +1,12 @@
-package org.minigamzreborn.bytelyplay.randomItems.listeners;
+package org.minigamzreborn.bytelyplay.listeners;
 
-import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.ServerCommandSource;
-import org.minigamzreborn.bytelyplay.randomItems.Main;
+import org.minigamzreborn.bytelyplay.Main;
 
 public class ServerStartedListener {
     public static void started(MinecraftServer server) {
         Main main = Main.getInstance();
+
         Main.setMinecraftServer(server);
         main.initializeProtocol(server);
     }

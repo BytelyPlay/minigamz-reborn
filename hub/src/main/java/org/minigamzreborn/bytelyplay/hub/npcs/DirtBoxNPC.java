@@ -44,7 +44,12 @@ public class DirtBoxNPC extends NPC {
     public void entityAttack(EntityAttackEvent event) {
         Entity attacker = event.getEntity();
         if (attacker instanceof Player p)
-            Main.getInstance().getServer().sendPlayerToServer(p.getUuid(), ServerTypeOuterClass.ServerType.DIRTBOX);
+            Main.getInstance().getServer()
+                    .sendPlayerToServer(
+                            p.getUuid(),
+                            ServerTypeOuterClass
+                                    .ServerType.DIRTBOX
+                    );
     }
 
     @Override
@@ -59,6 +64,7 @@ public class DirtBoxNPC extends NPC {
     }
 
     private static PlayerSkin makeSkin() {
+        // TODO: Make configurable
         PlayerSkin pSkin = PlayerSkin.fromUuid("bcbaabb3-f21a-4927-94ad-2979c54f67fc");
         skin = pSkin;
 

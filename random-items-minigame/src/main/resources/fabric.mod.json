@@ -1,28 +1,28 @@
 {
-  "schemaVersion": 1,
-  "id": "random_items_minigame",
-  "version": "${version}",
-  "name": "random_items_minigame",
-  "description": "",
-  "authors": [],
-  "contact": {},
-  "license": "All-Rights-Reserved",
-  "icon": "assets/random_items_minigame/icon.png",
-  "environment": "server",
-  "entrypoints": {
-    "main": [
-      "org.minigamzreborn.bytelyplay.randomItems.Main"
-    ]
-  },
-  "mixins": [
-    "random_items_minigame.mixins.json",
-    {
-      "config": "random_items_minigame.client.mixins.json",
-      "environment": "client"
-    }
-  ],
-  "depends": {
-    "fabricloader": ">=${loader_version}",
-    "minecraft": "${minecraft_version}"
-  }
+	"schemaVersion": 1,
+	"id": "random-items-minigame",
+	"version": "${version}",
+	"name": "random-items-minigame",
+	"description": "This mod should be added alone, this is for the random items minigame on MinigamzReborn.",
+	"authors": [
+		"BytelyPlay"
+	],
+	"contact": {
+		"sources": "https://github.com/BytelyPlay/minigamz-reborn"
+	},
+	"license": "MIT",
+	"environment": "server",
+	"entrypoints": {
+		"main": [
+			"org.minigamzreborn.bytelyplay.Main"
+		]
+	},
+	"mixins": [
+		"random-items-minigame.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~26.1.2",
+		"java": ">=25"
+	}
 }

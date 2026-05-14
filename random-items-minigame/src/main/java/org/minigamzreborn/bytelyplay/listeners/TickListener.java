@@ -1,10 +1,10 @@
-package org.minigamzreborn.bytelyplay.randomItems.listeners;
+package org.minigamzreborn.bytelyplay.listeners;
 
 import net.minecraft.server.MinecraftServer;
 
 public class TickListener {
     public static void tick(MinecraftServer server) {
-        if (server.getTicks() % 201 == 200) {
+        if (server.getTickCount() % 201 == 200) {
             RandomItem.giveRandomItem(server);
         }
     }

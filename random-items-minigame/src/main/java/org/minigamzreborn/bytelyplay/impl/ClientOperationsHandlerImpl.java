@@ -1,9 +1,9 @@
-package org.minigamzreborn.bytelyplay.randomItems.impl;
+package org.minigamzreborn.bytelyplay.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.server.MinecraftServer;
 import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.ClientOperationsHandler;
-import org.minigamzreborn.bytelyplay.randomItems.Main;
+import org.minigamzreborn.bytelyplay.Main;
 
 @Slf4j
 public class ClientOperationsHandlerImpl extends ClientOperationsHandler {
@@ -16,6 +16,6 @@ public class ClientOperationsHandlerImpl extends ClientOperationsHandler {
             return;
         }
         log.warn("Remote Server Disconnected, shutting down.");
-        server.shutdown();
+        server.halt(false);
     }
 }

@@ -31,6 +31,7 @@ public class ClientLogicHandler extends SimpleChannelInboundHandler<WrappedPacke
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         super.channelActive(ctx);
+
         server.sendPacket(
                 WrappedPacketC2SOuterClass.WrappedPacketC2S
                         .newBuilder()
