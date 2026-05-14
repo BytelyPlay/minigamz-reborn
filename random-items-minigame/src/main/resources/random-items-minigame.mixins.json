@@ -6,7 +6,7 @@
 		"WorldOptionsMixin",
 		"MinecraftServerMixin",
 		"NoiseBasedChunkGeneratorMixin",
-		"ServerCommandManagerMixin"
+		"CommandsMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
