@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("xyz.jpenilla.run-velocity") version "2.3.1"
+    id("xyz.jpenilla.run-velocity") version "3.0.2"
 }
 
 group = "org.minigamzreborn.bytelyplay.velocity"
@@ -18,12 +18,13 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
-    annotationProcessor("com.velocitypowered:velocity-api:3.4.0-SNAPSHOT")
+    compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+    annotationProcessor("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
+
     implementation(project(":common"))
 
-    // from maven local check https://github.com/BytelyPlay/brigadier-helper
-    implementation("org.bytelyplay.brigadierHelpers:BrigadierBytelyplayHelpersLib:1.0.0-ALPHA") {
+    implementation("com.github.BytelyPlay:brigadier-helper:" +
+            providers.gradleProperty("brigadier_helpers_version").get()) {
         isTransitive = false
     }
 }
