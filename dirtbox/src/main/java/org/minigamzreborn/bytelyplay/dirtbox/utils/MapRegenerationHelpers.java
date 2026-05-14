@@ -37,6 +37,7 @@ public class MapRegenerationHelpers {
 
             loadedSection.blockPalette().getAll(realSection.blockPalette()::set);
             loadedSection.biomePalette().getAll(realSection.biomePalette()::set);
+
             realSection.setBlockLight(loadedSection.blockLight().array());
             realSection.setSkyLight(loadedSection.skyLight().array());
         }

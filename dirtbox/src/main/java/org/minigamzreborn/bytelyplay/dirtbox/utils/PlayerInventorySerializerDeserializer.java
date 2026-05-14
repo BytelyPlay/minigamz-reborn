@@ -1,6 +1,11 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.codec.Encoder;
+import net.minestom.server.registry.Registry;
+import net.minestom.server.registry.RegistryTranscoder;
 import org.bson.types.Binary;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.RegistryTranscoders;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
@@ -40,7 +45,14 @@ public class PlayerInventorySerializerDeserializer {
                 ItemStack stack = inv.getItemStack(i);
                 if (stack.isAir()) continue;
 
-                Result<@NotNull BinaryTag> result = ItemStack.CODEC.encode(Transcoder.NBT, stack);
+                Result<@NotNull BinaryTag> result =
+                        ItemStack.CODEC.encode(RegistryTranscoders.nbtRegistryTranscoder, stack);
+
+                if (result instanceof Result.Error<BinaryTag> err) {
+                    log.warn("Error when encoding an ItemStack: ",
+                            new IllegalArgumentException(err.message()));
+                    continue;
+                }
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 BinaryTagIO.writer().write((CompoundBinaryTag) result.orElseThrow(), stream);
@@ -60,7 +72,8 @@ public class PlayerInventorySerializerDeserializer {
                 ByteArrayInputStream stream = new ByteArrayInputStream(stack.getData());
                 CompoundBinaryTag tag = BinaryTagIO.reader().read(stream);
 
-                Result<@NotNull ItemStack> result = ItemStack.CODEC.decode(Transcoder.NBT, tag);
+                Result<@NotNull ItemStack> result =
+                        ItemStack.CODEC.decode(RegistryTranscoders.nbtRegistryTranscoder, tag);
 
                 inv.setItemStack(Integer.parseInt(entry.getKey()), result.orElseThrow());
             } else {

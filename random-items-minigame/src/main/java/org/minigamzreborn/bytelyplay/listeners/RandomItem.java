@@ -22,15 +22,9 @@ public class RandomItem {
         List<ServerPlayer> players = server.getPlayerList().getPlayers();
 
         for (ServerPlayer player : players) {
-            ResourceKey<Registry<Item>> itemRegistryKey = Registries.ITEM;
-            Optional<Holder.Reference<Registry<Item>>> optItemRegistry =
-                    server.registryAccess().get(itemRegistryKey);
             Registry<Item> itemRegistry =
-                    optItemRegistry.orElseThrow(() ->
-                            new RuntimeException(
-                                    "This should not be thrown, item registry cannot be found."
-                            ))
-                            .value();
+                    server.registryAccess().lookupOrThrow(Registries.ITEM);
+
             int itemID = ThreadLocalRandom.current().nextInt(0, itemRegistry.size());
 
             Optional<Holder.Reference<Item>> optRandomItem = itemRegistry.get(itemID);

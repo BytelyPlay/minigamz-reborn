@@ -19,6 +19,7 @@ import org.minigamzreborn.bytelyplay.dirtbox.commands.BuyShovelsCommand;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.ChunkLoaders;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.Instances;
 import org.minigamzreborn.bytelyplay.dirtbox.constants.MongoDBConstants;
+import org.minigamzreborn.bytelyplay.dirtbox.constants.RegistryTranscoders;
 import org.minigamzreborn.bytelyplay.dirtbox.impl.ClientOperationsHandlerImpl;
 import org.minigamzreborn.bytelyplay.dirtbox.listeners.*;
 import org.minigamzreborn.bytelyplay.dirtbox.utils.Config;
@@ -60,6 +61,8 @@ public class Main {
         setupCommands();
 
         server.start(new InetSocketAddress(Config.getInstance().getIp(), Config.getInstance().getPort()));
+
+        RegistryTranscoders.init();
     }
     private void setupEvents() {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();

@@ -29,13 +29,10 @@ dependencies {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
 tasks.runVelocity {
     // Configure the Velocity version for our task.
     // This is the only required configuration besides applying the plugin.
     // Your plugin's jar (or shadowJar if present) will be used automatically.
-    velocityVersion("3.4.0-SNAPSHOT")
+    velocityVersion("3.5.0-SNAPSHOT")
     jvmArgs = listOf<String>("-Dvelocity.packet-decode-logging=true")
 }
