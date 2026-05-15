@@ -23,10 +23,11 @@ dependencies {
 
     implementation(project(":common"))
 
-    implementation("com.github.BytelyPlay:brigadier-helper:" +
+    implementation("com.github.bytelyplay:brigadier-helper:" +
             providers.gradleProperty("brigadier_helpers_version").get()) {
         isTransitive = false
     }
+    implementation("tools.jackson.core:jackson-databind:3.1.3")
 }
 
 tasks.runVelocity {

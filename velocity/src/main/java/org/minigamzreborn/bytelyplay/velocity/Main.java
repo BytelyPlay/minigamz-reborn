@@ -37,7 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
 )
 public class Main {
     @Getter
-    private CommandDispatcher<CommandSource> dispatcher;
+    private Commands<CommandSource> commands;
     @Getter
     private final Logger logger;
     @Getter
@@ -58,12 +58,14 @@ public class Main {
     }
     @Subscribe
     public void onProxyInitialized(ProxyInitializeEvent event) {
-        dispatcher = new CommandDispatcher<>();
-        Commands<CommandSource> commands = new Commands<>(dispatcher);
-        // TODO: make these constants.
+        commands = new Commands<>(new CommandDispatcher<>());
+
+        // TODO: make these configurable.
         String ip = "0.0.0.0";
         int port = 9485;
+
         protocolServer = ProtocolMain.initServer(ip, port);
+
         logger.info("Listening on {}:{}", ip, port);
 
         server.getEventManager().register(this, new PlayerJoinListener());

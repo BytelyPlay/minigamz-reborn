@@ -29,8 +29,9 @@ public class HandleAllCommands {
     public void onCommandExecuteEvent(CommandExecuteEvent e) {
         if (UNHANDLED_COMMANDS.contains(e.getCommand().toLowerCase().replace(" ", ""))) return;
 
-        CommandDispatcher<CommandSource> dispatcher = Main.getInstance().getDispatcher();
+        CommandDispatcher<CommandSource> dispatcher = Main.getInstance().getCommands().getDispatcher();
 
+        // TODO: This is a terrible method to use commands, use the proper velocity system.
         String commandNoArgs = Arrays.stream(e.getCommand().split(" ")).findFirst().orElse(null);
         if (commandNoArgs != null) {
             if (dispatcher.getRoot().getChild(commandNoArgs) != null) {
