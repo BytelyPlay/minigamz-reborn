@@ -30,7 +30,7 @@ import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.RegisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
-import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.ClientOperationsHandler;
+import org.minigamzreborn.bytelyplay.protocol.operationhandlers.client.ClientOperationsHandler;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
 import java.net.InetSocketAddress;

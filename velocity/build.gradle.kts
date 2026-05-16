@@ -27,6 +27,9 @@ dependencies {
             providers.gradleProperty("brigadier_helpers_version").get()) {
         isTransitive = false
     }
+    implementation("com.github.bytelyplay:abstract-vault:" +
+            providers.gradleProperty("abstract_vault_version").get())
+
     implementation("tools.jackson.core:jackson-databind:3.1.3")
 }
 

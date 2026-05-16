@@ -1,8 +1,8 @@
 package org.minigamzreborn.bytelyplay.protocol.utils;
 
 import com.google.protobuf.GeneratedMessage;
-import org.minigamzreborn.bytelyplay.protocol.operationHandlers.server.CommonServerOperationsHandler;
-import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.CommonClientOperationsHandler;
+import org.minigamzreborn.bytelyplay.protocol.operationhandlers.server.CommonServerOperationsHandler;
+import org.minigamzreborn.bytelyplay.protocol.operationhandlers.client.CommonClientOperationsHandler;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeC2S;
 import org.minigamzreborn.bytelyplay.protocol.packetType.PacketTypeS2C;
 import org.minigamzreborn.bytelyplay.protocol.packetType.c2s.*;

@@ -14,6 +14,7 @@ import org.abstractvault.bytelyplay.enums.DataFormat;
 import org.minigamzreborn.bytelyplay.hub.Main;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,10 +28,15 @@ public class DirtBoxNPC extends NPC {
             .build();
 
     static {
-        if (Files.exists(SKIN_CONFIG_PATH)) {
-            SKIN_SETTER.load(SKIN_CONFIG_PATH);
-        } else {
-            SKIN_SETTER.save(SKIN_CONFIG_PATH, DataFormat.BINARY_CBOR);
+        try {
+            if (Files.exists(SKIN_CONFIG_PATH)) {
+                SKIN_SETTER.load(SKIN_CONFIG_PATH);
+            } else {
+                SKIN_SETTER.save(SKIN_CONFIG_PATH, DataFormat.BINARY_CBOR);
+            }
+        } catch (IOException e) {
+            log.warn("Couldn't save/load skin, probably not a big deal, " +
+                    "it just means we have to request it from the Mojang API again.", e);
         }
     }
 

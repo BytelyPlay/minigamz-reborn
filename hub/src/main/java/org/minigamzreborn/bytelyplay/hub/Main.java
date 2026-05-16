@@ -28,7 +28,7 @@ import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.RegisterServerPacke
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protocol.constants.SharedConstants;
 import org.minigamzreborn.bytelyplay.protocol.ProtocolMain;
-import org.minigamzreborn.bytelyplay.protocol.operationHandlers.client.ClientOperationsHandler;
+import org.minigamzreborn.bytelyplay.protocol.operationhandlers.client.ClientOperationsHandler;
 import org.minigamzreborn.bytelyplay.protocol.utils.Server;
 
 import java.io.BufferedOutputStream;

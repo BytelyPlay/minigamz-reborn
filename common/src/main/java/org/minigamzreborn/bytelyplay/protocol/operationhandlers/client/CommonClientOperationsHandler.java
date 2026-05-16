@@ -1,4 +1,4 @@
-package org.minigamzreborn.bytelyplay.protocol.operationHandlers.client;
+package org.minigamzreborn.bytelyplay.protocol.operationhandlers.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.s2c.DisconnectPacketS2COuterClass;

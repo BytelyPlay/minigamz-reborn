@@ -1,4 +1,4 @@
-import java.util.Properties
+import java.util.*
 
 plugins {
 	id("net.fabricmc.fabric-loom") version("1.16-SNAPSHOT")
@@ -7,7 +7,7 @@ plugins {
 }
 
 // hackaround
-val props = Properties();
+val props = Properties()
 props.load(file("gradle.properties").inputStream())
 
 version = props["mod_version"].toString()
@@ -24,9 +24,14 @@ repositories {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft("com.mojang:minecraft:${props["minecraft_version"]}")
-	
+
 	implementation("net.fabricmc:fabric-loader:${props["loader_version"]}")
+
 	implementation(project((":common")))
+	implementation("com.github.bytelyplay:abstract-vault:" +
+			providers.gradleProperty("abstract_vault_version").get()) {
+		isTransitive = true
+	}
 }
 
 tasks.processResources {
@@ -61,9 +66,10 @@ tasks.jar {
 	}
 }
 tasks.shadowJar {
-	// TODO: Use a configuration
 	dependencies {
 		include(project((":common")))
+		include("com.github.bytelyplay:abstract-vault:" +
+				providers.gradleProperty("abstract_vault_version").get())
 	}
 }
 

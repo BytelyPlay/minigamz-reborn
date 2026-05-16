@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import org.minigamzreborn.bytelyplay.protobuffer.enums.ServerTypeOuterClass;
 import org.minigamzreborn.bytelyplay.velocity.Main;
 import org.minigamzreborn.bytelyplay.velocity.utils.Messages;
+import org.minigamzreborn.bytelyplay.velocity.utils.ServerTypeRegistry;
 
 import java.util.Optional;
 
@@ -23,7 +24,12 @@ public class HubCommand implements Command<CommandSource> {
     private int execute(CommandContext<CommandSource> ctx) {
         CommandSource source = ctx.getSource();
         if (source instanceof Player p) {
-            Optional<RegisteredServer> hubServer = Main.getInstance().getRandomServerOfType(ServerTypeOuterClass.ServerType.HUB);
+            Optional<RegisteredServer> hubServer =
+                    ServerTypeRegistry
+                            .getInstance()
+                            .getRandomServerOfType(
+                                    ServerTypeOuterClass.ServerType.HUB
+                            );
             if (hubServer.isEmpty()) {
                 p.sendMessage(Messages.NO_SERVER_FOUND_TO_TRANSFER);
                 return 1;
