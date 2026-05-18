@@ -60,7 +60,8 @@ public class Main {
         setupScheduledTasks();
         setupCommands();
 
-        server.start(new InetSocketAddress(Config.getInstance().getIp(), Config.getInstance().getPort()));
+        server.start(new InetSocketAddress(Config.getInstance().getListenIp(),
+                Config.getInstance().getListenPort()));
 
         RegistryTranscoders.init();
     }
@@ -80,8 +81,8 @@ public class Main {
 
         protocolServer.sendPacket(WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
                 .setRegisterServerPacket(RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S.newBuilder()
-                        .setAddress(Config.getInstance().getIp())
-                        .setPort(Config.getInstance().getPort())
+                        .setAddress(Config.getInstance().getIpToRegisterWith())
+                        .setPort(Config.getInstance().getListenPort())
                         .setType(ServerTypeOuterClass.ServerType.DIRTBOX)
                         .build())
                 .build());

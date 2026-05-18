@@ -1,9 +1,7 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
-import tools.jackson.core.JacksonException;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.node.ObjectNode;
+import org.abstractvault.bytelyplay.data.DataSetter;
+import org.abstractvault.bytelyplay.enums.DataFormat;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,77 +13,87 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+// TODO: Also make the IP to register the server with configurable.
 @Slf4j
 public class Config {
-    private final ObjectMapper mapper = new ObjectMapper();
-    private static final Path CONFIG_FILE_PATH = Path.of("./configuration", "config.json");
+    private static final DataSetter CONFIG_SETTER = new DataSetter.Builder()
+            .getterSetter(Config.getInstance()::getListenIp,
+                    Config.getInstance()::setListenIp, "listen_ip")
+            .getterSetter(Config.getInstance()::getListenPort,
+                    Config.getInstance()::setListenPort, "listen_port")
+
+            .getterSetter(Config.getInstance()::getProxyIp,
+                    Config.getInstance()::setProxyIp, "proxy_ip")
+            .getterSetter(Config.getInstance()::getProxyPort,
+                    Config.getInstance()::setProxyPort, "proxy_port")
+
+            .getterSetter(Config.getInstance()::getIpToRegisterWith,
+                    Config.getInstance()::setIpToRegisterWith, "ip_to_register_with")
+
+            .getterSetter(Config.getInstance()::getSpawnPoint,
+                    Config.getInstance()::setSpawnPoint, "spawn_point")
+
+            .getterSetter(Config.getInstance()::getForwardingSecret,
+                    Config.getInstance()::setForwardingSecret, "secret")
+
+            .getterSetter(Config.getInstance()::getMongoDBConnectionString,
+                    Config.getInstance()::setMongoDBConnectionString, "mongodb_connection_url")
+            .build();
+    private static final Path CONFIG_FILE_PATH = Path.of(
+            "./configuration", "config.json"
+    );
     private static final Path CONFIG_FOLDER = Path.of("./configuration");
 
     @Getter @Setter(value = AccessLevel.PRIVATE)
     private Pos spawnPoint = new Pos(0.5, 2, 0.5, 0, 0);
+
     @Getter @Setter(value = AccessLevel.PRIVATE)
     private String forwardingSecret = "";
+
     @Getter @Setter(value = AccessLevel.PRIVATE)
     private String mongoDBConnectionString = "mongodb://localhost:27017";
-    // TODO: add the ip and port to the json so it is configurable also make a listening ip and ip for the velocity server to use.
+
     @Getter @Setter(value = AccessLevel.PRIVATE)
-    private String ip = "127.0.0.1";
+    private String listenIp = "127.0.0.1";
+
     @Getter @Setter(value = AccessLevel.PRIVATE)
-    private int port = 25569;
+    private int listenPort = 25569;
+
+    @Getter @Setter(value = AccessLevel.PRIVATE)
+    private String proxyIp = "127.0.0.1";
+
+    @Getter @Setter(value = AccessLevel.PRIVATE)
+    private short proxyPort = 9485;
+
+    @Getter @Setter(value = AccessLevel.PRIVATE)
+    private String ipToRegisterWith = "127.0.0.1";
 
     private static Config instance;
 
     private Config() {
-        if (instance != null) throw new IllegalStateException("Tried to create an instance of a singleton twice.");
+        if (instance != null) throw new IllegalStateException(
+                "Tried to create an instance of a singleton twice."
+        );
         instance = this;
     }
     public static Config getInstance() {
         return instance == null ? new Config() : instance;
     }
+
     public void loadConfig() {
         try {
             if (!Files.exists(CONFIG_FOLDER)) Files.createDirectories(CONFIG_FOLDER);
 
             if (Files.exists(CONFIG_FILE_PATH)) {
-                deserialize(Files.readString(CONFIG_FILE_PATH));
+                CONFIG_SETTER.deserialize(Files.newInputStream(CONFIG_FILE_PATH));
             } else {
-                Files.writeString(CONFIG_FILE_PATH, serialize());
+                CONFIG_SETTER.serialize(
+                        Files.newOutputStream(CONFIG_FILE_PATH),
+                        DataFormat.TEXT_PRETTY_JSON
+                );
             }
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-    }
-    private String serialize() throws JacksonException {
-        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(buildJsonTree());
-    }
-    private void deserialize(String data) throws JacksonException {
-        JsonNode rootNode = mapper.readTree(data);
-
-        JsonNode spawnPoint = rootNode.get("spawn_point");
-        this.setSpawnPoint(new Pos(spawnPoint.get("x").asDouble(),
-                spawnPoint.get("y").asDouble(),
-                spawnPoint.get("z").asDouble(),
-                spawnPoint.get("yaw").floatValue(),
-                spawnPoint.get("pitch").floatValue()));
-
-        this.setForwardingSecret(rootNode.get("forwarding_secret").asText());
-        this.setMongoDBConnectionString(rootNode.get("mongodb_connection_url").asText());
-    }
-    private JsonNode buildJsonTree() {
-        ObjectNode rootNode = mapper.createObjectNode();
-        ObjectNode spawnPoint = mapper.createObjectNode();
-
-        spawnPoint.put("x", this.getSpawnPoint().x());
-        spawnPoint.put("y", this.getSpawnPoint().y());
-        spawnPoint.put("z", this.getSpawnPoint().z());
-        spawnPoint.put("yaw", this.getSpawnPoint().yaw());
-        spawnPoint.put("pitch", this.getSpawnPoint().pitch());
-
-        rootNode.put("forwarding_secret", this.getForwardingSecret());
-        rootNode.put("mongodb_connection_url", this.getMongoDBConnectionString());
-
-        rootNode.set("spawn_point", spawnPoint);
-
-        return rootNode;
     }
 }

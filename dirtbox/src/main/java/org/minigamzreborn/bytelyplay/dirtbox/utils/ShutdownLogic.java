@@ -1,7 +1,6 @@
 package org.minigamzreborn.bytelyplay.dirtbox.utils;
 
 import org.minigamzreborn.bytelyplay.dirtbox.Main;
-import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.DisconnectPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.UnregisterServerPacketC2SOuterClass;
 import org.minigamzreborn.bytelyplay.protobuffer.packets.c2s.WrappedPacketC2SOuterClass;
 
@@ -11,8 +10,8 @@ public class ShutdownLogic {
                 WrappedPacketC2SOuterClass.WrappedPacketC2S.newBuilder()
                         .setUnregisterServerPacket(
                                 UnregisterServerPacketC2SOuterClass.UnregisterServerPacketC2S.newBuilder()
-                                        .setIp(Config.getInstance().getIp())
-                                        .setPort(Config.getInstance().getPort())
+                                        .setIp(Config.getInstance().getIpToRegisterWith())
+                                        .setPort(Config.getInstance().getListenPort())
                                         .build()
                         )
                         .build()

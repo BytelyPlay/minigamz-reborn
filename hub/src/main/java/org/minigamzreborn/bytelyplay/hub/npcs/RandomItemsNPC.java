@@ -28,7 +28,7 @@ public final class RandomItemsNPC extends NPC {
             .build();
     private static final Path SKIN_CONFIG_PATH =
             Path.of("./")
-            .resolve("config")
+            .resolve("configuration")
             .resolve("random-items-minigames-skin.cbor");
     private static final Component USERNAME = Component.text("Random Items").style(
             style -> style
@@ -40,6 +40,7 @@ public final class RandomItemsNPC extends NPC {
             if (Files.exists(SKIN_CONFIG_PATH)) {
                 SKIN_SETTER.load(SKIN_CONFIG_PATH);
             } else {
+                Files.createDirectories(SKIN_CONFIG_PATH.getParent());
                 SKIN_SETTER.save(SKIN_CONFIG_PATH, DataFormat.BINARY_CBOR);
             }
         } catch (IOException e) {

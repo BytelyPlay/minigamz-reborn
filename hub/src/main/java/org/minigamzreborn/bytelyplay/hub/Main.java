@@ -68,17 +68,20 @@ public class Main {
 
         server.start(new InetSocketAddress(
                 Config.getInstance().getListenIp(),
-                Config.getInstance().getPort())
-        );
+                Config.getInstance().getListenPort()
+        ));
         setupNPCs();
     }
+
     public static void main(String[] args) {
         new Main();
     }
+
     private void setupInstances() {
         InstanceManager manager = MinecraftServer.getInstanceManager();
         Instances.hub = manager.createInstanceContainer(new AnvilLoader(HUB_WORLD_PATH));
     }
+
     private void setupEvents() {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
 
@@ -88,6 +91,7 @@ public class Main {
         globalEventHandler.addListener(EntityAttackEvent.class, NPCInteractionEvents::entityAttackEvent);
         // EventNode<InstanceEvent> hubEventNode = Instances.hub.eventNode();
     }
+
     private void parseConfig() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -102,24 +106,28 @@ public class Main {
             log.warn("Something went wrong while parsing the config.", e);
         }
     }
+
     private Server setupProtocol() {
         ClientOperationsHandler.setInstance(new ClientOperationsHandlerImpl());
-        return ProtocolMain.initClient("127.0.0.1", 9485);
+        return ProtocolMain.initClient(Config.getInstance().getProxyIp(),
+                Config.getInstance().getProxyPort());
     }
+
     private void setupServer() {
         server.sendPacket(
                 WrappedPacketC2SOuterClass.WrappedPacketC2S
-                .newBuilder()
-                .setRegisterServerPacket(
-                        RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S
-                                .newBuilder()
-                                .setAddress(ipToRegisterWith)
-                                .setPort(Config.getInstance().getPort())
-                                .build()
-                )
-                .build()
+                        .newBuilder()
+                        .setRegisterServerPacket(
+                                RegisterServerPacketC2SOuterClass.RegisterServerPacketC2S
+                                        .newBuilder()
+                                        .setAddress(ipToRegisterWith)
+                                        .setPort(Config.getInstance().getListenPort())
+                                        .build()
+                        )
+                        .build()
         );
     }
+
     private void setupNPCs() {
         RandomItemsNPC randomItemsNPC = new RandomItemsNPC();
         DirtBoxNPC dirtBoxNPC = new DirtBoxNPC();
@@ -127,6 +135,7 @@ public class Main {
         randomItemsNPC.setInstance(Instances.hub, new Pos(0.5, 11, 2.5, -180, 0));
         dirtBoxNPC.setInstance(Instances.hub, new Pos(-1.5, 11, 0.5, 90, 0));
     }
+
     private void setupScheduledTasks() {
         SchedulerManager manager = MinecraftServer.getSchedulerManager();
         manager.buildShutdownTask(ShutdownHandler::shutdown);
